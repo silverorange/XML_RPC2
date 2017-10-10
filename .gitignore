@@ -1,4 +1,18 @@
-# composer related
-composer.lock
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+vendor/
+node_modules/
+
+# misc
 composer.phar
-vendor
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.swp
+
+# dependency lock file
+composer.lock
+yarn.lock
