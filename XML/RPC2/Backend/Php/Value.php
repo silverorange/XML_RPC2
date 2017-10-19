@@ -29,7 +29,6 @@
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2005 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version   CVS: $Id$
  * @link      http://pear.php.net/package/XML_RPC2
  */
 
