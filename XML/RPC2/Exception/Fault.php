@@ -33,7 +33,7 @@
  */
 
 /**
- * XML_RPC struct value class. Represents values of type struct (associative struct)
+ * XML_RPC2_Exception_Fault signals a XML-RPC response that contains a fault element instead of a regular params element.
  *
  * @category  XML
  * @package   XML_RPC2
@@ -42,83 +42,79 @@
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link      http://pear.php.net/package/XML_RPC2
  */
-class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
+class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
 {
+    /**
+     * Fault code (in the response body)
+     *
+     * @var string
+     */
+    protected $faultCode = null;
 
     /**
-     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Scalar with the given nativeValue
+     * Construct a new XML_RPC2_Exception_Fault with a given message string and
+     * fault code
      *
-     * @param mixed $nativeValue the native value.
+     * @param string $messageString the message string, corresponding to the
+     *                              faultString present in the response body.
+     * @param string $faultCode     the fault code, corresponding to the
+     *                              faultCode in the response body.
      */
-    public function __construct($nativeValue)
+    public function __construct($messageString, $faultCode)
     {
-        $this->setNativeValue($nativeValue);
+        parent::__construct($messageString);
+        $this->faultCode = $faultCode;
     }
 
     /**
-     * NativeValue property setter
+     * FaultCode getter
      *
-     * @param mixed $value value the new nativeValue
-     *
-     * @return void
+     * @return string fault code
      */
-    protected function setNativeValue($value)
+    public function getFaultCode()
     {
-        if (!is_array($value)) {
-            throw new XML_RPC2_Exception_InvalidType(
-                sprintf(
-                    'Cannot create XML_RPC2_Backend_Php_Value_Struct from ' .
-                    'type \'%s\'.',
-                    gettype($value)
-                )
+        return $this->faultCode;
+    }
+
+    /**
+     * FaultString getter
+     *
+     * This is an alias to getMessage() in order to respect XML-RPC
+     * nomenclature for faults.
+     *
+     * @return string fault code
+     */
+    public function getFaultString()
+    {
+        return $this->getMessage();
+    }
+
+    /**
+     * Create a XML_RPC2_Exception_Fault by decoding the corresponding XML
+     * string
+     *
+     * @param string $xml the raw XML string.
+     *
+     * @return XML_RPC2_Exception_Fault the parsed fault exception.
+     */
+    public static function createFromDecode($xml)
+    {
+        // This is the only way I know of creating a new Document rooted in the provided simpleXMLFragment (needed for the xpath expressions that does not segfault sometimes
+        $xml = simplexml_load_string($xml->asXML());
+        $struct = XML_RPC2_Backend_Php_Value::createFromDecode($xml->value)->getNativeValue();
+        if (!(is_array($struct)
+            && array_key_exists('faultString', $struct)
+            && array_key_exists('faultCode', $struct))
+        ) {
+            throw new XML_RPC2_Exception_Decode(
+                'Unable to decode XML-RPC fault payload'
             );
         }
-        parent::setNativeValue($value);
-    }
 
-    /**
-     * Encode the instance into XML, for transport
-     *
-     * @return string The encoded XML-RPC value,
-     */
-    public function encode()
-    {
-        $result = '<struct>';
-        foreach ($this->getNativeValue() as $name => $element) {
-            $result .= '<member>';
-            $result .= '<name>';
-            $result .= strtr($name, array('&' => '&amp;', '<' => '&lt;', '>' => '&gt;'));
-            $result .= '</name>';
-            $result .= '<value>';
-            $result .= ($element instanceof XML_RPC2_Backend_Php_Value)
-                ? $element->encode()
-                : XML_RPC2_Backend_Php_Value::createFromNative($element)->encode();
-
-            $result .= '</value>';
-            $result .= '</member>';
-        }
-        $result .= '</struct>';
-        return $result;
-    }
-
-    /**
-     * Decode transport XML and set the instance value accordingly
-     *
-     * @param mixed $xml The encoded XML-RPC value.
-     *
-     * @return array the parsed struct.
-     */
-    public static function decode($xml)
-    {
-        // TODO Remove reparsing of XML fragment, when SimpleXML proves more solid. Currently it segfaults when
-        // xpath is used both in an element and in one of its children
-        $xml = simplexml_load_string($xml->asXML());
-        $values = $xml->xpath('/value/struct/member');
-        $result = array();
-        foreach (array_keys($values) as $i) {
-            $result[(string) $values[$i]->name] = XML_RPC2_Backend_Php_Value::createFromDecode($values[$i]->value)->getNativeValue();
-        }
-        return $result;
+        return new XML_RPC2_Exception_Fault(
+            $struct['faultString'],
+            $struct['faultCode']
+        );
     }
 }
 
