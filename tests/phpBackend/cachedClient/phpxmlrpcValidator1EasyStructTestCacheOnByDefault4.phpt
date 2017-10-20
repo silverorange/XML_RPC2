@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 $options = array(
     'debug' => false,
-    'backend' => 'Xmlrpcext',
+    'backend' => 'Php',
     'prefix' => 'validator1.',
     'cacheOptions' => array(
         'cacheDir' => sys_get_temp_dir() . '/',
