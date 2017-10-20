@@ -1,11 +1,15 @@
-PEAR XML_RPC2
-=============
-XML_RPC2 is a pear package providing XML_RPC client and server services.
-XML-RPC is a simple remote procedure call protocol built using HTTP as
-transport and XML as encoding.  As a client library, XML_RPC2 is capable of
-creating a proxy class which exposes the methods exported by the server. As a
-server library, XML_RPC2 is capable of exposing methods from a class or object
-instance, seamlessly exporting local methods as remotely callable procedures.
+XML_RPC2
+========
+XML_RPC2 is a package providing XML-RPC client and server services. XML-RPC is
+a simple remote procedure call protocol built using HTTP as transport and XML
+as the encoding.As a client library, XML_RPC2 is capable of creating a proxy
+class which exposes the methods exported by the server. As a server library,
+XML_RPC2 is capable of exposing methods from a class or object instance,
+seamlessly exporting local methods as remotely callable procedures.
+
+This fork maintained by silverorange updates the package for PHP 7 and
+composer compatibility.
+
 
 Basic Usage
 -----------
@@ -33,4 +37,13 @@ try {
 }
 
 ?>
+```
+
+Installation
+------------
+Make sure the silverorange composer repository is added to the `composer.json`
+for the project and then run:
+
+```
+composer require silverorange/xml_rpc2
 ```

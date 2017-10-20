@@ -1,0 +1,42 @@
+<phpunit bootstrap="vendor/autoload.php">
+  <testsuites>
+    <testsuite name="phpBackend.cachedClient">
+      <directory suffix=".phpt">tests/phpBackend/cachedClient</directory>
+    </testsuite>
+    <testsuite name="phpBackend.cachedServer">
+      <directory suffix=".phpt">tests/phpBackend/cachedServer</directory>
+    </testsuite>
+    <testsuite name="phpBackend.client">
+      <directory suffix=".phpt">tests/phpBackend/client</directory>
+    </testsuite>
+    <testsuite name="phpBackend.decoding">
+      <directory suffix=".phpt">tests/phpBackend/decoding</directory>
+    </testsuite>
+    <testsuite name="phpBackend.encoding">
+      <directory suffix=".phpt">tests/phpBackend/encoding</directory>
+    </testsuite>
+    <testsuite name="phpBackend.regressions">
+      <directory suffix=".phpt">tests/phpBackend/regressions</directory>
+    </testsuite>
+    <testsuite name="phpBackend.server">
+      <directory suffix=".phpt">tests/phpBackend/server</directory>
+    </testsuite>
+
+    <testsuite name="regressions">
+      <directory suffix=".phpt">tests/regressions</directory>
+    </testsuite>
+
+    <testsuite name="xmlrpcextBackend.cachedClient">
+      <directory suffix=".phpt">tests/xmlrpcextBackend/cachedClient</directory>
+    </testsuite>
+    <testsuite name="xmlrpcextBackend.cachedServer">
+      <directory suffix=".phpt">tests/xmlrpcextBackend/cachedServer</directory>
+    </testsuite>
+    <testsuite name="xmlrpcextBackend.client">
+      <directory suffix=".phpt">tests/xmlrpcextBackend/client</directory>
+    </testsuite>
+    <testsuite name="xmlrpcextBackend.server">
+      <directory suffix=".phpt">tests/xmlrpcextBackend/server</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

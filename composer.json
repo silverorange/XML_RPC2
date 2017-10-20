@@ -1,44 +1,51 @@
 {
-    "name": "pear/xml_rpc2",
-    "description": "More info available on: http://pear.php.net/package/XML_RPC2",
-    "type": "library",
-    "license": "LGPL-2.1",
-    "support": {
-        "docs": "http://pear.php.net/package/XML_RPC2",
-        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_RPC2",
-        "source": "https://github.com/pear/XML_RPC2"
+  "name": "silverorange/xml_rpc2",
+  "description": "Fork of PEAR's XML_RPC2 package. Packaged for composer and working in PHP 7.",
+  "type": "library",
+  "license": "LGPL-2.1",
+  "support": {
+    "docs": "http://pear.php.net/package/XML_RPC2",
+    "issues": "https://github.com/silverorange/XML_RPC2/issues",
+    "source": "https://github.com/silverorange/XML_RPC2"
+  },
+  "authors": [
+    {
+      "email": "sergiosgc@php.net",
+      "name": "Sergio Carvalho",
+      "role": "Lead"
     },
-    "authors": [
-        {
-            "email": "sergiosgc@php.net",
-            "name": "Sergio Carvalho",
-            "role": "Lead"
-        },
-        {
-            "email": "fab@php.net",
-            "name": "Fabien MARTY",
-            "role": "Developer"
-        },
-        {
-            "email": "jal@ambitonline.com",
-            "name": "Alan Langford",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.2.0",
-        "pear/pear_exception": "^1.0.0",
-        "pear/http_request2": "^2.3.0"
+    {
+      "email": "fab@php.net",
+      "name": "Fabien MARTY",
+      "role": "Developer"
     },
-    "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "autoload": {
-        "psr-0": {
-            "XML_RPC2": ""
-        }
-    },
-    "include-path": [
-        "./"
-    ]
+    {
+      "email": "jal@ambitonline.com",
+      "name": "Alan Langford",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.1",
+    "pear/pear_exception": "^1.0.0",
+    "pear/http_request2": "^2.3.0",
+    "pear/pear-core-minimal": "^1.10"
+  },
+  "require-dev": {
+    "pear/cache_lite": "^1.8.0",
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "^3.0.0"
+  },
+  "suggest": {
+    "pear/cache_lite": "Adds caching layer to client and server"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit",
+    "lint": "./vendor/bin/phpcs"
+  },
+  "autoload": {
+    "psr-0": {
+      "XML_RPC2": ""
+    }
+  }
 }

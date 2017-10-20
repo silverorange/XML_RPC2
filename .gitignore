@@ -1,4 +1,13 @@
-# composer related
-composer.lock
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+vendor/
+
+# misc
 composer.phar
-vendor
+.DS_Store
+.env
+*.swp
+
+# dependency lock file
+composer.lock
