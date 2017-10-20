@@ -271,6 +271,7 @@ class XML_RPC2_CachedClient
      *
      * @return mixed The call result, already decoded into native types
      */
+    // @codingStandardsIgnoreLine
     private function _workWithoutCache___($methodName, $parameters)
     {
         if (!(isset($this->_clientObject))) {
@@ -292,6 +293,7 @@ class XML_RPC2_CachedClient
      *
      * @return string cache id
      */
+    // @codingStandardsIgnoreLine
     private function _makeCacheId___($methodName, $parameters)
     {
         return md5($methodName . serialize($parameters) . serialize($this->_uri) . serialize($this->_options));
@@ -308,6 +310,7 @@ class XML_RPC2_CachedClient
      *
      * @return void
      */
+    // @codingStandardsIgnoreLine
     public function dropCacheFile___($methodName, $parameters)
     {
         $id = $this->_makeCacheId___($methodName, $parameters);
@@ -322,6 +325,7 @@ class XML_RPC2_CachedClient
      *
      * @return void
      */
+    // @codingStandardsIgnoreLine
     public function clean___()
     {
         $this->_cacheObject->clean($this->_defaultCacheGroup, 'ingroup');
