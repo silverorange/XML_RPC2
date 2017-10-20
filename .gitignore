@@ -2,17 +2,12 @@
 
 # dependencies
 vendor/
-node_modules/
 
 # misc
 composer.phar
 .DS_Store
 .env
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 *.swp
 
 # dependency lock file
 composer.lock
-yarn.lock
