@@ -28,7 +28,7 @@ $client = XML_RPC2_Client::create(
 try {
   $result = $client->info('XML_RPC2');
   print_r($result);
-} catch (XML_RPC2_FaultException $e) {
+} catch (XML_RPC2_Exception_Fault $e) {
   // The XMLRPC server returns a XMLRPC error
   die('Exception #' . $e->getFaultCode() . ' : ' . $e->getFaultString());
 } catch (Exception $e) {
