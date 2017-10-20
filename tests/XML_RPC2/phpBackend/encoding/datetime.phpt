@@ -2,9 +2,11 @@
 Datetime XML-RPC encoding (Php Backend)
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 date_default_timezone_set('UTC');
-require_once 'XML/RPC2/Backend/Php/Value/Datetime.php';
+
 $time = new XML_RPC2_Backend_Php_Value_Datetime(853438830.45);
 var_dump($time->encode());
 ?>

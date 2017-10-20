@@ -11,14 +11,14 @@ if (!function_exists('curl_init')) {
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Client.php';
-require_once 'XML/RPC2/Backend.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 XML_RPC2_Backend::setBackend('xmlrpcext');
 $client = XML_RPC2_Client::create('http://rpc.example.com:1000/', '', null);
 try {
     $client->invalidMethod('World');
-} catch (XML_RPC2_CurlException $e) {
+} catch (XML_RPC2_Exception_Curl $e) {
     var_dump($e->getMessage());
 }
 ?>

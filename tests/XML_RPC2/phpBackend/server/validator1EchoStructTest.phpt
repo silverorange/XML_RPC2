@@ -2,6 +2,9 @@
 PHP Backend XML-RPC server Validator1 test (echoStructTest)
 --FILE--
 <?php
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 class TestServer {
     /**
      * test function
@@ -16,11 +19,9 @@ class TestServer {
     }
 }
 
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Server.php';
 $options = array(
-	'prefix' => 'validator1.',
-	'backend' => 'Php'
+    'prefix' => 'validator1.',
+    'backend' => 'Php'
 );
 
 $server = XML_RPC2_Server::create('TestServer', $options);

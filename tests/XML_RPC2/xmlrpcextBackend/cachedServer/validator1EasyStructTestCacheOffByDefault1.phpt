@@ -8,6 +8,9 @@ if (!function_exists('xmlrpc_server_create')) {
 ?>
 --FILE--
 <?php
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 class TestServer {
     /**
      * test function
@@ -22,19 +25,15 @@ class TestServer {
     }
 }
 
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/CachedServer.php';
-require_once 'tmpdir.inc';
-require_once 'XML/RPC2/Backend/Php/Response.php';
 $options = array(
-	'prefix' => 'validator1.',
-	'backend' => 'Xmlrpcext',
-	'cacheOptions' => array(
-		'cacheDir' => tmpDir() . '/',
-		'lifetime' => 60,
-		'cacheByDefault' => false
-	),
-	'cacheDebug' => true
+    'prefix' => 'validator1.',
+    'backend' => 'Xmlrpcext',
+    'cacheOptions' => array(
+        'cacheDir' => sys_get_temp_dir() . '/',
+        'lifetime' => 60,
+        'cacheByDefault' => false
+    ),
+    'cacheDebug' => true
 );
 
 $server = XML_RPC2_CachedServer::create('TestServer', $options);

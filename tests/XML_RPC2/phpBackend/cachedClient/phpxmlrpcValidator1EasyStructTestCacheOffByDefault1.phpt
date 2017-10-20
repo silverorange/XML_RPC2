@@ -3,24 +3,23 @@ PHP Backend XML-RPC cachedClient against phpxmlrpc validator1 (easyStructTest wi
 --SKIPIF--
 <?php
 if (!function_exists('curl_init')) {
-    print "Skip no CURI extension available";
+    print "Skip no cURL extension available";
 }
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once('tmpdir.inc');
-require_once 'XML/RPC2/CachedClient.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 $options = array(
-	'debug' => false,
-	'backend' => 'Php',
-	'prefix' => 'validator1.',
-	'cacheOptions' => array(
-		'cacheDir' => tmpDir() . '/',
-		'lifetime' => 60,
-		'cacheByDefault' => false
-	),
-	'cacheDebug' => true
+    'debug' => false,
+    'backend' => 'Php',
+    'prefix' => 'validator1.',
+    'cacheOptions' => array(
+        'cacheDir' => sys_get_temp_dir() . '/',
+        'lifetime' => 60,
+        'cacheByDefault' => false
+    ),
+    'cacheDebug' => true
 );
 
 $client = XML_RPC2_CachedClient::create('http://phpxmlrpc.sourceforge.net/server.php', $options);

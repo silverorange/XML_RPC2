@@ -11,26 +11,25 @@ if (!function_exists('curl_init')) {
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once('tmpdir.inc');
-require_once 'XML/RPC2/CachedClient.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 $options = array(
-	'debug' => false,
-	'backend' => 'Xmlrpcext',
-	'prefix' => 'validator1.',
-	'cacheOptions' => array(
-		'cacheDir' => tmpDir() . '/',
-		'lifetime' => 60,
-		'cacheByDefault' => true,
-		'cachedMethods' => array(
-			'foo' => 30,
-			'bar' => 10,
-			'easyStructTest' => -1,
-			'foobar' => 60
-		)
-	),
-	'cacheDebug' => true
+    'debug' => false,
+    'backend' => 'Xmlrpcext',
+    'prefix' => 'validator1.',
+    'cacheOptions' => array(
+        'cacheDir' => sys_get_temp_dir() . '/',
+        'lifetime' => 60,
+        'cacheByDefault' => true,
+        'cachedMethods' => array(
+            'foo' => 30,
+            'bar' => 10,
+            'easyStructTest' => -1,
+            'foobar' => 60
+        )
+    ),
+    'cacheDebug' => true
 );
 
 $client = XML_RPC2_CachedClient::create('http://phpxmlrpc.sourceforge.net/server.php', $options);

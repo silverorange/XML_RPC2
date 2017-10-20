@@ -6,8 +6,9 @@ if (PHP_INT_SIZE < 8) print "Skip: Integer64 is only available on 64bit systems"
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Backend/Php/Value/Integer64.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 $integer = new XML_RPC2_Backend_Php_Value_Integer64(34359738368);
 var_dump($integer->encode());
 ?>

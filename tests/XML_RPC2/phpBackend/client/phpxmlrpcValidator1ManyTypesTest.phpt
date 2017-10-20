@@ -8,14 +8,15 @@ if (!function_exists('curl_init')) {
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
+
 date_default_timezone_set('UTC');
-require_once 'XML/RPC2/Client.php';
-require_once 'XML/RPC2/Value.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 $options = array(
-	'debug' => false,
-	'backend' => 'Php',
-	'prefix' => 'validator1.'
+    'debug' => false,
+    'backend' => 'Php',
+    'prefix' => 'validator1.'
 );
 $client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
 $tmp = "20060116T19:14:03";

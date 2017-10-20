@@ -8,6 +8,9 @@ if (!function_exists('xmlrpc_server_create')) {
 ?>
 --FILE--
 <?php
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 class TestServer {
     /**
      * test function
@@ -22,11 +25,9 @@ class TestServer {
     }
 }
 
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Server.php';
 $options = array(
-	'prefix' => 'validator1.',
-	'backend' => 'Xmlrpcext'
+    'prefix' => 'validator1.',
+    'backend' => 'Xmlrpcext'
 );
 
 $server = XML_RPC2_Server::create('TestServer', $options);

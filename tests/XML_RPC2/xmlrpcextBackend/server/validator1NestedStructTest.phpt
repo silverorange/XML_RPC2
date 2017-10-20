@@ -8,6 +8,9 @@ if (!function_exists('xmlrpc_server_create')) {
 ?>
 --FILE--
 <?php
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 class TestServer {
     /**
      * test function
@@ -18,29 +21,27 @@ class TestServer {
      * @return int result
      */
     public static function nestedStructTest($struct) {
-    	// just to avoir problems with numeric indexes...
-    	$struct2 = array();
-    	while (list($key, $year) = each($struct)) {
-    		if ($key=='2000') {
-    			while (list($key2, $month) = each($year)) {
-    				if ($key2=='04') {
-    					while (list($key3, $day) = each($month)) {
-    						if ($key3=='01') {
-    							return $day['moe'] + $day['larry'] + $day['curly'];
-    						}
-    					}
-    				}
-    			} 
-    		}
-    	}
+        // just to avoir problems with numeric indexes...
+        $struct2 = array();
+        while (list($key, $year) = each($struct)) {
+            if ($key=='2000') {
+                while (list($key2, $month) = each($year)) {
+                    if ($key2=='04') {
+                        while (list($key3, $day) = each($month)) {
+                            if ($key3=='01') {
+                                return $day['moe'] + $day['larry'] + $day['curly'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Server.php';
 $options = array(
-	'prefix' => 'validator1.',
-	'backend' => 'Xmlrpcext'
+    'prefix' => 'validator1.',
+    'backend' => 'Xmlrpcext'
 );
 
 $server = XML_RPC2_Server::create('TestServer', $options);

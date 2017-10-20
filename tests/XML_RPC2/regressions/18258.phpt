@@ -2,11 +2,8 @@
 Request #18258  Can not call remote function called create() because XML_RPC2_Client::create()
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Server.php';
-require_once 'XML/RPC2/Client.php';
-require_once 'XML/RPC2/Backend/Php/Request.php';
 
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 class TestServer {
 
@@ -37,4 +34,12 @@ $server->handleCall();
 ?>
 --EXPECT--
 <?xml version="1.0" encoding="utf-8"?>
-<methodResponse><params><param><value><int>12</int></value></param></params></methodResponse>
+<methodResponse>
+<params>
+ <param>
+  <value>
+   <int>12</int>
+  </value>
+ </param>
+</params>
+</methodResponse>

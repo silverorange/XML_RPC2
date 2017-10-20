@@ -2,8 +2,9 @@
 Struct XML-RPC encoding (Php Backend)
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Backend/Php/Value/Struct.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 $struct = new XML_RPC2_Backend_Php_Value_Struct(array('a' => 1, 'b' => true, 'c' => 'a string'));
 var_dump($struct->encode());
 ?>

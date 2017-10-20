@@ -2,8 +2,9 @@
 Empty array should not trigger notice
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../') . PATH_SEPARATOR . get_include_path());
-require 'XML/RPC2/Backend/Php/Value.php';
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 class Empty_Array_Value_Test extends XML_RPC2_Backend_Php_Value
 {
 }

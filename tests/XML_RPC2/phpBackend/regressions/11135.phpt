@@ -2,7 +2,9 @@
 Regression guard against bug 11135: Empty array should not trigger notice
 --FILE--
 <?php
-require 'XML/RPC2/Backend/Php/Value.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 class Empty_Array_Value_Test extends XML_RPC2_Backend_Php_Value
 {
 }

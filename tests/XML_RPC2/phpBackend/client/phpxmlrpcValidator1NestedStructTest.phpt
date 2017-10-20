@@ -8,12 +8,13 @@ if (!function_exists('curl_init')) {
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
-require_once 'XML/RPC2/Client.php';
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 $options = array(
-	'debug' => false,
-	'backend' => 'Php',
-	'prefix' => 'validator1.'
+    'debug' => false,
+    'backend' => 'Php',
+    'prefix' => 'validator1.'
 );
 $client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
 
@@ -23,9 +24,9 @@ $year1999 = array(
 $year2001 = $year1999;
 $year2000 = $year1999;
 $year2000['04']['01'] = array(
-	'moe' => 12,
-	'larry' => 14,
-	'curly' => 9
+    'moe' => 12,
+    'larry' => 14,
+    'curly' => 9
 );
 
 $index1999 = '1999 ';

@@ -2,7 +2,9 @@
 Bug #11314: Following codesniffer standards param docs mess up
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../') . PATH_SEPARATOR . get_include_path());
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 /**
  * Point to a problem with the autodocumentation of servers which follows the specifications
  * in PHPCodeSniffer.
@@ -18,7 +20,6 @@ set_include_path(realpath(dirname(__FILE__) . '/../../../') . PATH_SEPARATOR . g
  * @version   @package-version@
  * @link      http://pear.php.net/package/XML_RPC2
  */
-require_once 'XML/RPC2/Server.php';
 
 /**
  * The implementation

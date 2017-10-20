@@ -14,14 +14,15 @@ if (version_compare(PHP_VERSION, '5.2.9', '<')) {
 ?>
 --FILE--
 <?php
-set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
+
+require_once __DIR__ . '/../../../../vendor/autoload.php';
+
 date_default_timezone_set('UTC');
-require_once 'XML/RPC2/Client.php';
-require_once 'XML/RPC2/Value.php';
+
 $options = array(
-	'debug' => false,
-	'backend' => 'Xmlrpcext',
-	'prefix' => 'validator1.'
+    'debug' => false,
+    'backend' => 'Xmlrpcext',
+    'prefix' => 'validator1.'
 );
 $client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
 $tmp = "20060116T19:14:03";
