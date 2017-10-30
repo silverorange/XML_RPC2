@@ -35,9 +35,9 @@
 /**
  * This class is a server call handler which exposes an instance's public methods.
  *
- * XML_RPC2_Server_Callhandler_Instance is the preferred call handler to use when
+ * XML_RPC2_Server_CallHandler_Instance is the preferred call handler to use when
  * you just need to quickly expose an already existing object. If designing a remote
- * API from the ground up, it's best to use XML_RPC2_Server_Callhandler_Class instead.
+ * API from the ground up, it's best to use XML_RPC2_Server_CallHandler_Class instead.
  *
  * Usage is simple:
  *  - PhpDoc the methods, including at least method signature (params and return types) and short description.
@@ -69,9 +69,9 @@
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link      http://pear.php.net/package/XML_RPC2
  * @see       XML_RPC2_Server::create
- * @see       XML_RPC2_Server_Callhandler_Class
+ * @see       XML_RPC2_Server_CallHandler_Class
  */
-class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
+class XML_RPC2_Server_CallHandler_Instance extends XML_RPC2_Server_CallHandler
 {
     /**
      * Instance of target object
@@ -81,7 +81,7 @@ class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
     private $_instance;
 
     /**
-     * XML_RPC2_Server_Callhandler_Class Constructor. Creates a new call handler exporting the given object methods
+     * XML_RPC2_Server_CallHandler_Class Constructor. Creates a new call handler exporting the given object methods
      *
      * Before using this constructor, take a look at XML_RPC2_Server::create. The factory
      * method is usually a quicker way of instantiating the server and its call handler.
