@@ -35,7 +35,7 @@
 /**
  * This class is a server call handler which exposes a classe's static public methods.
  *
- * XML_RPC2_Server_Callhandler_Class is the preferred call handler to use when you are
+ * XML_RPC2_Server_CallHandler_Class is the preferred call handler to use when you are
  * designing your XML-RPC server from the ground up. Usage is quite simple:
  *  - Create a class holding all of the XML-RPC server's exported procedures as public static methods (the interface class).
  *  - PhpDoc the classes' methods, including at least method signature (params and return types) and short description.
@@ -62,7 +62,7 @@
  * Use this call handler if you have designed your xml-rpc external interface as a set of
  * public class methods on a given class. If, on the other hand, you intend to export an
  * already existing class, it may be that not all of the methods you want to export are static.
- * In that case, it is probably best to use XML_RPC2_Server_Callhandler_Instance instead.
+ * In that case, it is probably best to use XML_RPC2_Server_CallHandler_Instance instead.
  *
  * @category  XML
  * @package   XML_RPC2
@@ -71,9 +71,9 @@
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link      http://pear.php.net/package/XML_RPC2
  * @see       XML_RPC2_Server::create
- * @see       XML_RPC2_Server_Callhandler_Instance
+ * @see       XML_RPC2_Server_CallHandler_Instance
  */
-class XML_RPC2_Server_Callhandler_Class extends XML_RPC2_Server_CallHandler
+class XML_RPC2_Server_CallHandler_Class extends XML_RPC2_Server_CallHandler
 {
     /**
      * Name of target class
@@ -83,7 +83,7 @@ class XML_RPC2_Server_Callhandler_Class extends XML_RPC2_Server_CallHandler
     private $_className;
 
     /**
-     * XML_RPC2_Server_Callhandler_Class Constructor. Creates a new call handler exporting the give static class' methods
+     * XML_RPC2_Server_CallHandler_Class Constructor. Creates a new call handler exporting the give static class' methods
      *
      * Before using this constructor, take a look at XML_RPC2_Server::create. The factory
      * method is usually a quicker way of instantiating the server and its call handler.
