@@ -5,6 +5,8 @@ Request XML-RPC encoding (Php Backend)
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
+date_default_timezone_set('UTC');
+
 $request = new XML_RPC2_Backend_Php_Request('foo.bar');
 $request->addParameter('a string');
 $request->addParameter(125);
