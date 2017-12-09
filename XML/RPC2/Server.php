@@ -311,7 +311,7 @@ abstract class XML_RPC2_Server
      */
     protected function getContentLength($content)
     {
-        if (extension_loaded('mbstring') && (ini_get('mbstring.func_overload') & 2) == 2) {
+        if ((ini_get('mbstring.func_overload') & 2) === 2) {
             $length = mb_strlen($content, '8bit');
         } else {
             $length = strlen((binary)$content);
