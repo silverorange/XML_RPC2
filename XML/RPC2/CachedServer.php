@@ -368,13 +368,7 @@ class XML_RPC2_CachedServer
      */
     protected function getContentLength($content)
     {
-        if ((ini_get('mbstring.func_overload') & 2) === 2) {
-            $length = mb_strlen($content, '8bit');
-        } else {
-            $length = strlen((binary)$content);
-        }
-
-        return $length;
+        return mb_strlen($content, '8bit');
     }
 }
 
