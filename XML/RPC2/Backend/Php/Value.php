@@ -134,7 +134,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                 }
                 break;
             case 'object':
-                if ((strtolower(get_class($nativeValue)) == 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+                if ((mb_strtolower(get_class($nativeValue)) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
                     // In this case, we have a "stdclass native value" (emulate xmlrpcext)
                     // the type 'base64' or 'datetime' is given by xmlrpc_type public property
                     $explicitType = $nativeValue->xmlrpc_type;
@@ -163,7 +163,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                 );
             }
         }
-        $explicitType = ucfirst(strtolower($explicitType));
+        $explicitType = ucfirst(mb_strtolower($explicitType));
         switch ($explicitType) {
         case 'I8':
             return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue, 'Integer64');

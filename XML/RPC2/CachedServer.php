@@ -278,7 +278,7 @@ class XML_RPC2_CachedServer
         $weCache = $this->_cacheByDefault;
         $lifetime = $this->_cacheOptions['lifetime'];
         if (is_string($this->_callTarget)) {
-            $className = strtolower($this->_callTarget);
+            $className = mb_strtolower($this->_callTarget);
         } else {
             $className = get_class($this->_callTarget);
         }
@@ -368,13 +368,7 @@ class XML_RPC2_CachedServer
      */
     protected function getContentLength($content)
     {
-        if (extension_loaded('mbstring') && (ini_get('mbstring.func_overload') & 2) == 2) {
-            $length = mb_strlen($content, '8bit');
-        } else {
-            $length = strlen((binary)$content);
-        }
-
-        return $length;
+        return mb_strlen($content, '8bit');
     }
 }
 

@@ -83,7 +83,7 @@ abstract class XML_RPC2_Backend
      */
     public static function setBackend($backend)
     {
-        $backend = ucfirst(strtolower($backend));
+        $backend = ucfirst(mb_strtolower($backend));
         if ($backend != 'Php'
             && $backend != 'Xmlrpcext'
         ) {

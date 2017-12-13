@@ -124,27 +124,27 @@ class XML_RPC2_Server_Method
         $paramDocs = array();
         foreach ($docs as $i => $doc) {
             $doc = trim($doc, " \r\t/*");
-            if (strlen($doc) && strpos($doc, '@') !== 0) {
+            if ($doc != '' && mb_strpos($doc, '@') !== 0) {
                 if ($shortdesc) {
                     $shortdesc .= "\n";
                 }
                 $shortdesc .= $doc;
                 continue;
             }
-            if (strpos($doc, '@xmlrpc.hidden') === 0) {
+            if (mb_strpos($doc, '@xmlrpc.hidden') === 0) {
                 $hidden = true;
             }
-            if ((strpos($doc, '@xmlrpc.prefix') === 0) && preg_match('/@xmlrpc.prefix( )*(.*)/', $doc, $matches)) {
+            if ((mb_strpos($doc, '@xmlrpc.prefix') === 0) && preg_match('/@xmlrpc.prefix( )*(.*)/', $doc, $matches)) {
                 $prefix = $matches[2];
             }
-            if ((strpos($doc, '@xmlrpc.methodname') === 0) && preg_match('/@xmlrpc.methodname( )*(.*)/', $doc, $matches)) {
+            if ((mb_strpos($doc, '@xmlrpc.methodname') === 0) && preg_match('/@xmlrpc.methodname( )*(.*)/', $doc, $matches)) {
                 $methodname = $matches[2];
             }
-            if (strpos($doc, '@param') === 0) { // Save doctag for usage later when filling parameters
+            if (mb_strpos($doc, '@param') === 0) { // Save doctag for usage later when filling parameters
                 $paramDocs[] = $doc;
             }
 
-            if (strpos($doc, '@return') === 0) {
+            if (mb_strpos($doc, '@return') === 0) {
                 $param = preg_split("/\s+/", $doc);
                 if (isset($param[1])) {
                     $param = $param[1];
@@ -162,18 +162,18 @@ class XML_RPC2_Server_Method
             if (array_key_exists($parameterIndex, $paramDocs)
                 && preg_match('/@param\s+(\S+)(\s+(.+))/', $paramDocs[$parameterIndex], $matches)
             ) {
-                if (strpos($matches[1], '|')) {
+                if (mb_strpos($matches[1], '|')) {
                     $newParameter['type'] = XML_RPC2_Server_Method::_limitPHPType(explode('|', $matches[1]));
                 } else {
                     $newParameter['type'] = XML_RPC2_Server_Method::_limitPHPType($matches[1]);
                 }
                 $tmp = '$' . $parameter->getName() . ' ';
-                if (strpos($matches[3], '$' . $tmp) === 0) {
+                if (mb_strpos($matches[3], '$' . $tmp) === 0) {
                     $newParameter['doc'] = $matches[3];
                 } else {
                     // The phpdoc comment is something like "@param string $param description of param"
                     // Let's keep only "description of param" as documentation (remove $param)
-                    $newParameter['doc'] = substr($matches[3], strlen($tmp));
+                    $newParameter['doc'] = mb_substr($matches[3], mb_strlen($tmp));
                 }
                 $newParameter['doc'] = preg_replace('_^\s*_', '', $newParameter['doc']);
             }
@@ -336,7 +336,7 @@ class XML_RPC2_Server_Method
      */
     private static function _limitPHPType($type)
     {
-        $tmp = strtolower($type);
+        $tmp = mb_strtolower($type);
         $convertArray = array(
             'int' => 'integer',
             'i4' => 'integer',

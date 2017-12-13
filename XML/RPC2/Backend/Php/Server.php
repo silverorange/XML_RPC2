@@ -62,7 +62,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     public function __construct($callHandler, $options = array())
     {
         parent::__construct($callHandler, $options);
-        if (strtolower($this->encoding) != 'utf-8') {
+        if (mb_strtolower($this->encoding) !== 'utf-8') {
             throw new XML_RPC2_Exception('XML_RPC2_Backend_Php does not support any encoding other than utf-8, due to a simplexml limitation');
         }
     }
@@ -78,7 +78,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
             $this->autoDocument();
         } else {
             $response = $this->getResponse();
-            header('Content-type: text/xml; charset=' . strtolower($this->encoding));
+            header('Content-type: text/xml; charset=' . mb_strtolower($this->encoding));
             header('Content-length: ' . $this->getContentLength($response));
             print $response;
         }

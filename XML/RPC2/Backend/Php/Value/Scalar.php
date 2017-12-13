@@ -135,7 +135,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
                 );
             }
         }
-        $explicitType = ucfirst(strtolower($explicitType));
+        $explicitType = ucfirst(mb_strtolower($explicitType));
         $explicitType = sprintf('XML_RPC2_Backend_Php_Value_%s', $explicitType);
         return new $explicitType($nativeValue);
     }

@@ -54,7 +54,7 @@ class XML_RPC2_Backend_Xmlrpcext_Value
      */
     public static function createFromNative($value, $explicitType)
     {
-        $type = strtolower($explicitType);
+        $type = mb_strtolower($explicitType);
         $availableTypes = array('datetime', 'base64', 'struct');
         if (in_array($type, $availableTypes)) {
             if ($type=='struct') {

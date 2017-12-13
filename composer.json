@@ -27,6 +27,7 @@
   ],
   "require": {
     "php": ">=5.2.1",
+    "ext-mbstring": "*",
     "pear/pear_exception": "^1.0.0",
     "pear/http_request2": "^2.3.0",
     "pear/pear-core-minimal": "^1.10"

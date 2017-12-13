@@ -21,11 +21,11 @@ class TestServer {
      * @return array result
      */
     public static function countTheEntities($string) {
-        $ctLeftAngleBrackets = substr_count($string, '<');
-        $ctRightAngleBrackets = substr_count($string, '>');
-        $ctAmpersands = substr_count($string, '&');
-        $ctApostrophes = substr_count($string, "'");
-        $ctQuotes = substr_count($string, '"');
+        $ctLeftAngleBrackets = mb_substr_count($string, '<');
+        $ctRightAngleBrackets = mb_substr_count($string, '>');
+        $ctAmpersands = mb_substr_count($string, '&');
+        $ctApostrophes = mb_substr_count($string, "'");
+        $ctQuotes = mb_substr_count($string, '"');
         return array(
             'ctLeftAngleBrackets' => $ctLeftAngleBrackets,
             'ctRightAngleBrackets' => $ctRightAngleBrackets,
