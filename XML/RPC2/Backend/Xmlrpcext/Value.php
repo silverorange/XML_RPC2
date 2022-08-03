@@ -65,7 +65,7 @@ class XML_RPC2_Backend_Xmlrpcext_Value
                 // is some cases (structs with numeric indexes), we need to be able to force the "struct" type
                 // (xmlrpc_set_type doesn't help for this, so we need this ugly hack)
                 $new = array();
-                while (list($k, $v) = each($value)) {
+                foreach ($value as $k => $v) {
                     $new["xml_rpc2_ugly_struct_hack_$k"] = $v;
                     // with this "string" prefix, we are sure that the array will be seen as a "struct"
                 }

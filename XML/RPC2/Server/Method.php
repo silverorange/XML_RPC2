@@ -273,7 +273,7 @@ class XML_RPC2_Server_Method
         $result  .= "<span class=\"other\">(</span>";
         $first = true;
         $nbr = 0;
-        while (list($name, $parameter) = each($this->_parameters)) {
+        foreach ($this->_parameters as $name => $parameter) {
             $nbr++;
             if ($nbr == $this->_numberOfRequiredParameters + 1) {
                 $result .= "<span class=\"other\"> [ </span>";
@@ -316,7 +316,7 @@ class XML_RPC2_Server_Method
             if (count($this->_parameters)>0) {
                 print "      <table>\n";
                 print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
-                while (list($name, $parameter) = each($this->_parameters)) {
+                foreach ($this->_parameters as $name => $parameter) {
                     $type = $parameter['type'];
                     $doc = isset($parameter['doc']) ? htmlentities($parameter['doc']) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
                     print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
@@ -338,25 +338,25 @@ class XML_RPC2_Server_Method
     {
         $tmp = mb_strtolower($type);
         $convertArray = array(
-            'int' => 'integer',
-            'i4' => 'integer',
-            'integer' => 'integer',
-            'string' => 'string',
-            'str' => 'string',
-            'char' => 'string',
-            'bool' => 'boolean',
-            'boolean' => 'boolean',
-            'array' => 'array',
-            'float' => 'double',
-            'double' => 'double',
-            'array' => 'array',
-            'struct' => 'array',
-            'assoc' => 'array',
-            'structure' => 'array',
-            'datetime' => 'mixed',
-            'datetime.iso8601' => 'mixed',
-            'iso8601' => 'mixed',
-            'base64' => 'string'
+        'int' => 'integer',
+        'i4' => 'integer',
+        'integer' => 'integer',
+        'string' => 'string',
+        'str' => 'string',
+        'char' => 'string',
+        'bool' => 'boolean',
+        'boolean' => 'boolean',
+        'array' => 'array',
+        'float' => 'double',
+        'double' => 'double',
+        'array' => 'array',
+        'struct' => 'array',
+        'assoc' => 'array',
+        'structure' => 'array',
+        'datetime' => 'mixed',
+        'datetime.iso8601' => 'mixed',
+        'iso8601' => 'mixed',
+        'base64' => 'string'
         );
         if (isset($convertArray[$tmp])) {
             return $convertArray[$tmp];
