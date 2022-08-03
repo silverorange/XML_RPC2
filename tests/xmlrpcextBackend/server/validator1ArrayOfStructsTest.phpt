@@ -22,7 +22,7 @@ class TestServer {
      */
     public static function arrayOfStructsTest($array) {
         $result = 0;
-        while (list(, $struct) = each($array)) {
+        foreach ($array as $struct) {
             if (isset($struct['curly'])) {
                 $result = $result + $struct['curly'];
             }

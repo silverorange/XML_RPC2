@@ -24,4 +24,5 @@ $errcontext)
 }
 
 ?>
---EXPECT--
+--EXPECTREGEX--
+^$

@@ -23,11 +23,11 @@ class TestServer {
     public static function nestedStructTest($struct) {
         // just to avoir problems with numeric indexes...
         $struct2 = array();
-        while (list($key, $year) = each($struct)) {
+        foreach($struct as $key => $year) {
             if ($key=='2000') {
-                while (list($key2, $month) = each($year)) {
+                foreach($year as $key2 => $month) {
                     if ($key2=='04') {
-                        while (list($key3, $day) = each($month)) {
+                        foreach ($month as $key3 => $day) {
                             if ($key3=='01') {
                                 return $day['moe'] + $day['larry'] + $day['curly'];
                             }

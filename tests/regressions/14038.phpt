@@ -22,4 +22,5 @@ $errcontext)
     $array_class = new Empty_Array_Value_Test();
     $array_class->createFromNative(array());
 }
---EXPECT--
+--EXPECTREGEX--
+^$
