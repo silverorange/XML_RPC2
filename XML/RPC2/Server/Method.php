@@ -304,7 +304,7 @@ class XML_RPC2_Server_Method
         $name = $this->getName();
         $signature = $this->getHTMLSignature();
         $id = md5($name);
-        $help = nl2br(htmlentities($this->_help));
+        $help = nl2br(htmlentities($this->_help, ENT_COMPAT));
         print "      <h3><a name=\"$id\">$signature</a></h3>\n";
         print "      <p><b>Description :</b></p>\n";
         print "      <div class=\"description\">\n";
@@ -317,7 +317,7 @@ class XML_RPC2_Server_Method
                 print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
                 foreach ($this->_parameters as $name => $parameter) {
                     $type = $parameter['type'];
-                    $doc = isset($parameter['doc']) ? htmlentities($parameter['doc']) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
+                    $doc = isset($parameter['doc']) ? htmlentities($parameter['doc'], ENT_COMPAT) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
                     print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
                 }
                 print "      </table>\n";
