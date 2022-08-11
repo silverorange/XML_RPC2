@@ -25,7 +25,7 @@ class TestServer {
         $struct2 = array();
         foreach($struct as $key => $year) {
             if ($key=='2000') {
-                foreach($year as $key2 => $month) {
+                foreach ($year as $key2 => $month) {
                     if ($key2=='04') {
                         foreach ($month as $key3 => $day) {
                             if ($key3=='01') {
