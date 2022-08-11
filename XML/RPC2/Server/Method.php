@@ -287,7 +287,6 @@ class XML_RPC2_Server_Method
             $result .= "<span class=\"paratype\">($type) </span>";
             $result .= "<span class=\"paraname\">$name</span>";
         }
-        reset($this->_parameters);
         if ($nbr > $this->_numberOfRequiredParameters) {
             $result .= "<span class=\"other\"> ] </span>";
         }
@@ -321,7 +320,6 @@ class XML_RPC2_Server_Method
                     $doc = isset($parameter['doc']) ? htmlentities($parameter['doc']) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
                     print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
                 }
-                reset($this->_parameters);
                 print "      </table>\n";
             }
         }
