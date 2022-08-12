@@ -1,4 +1,7 @@
 <phpunit bootstrap="vendor/autoload.php">
+  <php>
+    <ini name="xdebug.overload_var_dump" value="off"/>
+  </php>
   <testsuites>
     <testsuite name="phpBackend.cachedClient">
       <directory suffix=".phpt">tests/phpBackend/cachedClient</directory>

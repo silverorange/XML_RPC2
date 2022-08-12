@@ -146,7 +146,7 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
      */
     private static function _timestampToIso8601($timestamp)
     {
-        return strftime('%Y%m%dT%H:%M:%S', (int) $timestamp);
+        return date("Ymd\TH:i:s", (int) $timestamp);
     }
 
     /**
