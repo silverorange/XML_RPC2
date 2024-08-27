@@ -108,7 +108,11 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
         */
         if (is_array($result) && xmlrpc_is_fault($result)) {
             if ($this->debug) {
-                print "XML_RPC2_Exception_Fault(${result['faultString']}, ${result['faultCode']})";
+                printf(
+                    "XML_RPC2_Exception_Fault(%s, %s)",
+                    $result['faultString'],
+                    $result['faultCode']
+                );
             }
             throw new XML_RPC2_Exception_Fault($result['faultString'], $result['faultCode']);
         }
@@ -118,5 +122,3 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
         return $result;
     }
 }
-
-?>
