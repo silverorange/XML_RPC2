@@ -25,28 +25,47 @@
       "role": "Developer"
     }
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.silverorange.com",
+      "only": [
+        "silverorange/*"
+      ]
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "XML_RPC2": ""
+    }
+  },
   "require": {
-    "php": ">=5.2.1",
+    "php": ">=8.2",
     "ext-mbstring": "*",
     "pear/pear_exception": "^1.0.0",
     "pear/http_request2": "^2.3.0",
     "pear/pear-core-minimal": "^1.10"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.64",
     "pear/cache_lite": "^1.8.0",
+    "phpstan/phpstan": "^1.12",
     "phpunit/phpunit": "*",
-    "squizlabs/php_codesniffer": "^3.0.0"
+    "rector/rector": "^1.2",
+    "silverorange/php-coding-tools": "^1.4"
   },
   "suggest": {
     "pear/cache_lite": "Adds caching layer to client and server"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit",
-    "lint": "./vendor/bin/phpcs"
+    "phpcs": "./vendor/bin/php-cs-fixer check --config=./.php-cs-fixer.php -v",
+    "phpcs:fix": "./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php -v",
+    "phpstan": "./vendor/bin/phpstan analyze",
+    "rector": "./vendor/bin/rector --dry-run",
+    "rector:fix": "./vendor/bin/rector"
   },
-  "autoload": {
-    "psr-0": {
-      "XML_RPC2": ""
-    }
+  "config": {
+    "sort-packages": true
   }
 }
