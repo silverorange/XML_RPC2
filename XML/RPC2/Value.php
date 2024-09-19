@@ -59,9 +59,9 @@ abstract class XML_RPC2_Value
      */
     public static function createFromNative($value, $explicitType = null)
     {
-        $xmlrpcTypes = array('int', 'boolean', 'string', 'double', 'datetime', 'base64', 'struct', 'array');
+        $xmlrpcTypes = ['int', 'boolean', 'string', 'double', 'datetime', 'base64', 'struct', 'array'];
         if (in_array($explicitType, $xmlrpcTypes)) {
-            return @call_user_func(array(XML_RPC2_Backend::getValueClassname(), 'createFromNative'), $value, $explicitType);
+            return @call_user_func([XML_RPC2_Backend::getValueClassname(), 'createFromNative'], $value, $explicitType);
         }
         return $value;
     }

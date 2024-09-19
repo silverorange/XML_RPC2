@@ -87,7 +87,7 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
         foreach ($this->getNativeValue() as $name => $element) {
             $result .= '<member>';
             $result .= '<name>';
-            $result .= strtr($name, array('&' => '&amp;', '<' => '&lt;', '>' => '&gt;'));
+            $result .= strtr($name, ['&' => '&amp;', '<' => '&lt;', '>' => '&gt;']);
             $result .= '</name>';
             $result .= '<value>';
             $result .= ($element instanceof XML_RPC2_Backend_Php_Value)
@@ -114,7 +114,7 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $values = $xml->xpath('/value/struct/member');
-        $result = array();
+        $result = [];
         foreach (array_keys($values) as $i) {
             $result[(string) $values[$i]->name] = XML_RPC2_Backend_Php_Value::createFromDecode($values[$i]->value)->getNativeValue();
         }

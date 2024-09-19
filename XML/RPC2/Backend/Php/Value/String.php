@@ -62,7 +62,7 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
      */
     public function encode()
     {
-        return '<string>' . strtr($this->getNativeValue(), array('&' => '&amp;', '<' => '&lt;' , '>' => '&gt;')) . '</string>';
+        return '<string>' . strtr($this->getNativeValue(), ['&' => '&amp;', '<' => '&lt;', '>' => '&gt;']) . '</string>';
     }
 
     /**

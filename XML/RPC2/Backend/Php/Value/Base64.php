@@ -61,7 +61,7 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
      */
     public function __construct($nativeValue)
     {
-        if ((is_object($nativeValue)) && (mb_strtolower(get_class($nativeValue)) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+        if ((is_object($nativeValue)) && (mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
             $scalar = $nativeValue->scalar;
         } else {
             if (!is_string($nativeValue)) {

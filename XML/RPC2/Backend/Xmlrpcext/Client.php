@@ -53,7 +53,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) Associative array of options
      */
-    public function __construct($uri, $options = array())
+    public function __construct($uri, $options = [])
     {
         parent::__construct($uri, $options);
     }
@@ -74,7 +74,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      */
     public function __call($methodName, $parameters)
     {
-        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('escaping' => $this->escaping, 'encoding' => $this->encoding));
+        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, ['escaping' => $this->escaping, 'encoding' => $this->encoding]);
         if ($this->uglyStructHack) {
             // ugly hack because of http://bugs.php.net/bug.php?id=21949
             // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
@@ -83,12 +83,12 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
             $request = $tmp;
         }
         $uri = $this->uri;
-        $options = array(
+        $options = [
             'encoding' => $this->encoding,
             'proxy' => $this->proxy,
             'sslverify' => $this->sslverify,
             'connectionTimeout' => $this->connectionTimeout
-        );
+        ];
         if (isset($this->httpRequest)) $options['httpRequest'] = $this->httpRequest;
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);

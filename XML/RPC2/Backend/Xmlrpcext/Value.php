@@ -55,7 +55,7 @@ class XML_RPC2_Backend_Xmlrpcext_Value
     public static function createFromNative($value, $explicitType)
     {
         $type = mb_strtolower($explicitType);
-        $availableTypes = array('datetime', 'base64', 'struct');
+        $availableTypes = ['datetime', 'base64', 'struct'];
         if (in_array($type, $availableTypes)) {
             if ($type=='struct') {
                 if (!(is_array($value))) {
@@ -64,7 +64,7 @@ class XML_RPC2_Backend_Xmlrpcext_Value
                 // Because of http://bugs.php.net/bug.php?id=21949
                 // is some cases (structs with numeric indexes), we need to be able to force the "struct" type
                 // (xmlrpc_set_type doesn't help for this, so we need this ugly hack)
-                $new = array();
+                $new = [];
                 foreach ($value as $k => $v) {
                     $new["xml_rpc2_ugly_struct_hack_$k"] = $v;
                     // with this "string" prefix, we are sure that the array will be seen as a "struct"

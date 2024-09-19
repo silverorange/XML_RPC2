@@ -70,7 +70,7 @@ class XML_RPC2_CachedClient
      *
      * @var array
      */
-    private $_cacheOptions = array();
+    private $_cacheOptions = [];
 
     /**
      * Cached methods array (usefull only if cache is off by default)
@@ -82,7 +82,7 @@ class XML_RPC2_CachedClient
      *
      * @var array
      */
-    private $_cachedMethods = array();
+    private $_cachedMethods = [];
 
     /**
      * Non-Cached methods array (usefull only if cache is on by default)
@@ -91,7 +91,7 @@ class XML_RPC2_CachedClient
      *
      * @var array
      */
-    private $_notCachedMethods = array();
+    private $_notCachedMethods = [];
 
     /**
      * Whether or not to cache by default
@@ -136,7 +136,7 @@ class XML_RPC2_CachedClient
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) Associative array of options
      */
-    protected function __construct($uri, $options = array())
+    protected function __construct($uri, $options = [])
     {
         if (isset($options['cacheOptions'])) {
             $array = $options['cacheOptions'];
@@ -162,10 +162,10 @@ class XML_RPC2_CachedClient
             }
             unset($options['cacheOptions']); // this is a "non standard" option for XML/RPC2/Client
         } else { // no cache options ?
-            $array = array(
-                'lifetime' => 3600,               // we need a default lifetime
-                'automaticSerialization' => false // datas are already serialized in this class
-            );
+            $array = [
+                'lifetime'               => 3600,  // we need a default lifetime
+                'automaticSerialization' => false, // datas are already serialized in this class
+            ];
         }
         if (isset($options['cacheDebug'])) {
             $this->_cacheDebug = $options['cacheDebug'];
@@ -187,7 +187,7 @@ class XML_RPC2_CachedClient
      *
      * @return XML_RPC2_CachedClient the new client.
      */
-    public static function create($uri, $options = array())
+    public static function create($uri, $options = [])
     {
         return new XML_RPC2_CachedClient($uri, $options);
     }
@@ -279,7 +279,7 @@ class XML_RPC2_CachedClient
             $this->_clientObject = XML_RPC2_Client::create($this->_uri, $this->_options);
         }
         // the real function call...
-        return call_user_func_array(array($this->_clientObject, $methodName), $parameters);
+        return call_user_func_array([$this->_clientObject, $methodName], $parameters);
     }
 
     /**

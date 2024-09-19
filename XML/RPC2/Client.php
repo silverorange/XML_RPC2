@@ -97,7 +97,7 @@ abstract class XML_RPC2_Client
      *
      * @var string
      */
-    protected $escaping = array('non-ascii', 'non-print', 'markup');
+    protected $escaping = ['non-ascii', 'non-print', 'markup'];
 
     /**
      * Holds the SSL verify flag
@@ -143,7 +143,7 @@ abstract class XML_RPC2_Client
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) Associative array of options
      */
-    protected function __construct($uri, $options = array())
+    protected function __construct($uri, $options = [])
     {
         if (!$uriParse = parse_url($uri)) {
             throw new XML_RPC2_Exception_InvalidUri(sprintf('Client URI \'%s\' is not valid', $uri));
@@ -209,7 +209,7 @@ abstract class XML_RPC2_Client
      *
      * @return XML_RPC2_Client new client using requested backend.
      */
-    public static function create($uri, $options = array())
+    public static function create($uri, $options = [])
     {
         if (isset($this)) { // Method called non-statically forward to remote call() as RPC
             $this->__call('create', func_get_args());

@@ -134,7 +134,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                 }
                 break;
             case 'object':
-                if ((mb_strtolower(get_class($nativeValue)) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+                if ((mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
                     // In this case, we have a "stdclass native value" (emulate xmlrpcext)
                     // the type 'base64' or 'datetime' is given by xmlrpc_type public property
                     $explicitType = $nativeValue->xmlrpc_type;
@@ -164,34 +164,15 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
             }
         }
         $explicitType = ucfirst(mb_strtolower($explicitType));
-        switch ($explicitType) {
-        case 'I8':
-            return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue, 'Integer64');
-                break;
-        case 'I4':
-        case 'Int':
-        case 'Boolean':
-        case 'Double':
-        case 'String':
-        case 'Nil':
-            return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue);
-                break;
-        case 'Datetime.iso8601':
-        case 'Datetime':
-            return new XML_RPC2_Backend_Php_Value_Datetime($nativeValue);
-                break;
-        case 'Base64':
-            return new XML_RPC2_Backend_Php_Value_Base64($nativeValue);
-                break;
-        case 'Array':
-            return new XML_RPC2_Backend_Php_Value_Array($nativeValue);
-                break;
-        case 'Struct':
-            return new XML_RPC2_Backend_Php_Value_Struct($nativeValue);
-                break;
-        default:
-            throw new XML_RPC2_Exception_InvalidTypeEncode(sprintf('Unexpected explicit encoding type \'%s\'', $explicitType));
-        }
+        return match ($explicitType) {
+            'I8' => XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue, 'Integer64'),
+            'I4', 'Int', 'Boolean', 'Double', 'String', 'Nil' => XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue),
+            'Datetime.iso8601', 'Datetime' => new XML_RPC2_Backend_Php_Value_Datetime($nativeValue),
+            'Base64' => new XML_RPC2_Backend_Php_Value_Base64($nativeValue),
+            'Array' => new XML_RPC2_Backend_Php_Value_Array($nativeValue),
+            'Struct' => new XML_RPC2_Backend_Php_Value_Struct($nativeValue),
+            default => throw new XML_RPC2_Exception_InvalidTypeEncode(sprintf('Unexpected explicit encoding type \'%s\'', $explicitType)),
+        };
     }
 
     /**
@@ -210,41 +191,19 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
         $valueType = $simpleXML->xpath('./*');
         if (count($valueType) == 1) { // Usually we must check the node name
             $nodename = dom_import_simplexml($valueType[0])->nodeName;
-            switch ($nodename) {
-            case 'i8':
-                $nativeType = 'Integer64';
-                break;
-            case 'i4':
-            case 'int':
-                $nativeType = 'Integer';
-                break;
-            case 'boolean':
-                $nativeType = 'Boolean';
-                break;
-            case 'double':
-                $nativeType = 'Double';
-                break;
-            case 'string':
-                $nativeType = 'String';
-                break;
-            case 'dateTime.iso8601':
-                $nativeType = 'Datetime';
-                break;
-            case 'base64':
-                $nativeType = 'Base64';
-                break;
-            case 'array':
-                $nativeType = 'Array';
-                break;
-            case 'struct':
-                $nativeType = 'Struct';
-                break;
-            case 'nil':
-                $nativeType = 'Nil';
-                break;
-            default:
-                throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename));
-            }
+            $nativeType = match ($nodename) {
+                'i8' => 'Integer64',
+                'i4', 'int' => 'Integer',
+                'boolean' => 'Boolean',
+                'double' => 'Double',
+                'string' => 'String',
+                'dateTime.iso8601' => 'Datetime',
+                'base64' => 'Base64',
+                'array' => 'Array',
+                'struct' => 'Struct',
+                'nil' => 'Nil',
+                default => throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename)),
+            };
         } elseif (count($valueType) == 0) { // Default type is string
             $nodename = null;
             $nativeType = 'String';
@@ -252,7 +211,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
             throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value presented %s type nodes: %s.', count($valueType), $simpleXML->asXML()));
         }
         $nativeType = 'XML_RPC2_Backend_Php_Value_' . $nativeType;
-        return self::createFromNative(@call_user_func(array($nativeType, 'decode'), $simpleXML), $nodename);
+        return self::createFromNative(@call_user_func([$nativeType, 'decode'], $simpleXML), $nodename);
     }
 
     /**

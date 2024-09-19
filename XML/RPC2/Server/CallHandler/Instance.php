@@ -94,7 +94,7 @@ class XML_RPC2_Server_CallHandler_Instance extends XML_RPC2_Server_CallHandler
     public function __construct($instance, $defaultPrefix)
     {
         $this->_instance = $instance;
-        $reflection = new ReflectionClass(get_class($instance));
+        $reflection = new ReflectionClass($instance::class);
         foreach ($reflection->getMethods() as $method) {
             if (!$method->isStatic() && $method->isPublic() && !$method->isConstructor()) {
                 $candidate = new XML_RPC2_Server_Method($method, $defaultPrefix);
@@ -116,7 +116,7 @@ class XML_RPC2_Server_CallHandler_Instance extends XML_RPC2_Server_CallHandler
         if (!array_key_exists($methodName, $this->getMethods())) {
             throw new XML_RPC2_Exception_UnknownMethod("Method $methodName is not exported by this server");
         }
-        return call_user_func_array(array($this->_instance, $this->getMethod($methodName)->getInternalMethod()), $parameters);
+        return call_user_func_array([$this->_instance, $this->getMethod($methodName)->getInternalMethod()], $parameters);
     }
 }
 

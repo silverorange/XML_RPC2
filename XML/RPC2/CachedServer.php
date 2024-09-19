@@ -98,7 +98,7 @@ class XML_RPC2_CachedServer
      *
      * @var array
      */
-    private $_options = array();
+    private $_options = [];
 
     /**
      * Flag for debugging the caching process
@@ -120,7 +120,7 @@ class XML_RPC2_CachedServer
      * @param object $callTarget the call handler will receive a method call for each remote call received.
      * @param array  $options    cache options.
      */
-    protected function __construct($callTarget, $options = array())
+    protected function __construct($callTarget, $options = [])
     {
         if (isset($options['cacheOptions'])) {
             $cacheOptions = $options['cacheOptions'];
@@ -180,7 +180,7 @@ class XML_RPC2_CachedServer
      *
      * @return object a server class instance
      */
-    public static function create($callTarget, $options = array())
+    public static function create($callTarget, $options = [])
     {
         return new XML_RPC2_CachedServer($callTarget, $options);
     }
@@ -225,7 +225,7 @@ class XML_RPC2_CachedServer
         }
         if ($methodName) {
             // work on reflection API to search for @xmlrpc.caching tags into PHPDOC comments
-            list($weCache, $lifetime) = $this->_reflectionWork($methodName);
+            [$weCache, $lifetime] = $this->_reflectionWork($methodName);
             if ($this->_cacheDebug) {
                 if ($weCache) {
                     print "CACHE DEBUG : phpdoc comments => weCache=true, lifetime=$lifetime\n";
@@ -280,12 +280,12 @@ class XML_RPC2_CachedServer
         if (is_string($this->_callTarget)) {
             $className = mb_strtolower($this->_callTarget);
         } else {
-            $className = get_class($this->_callTarget);
+            $className = $this->_callTarget::class;
         }
         $class = new ReflectionClass($className);
         $method = $class->getMethod($methodName);
         $docs = explode("\n", $method->getDocComment());
-        foreach ($docs as $i => $doc) {
+        foreach ($docs as $doc) {
             $doc = trim($doc, " \r\t/*");
             $res = preg_match('/@xmlrpc.caching ([+-]{0,1}[a-zA-Z0-9]*)/', $doc, $results); // TODO : better/faster regexp ?
             if ($res>0) {
@@ -304,7 +304,7 @@ class XML_RPC2_CachedServer
                 }
             }
         }
-         return array($weCache, $lifetime);
+         return [$weCache, $lifetime];
     }
 
     /**

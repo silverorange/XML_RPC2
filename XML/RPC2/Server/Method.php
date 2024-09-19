@@ -113,7 +113,7 @@ class XML_RPC2_Server_Method
         }
         $docs = explode("\n", $docs);
 
-        $parameters = array();
+        $parameters = [];
         $methodname = null;
         $returns = 'mixed';
         $shortdesc = '';
@@ -121,8 +121,8 @@ class XML_RPC2_Server_Method
         $prefix = $defaultPrefix;
 
         // Extract info from Docblock
-        $paramDocs = array();
-        foreach ($docs as $i => $doc) {
+        $paramDocs = [];
+        foreach ($docs as $doc) {
             $doc = trim($doc, " \r\t/*");
             if ($doc != '' && mb_strpos($doc, '@') !== 0) {
                 if ($shortdesc) {
@@ -156,7 +156,7 @@ class XML_RPC2_Server_Method
         // Fill in info for each method parameter
         foreach ($method->getParameters() as $parameterIndex => $parameter) {
             // Parameter defaults
-            $newParameter = array('type' => 'mixed');
+            $newParameter = ['type' => 'mixed'];
 
             // Attempt to extract type and doc from docblock
             if (array_key_exists($parameterIndex, $paramDocs)
@@ -335,31 +335,27 @@ class XML_RPC2_Server_Method
     private static function _limitPHPType($type)
     {
         $tmp = mb_strtolower($type);
-        $convertArray = array(
-        'int' => 'integer',
-        'i4' => 'integer',
-        'integer' => 'integer',
-        'string' => 'string',
-        'str' => 'string',
-        'char' => 'string',
+        return match($tmp) {
+        'array' => 'array',
+        'assoc' => 'array',
+        'base64' => 'string',
         'bool' => 'boolean',
         'boolean' => 'boolean',
-        'array' => 'array',
-        'float' => 'double',
-        'double' => 'double',
-        'array' => 'array',
-        'struct' => 'array',
-        'assoc' => 'array',
-        'structure' => 'array',
+        'char' => 'string',
         'datetime' => 'mixed',
         'datetime.iso8601' => 'mixed',
+        'double' => 'double',
+        'float' => 'double',
+        'i4' => 'integer',
+        'int' => 'integer',
+        'integer' => 'integer',
         'iso8601' => 'mixed',
-        'base64' => 'string'
-        );
-        if (isset($convertArray[$tmp])) {
-            return $convertArray[$tmp];
-        }
-        return 'mixed';
+        'str' => 'string',
+        'string' => 'string',
+        'struct' => 'array',
+        'structure' => 'array',
+        default => 'mixed'
+        };
     }
 }
 

@@ -67,7 +67,7 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
         if ((!is_int($nativeValue)) and (!is_float($nativeValue)) and (!is_string($nativeValue)) and (!is_object($nativeValue))) {
             throw new XML_RPC2_Exception_InvalidType(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Datetime from type \'%s\'.', gettype($nativeValue)));
         }
-        if ((is_object($nativeValue)) && (mb_strtolower(get_class($nativeValue)) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+        if ((is_object($nativeValue)) && (mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
             $scalar = $nativeValue->scalar;
             $timestamp = $nativeValue->timestamp;
         } else {
@@ -129,7 +129,7 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
             if ($milliseconds==0) return $result;
             return ((float) $result) + $milliseconds/1000;
         } else {
-            $result = ((double) @mktime($hour, $minutes, $seconds, $month, $day, $year, 0)) +
+            $result = ((double) @mktime($hour, $minutes, $seconds, $month, $day, $year)) +
                       ((double) $milliseconds) -
                       ((double) $tzSeconds);
             if ($milliseconds==0) return ((int) $result);

@@ -66,7 +66,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      * @param object $callHandler call handler to use.
      * @param array  $options     associative array of options
      */
-    public function __construct($callHandler, $options = array())
+    public function __construct($callHandler, $options = [])
     {
         parent::__construct($callHandler, $options);
         $this->_xmlrpcextServer = xmlrpc_server_create();
@@ -74,7 +74,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             if (xmlrpc_server_register_method(
                 $this->_xmlrpcextServer,
                 $method->getName(),
-                array($this, 'epiFunctionHandlerAdapter')
+                [$this, 'epiFunctionHandlerAdapter']
             ) !== true
             ) {
                 throw new XML_RPC2_Exception('Unable to setup XMLRPCext server. xmlrpc_server_register_method returned non-true.');
@@ -93,7 +93,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      */
     protected function epiFunctionHandlerAdapter($methodName, $params, $appData)
     {
-        return @call_user_func_array(array($this->callHandler, $methodName), $params);
+        return @call_user_func_array([$this->callHandler, $methodName], $params);
     }
 
     /**
@@ -138,12 +138,12 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
                     return (XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));
                 }
             }
-            set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
+            set_error_handler(['XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException']);
             $response = @xmlrpc_server_call_method(
                 $this->_xmlrpcextServer,
                 $this->input->readRequest(),
                 null,
-                array('output_type' => 'xml', 'encoding' => $this->encoding)
+                ['output_type' => 'xml', 'encoding' => $this->encoding]
             );
             restore_error_handler();
             return $response;
@@ -151,7 +151,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
         } catch (Exception $e) {
             if (ini_get('display_errors') == 1) {
-                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . $e::class . ' exception:' . $e->getMessage()));
             } else {
                 return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception');
             }

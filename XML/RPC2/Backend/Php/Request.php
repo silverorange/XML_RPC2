@@ -75,7 +75,7 @@ class XML_RPC2_Backend_Php_Request
     public function __construct($methodName, $encoding = 'utf-8')
     {
         $this->_methodName = $methodName;
-        $this->setParameters(array());
+        $this->setParameters([]);
         $this->_encoding = $encoding;
     }
 
@@ -157,7 +157,7 @@ class XML_RPC2_Backend_Php_Request
     public static function createFromDecode($simpleXML)
     {
         $methodName = (string) $simpleXML->methodName;
-        $params = array();
+        $params = [];
         foreach ($simpleXML->params->param as $param) {
             foreach ($param->value as $value) {
                 $params[] = XML_RPC2_Backend_Php_Value::createFromDecode($value)->getNativeValue();

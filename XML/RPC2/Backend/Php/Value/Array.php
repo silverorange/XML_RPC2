@@ -107,7 +107,7 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $values = $xml->xpath('/value/array/data/value');
-        $result = array();
+        $result = [];
         foreach (array_keys($values) as $i) {
             $result[] = XML_RPC2_Backend_Php_Value::createFromDecode($values[$i])->getNativeValue();
         }

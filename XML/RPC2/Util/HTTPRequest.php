@@ -115,7 +115,7 @@ class XML_RPC2_Util_HTTPRequest
      *                       - connectionTimeout - The connection timeout in milliseconds (integer)
      *                       - httpRequest       - Preconfigured instance of HTTP_Request2 (optional)
      */
-    public function __construct($uri = '', $params = array())
+    public function __construct($uri = '', $params = [])
     {
         if (!preg_match('/(https?:\/\/)(.*)/', $uri)) {
             throw new XML_RPC2_Exception('Unable to parse URI');

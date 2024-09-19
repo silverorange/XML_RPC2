@@ -56,7 +56,7 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) Associative array of options
      */
-    public function __construct($uri, $options = array())
+    public function __construct($uri, $options = [])
     {
         parent::__construct($uri, $options);
         if ($this->encoding != 'utf-8') {
@@ -87,12 +87,12 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         $request->setParameters($parameters);
         $request = $request->encode();
         $uri = $this->uri;
-        $options = array(
+        $options = [
             'encoding' => $this->encoding,
             'proxy' => $this->proxy,
             'sslverify' => $this->sslverify,
             'connectionTimeout' => $this->connectionTimeout
-        );
+        ];
         if (isset($this->httpRequest)) $options['httpRequest'] = $this->httpRequest;
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
@@ -106,10 +106,10 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
             $result   = XML_RPC2_Backend_Php_Response::decode($document);
         } catch (XML_RPC2_Exception $e) {
             if ($this->debug) {
-                if (get_class($e)=='XML_RPC2_Exception_Fault') {
+                if ($e::class=='XML_RPC2_Exception_Fault') {
                     print "XML_RPC2_Exception_Fault #" . $e->getFaultCode() . " : " . $e->getMessage();
                 } else {
-                    print get_class($e) . " : " . $e->getMessage();
+                    print $e::class . " : " . $e->getMessage();
                 }
             }
             throw $e;

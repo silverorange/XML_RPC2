@@ -146,7 +146,7 @@ abstract class XML_RPC2_Server
      *                            for each remote call received.
      * @param array  $options     associative array of options.
      */
-    protected function __construct($callHandler, $options = array())
+    protected function __construct($callHandler, $options = [])
     {
         $this->callHandler = $callHandler;
         if ((isset($options['prefix'])) && (is_string($options['prefix']))) {
@@ -185,7 +185,7 @@ abstract class XML_RPC2_Server
      *
      * @return object a server class instance.
      */
-    public static function create($callTarget, $options = array())
+    public static function create($callTarget, $options = [])
     {
         if (isset($options['backend'])) {
             XML_RPC2_Backend::setBackend($options['backend']);

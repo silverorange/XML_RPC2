@@ -59,7 +59,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
      * @param object $callHandler the call handler.
      * @param array  $options     associative array of options
      */
-    public function __construct($callHandler, $options = array())
+    public function __construct($callHandler, $options = [])
     {
         parent::__construct($callHandler, $options);
         if (mb_strtolower($this->encoding) !== 'utf-8') {
@@ -92,7 +92,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     public function getResponse()
     {
         try {
-            set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
+            set_error_handler(['XML_RPC2_Backend_Php_Server', 'errorToException']);
             $request = @simplexml_load_string($this->input->readRequest());
             // TODO : do not use exception but a XMLRPC error !
             if (!is_object($request)) throw new XML_RPC2_Exception_Fault('Unable to parse request XML', 0);
@@ -110,12 +110,12 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
                 }
             }
             restore_error_handler();
-            return (XML_RPC2_Backend_Php_Response::encode(call_user_func_array(array($this->callHandler, $methodName), $arguments), $this->encoding));
+            return (XML_RPC2_Backend_Php_Response::encode(call_user_func_array([$this->callHandler, $methodName], $arguments), $this->encoding));
         } catch (XML_RPC2_Exception_Fault $e) {
             return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage(), $this->encoding));
         } catch (Exception $e) {
             if (ini_get('display_errors') == 1) {
-                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage() . $e->getTraceAsString(), $this->encoding));
+                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . $e::class . ' exception:' . $e->getMessage() . $e->getTraceAsString(), $this->encoding));
             } else {
                 return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception', $this->encoding);
             }

@@ -63,7 +63,7 @@ abstract class XML_RPC2_Server_CallHandler
      *
      * @var array
      */
-    protected $methods = array();
+    protected $methods = [];
 
     /**
      * Methods getter
@@ -96,10 +96,7 @@ abstract class XML_RPC2_Server_CallHandler
      */
     public function getMethod($name)
     {
-        if (isset($this->methods[$name])) {
-            return $this->methods[$name];
-        }
-        return false;
+        return $this->methods[$name] ?? false;
     }
 }
 
