@@ -228,7 +228,7 @@ abstract class XML_RPC2_Server
      * @param string $errfile error file.
      * @param int    $errline error line.
      *
-     * @return Exception the exception.
+     * @throws Exception the exception.
      */
     public static function errorToException($errno, $errstr, $errfile, $errline)
     {
