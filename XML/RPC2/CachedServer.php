@@ -58,6 +58,7 @@ class XML_RPC2_CachedServer
      */
     private $_cacheObject = null;
 
+    private array $_cacheOptions = [];
     /**
      * XML_RPC2_Server object (if needed, dynamically built)
      *
