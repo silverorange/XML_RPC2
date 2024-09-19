@@ -101,6 +101,8 @@ class XML_RPC2_Util_HTTPRequest
      */
     private $_httpRequest = null;
 
+    private string $_body = '';
+
     /**
      * Constructor
      *
@@ -189,8 +191,8 @@ class XML_RPC2_Util_HTTPRequest
         $request = $this->_httpRequest;
         $request->setUrl($this->_uri);
         $request->setMethod(HTTP_Request2::METHOD_POST);
-        if (isset($params['proxy'])) {
-            $elements = parse_url($params['proxy']);
+        if ($this->_proxy !== null) {
+            $elements = parse_url($this->_proxy);
             if (is_array($elements)) {
                 if ((isset($elements['scheme'])) and (isset($elements['host']))) {
                     $request->setConfig('proxy_host', $elements['host']);
