@@ -148,7 +148,7 @@ class XML_RPC2_Server_Method
             }
 
             if (mb_strpos($doc, '@return') === 0) {
-                $param = preg_split('/\\s+/', $doc);
+                $param = preg_split('/\s+/', $doc);
                 if (isset($param[1])) {
                     $param = $param[1];
                     $returns = $param;

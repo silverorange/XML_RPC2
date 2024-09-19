@@ -135,8 +135,8 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
             return ((float) $result) + $milliseconds / 1000;
         }
         $result = ((float) @mktime($hour, $minutes, $seconds, $month, $day, $year)) +
-                  ((float) $milliseconds) -
-                  ((float) $tzSeconds);
+            ((float) $milliseconds) -
+            ((float) $tzSeconds);
         if ($milliseconds == 0) {
             return (int) $result;
         }
@@ -149,11 +149,11 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
      *
      * @param int $timestamp timestamp
      *
-     * @return string iso8601 datetim
+     * @return string iso8601 datetime
      */
     private static function _timestampToIso8601($timestamp)
     {
-        return date('Ymd\\TH:i:s', (int) $timestamp);
+        return date('Ymd\TH:i:s', (int) $timestamp);
     }
 
     /**
