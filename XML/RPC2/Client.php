@@ -180,7 +180,7 @@ abstract class XML_RPC2_Client
         }
         if (isset($options['sslverify'])) {
             if (!(is_bool($options['sslverify']))) {
-                throw new XML_RPC2_Exception_InvalidSslverify(sprintf('SSL verify \'%s\' is not valid', $options['sslverify']));
+                throw new XML_RPC2_Exception_InvalidSslVerify(sprintf('SSL verify \'%s\' is not valid', $options['sslverify']));
             }
             $this->sslverify = $options['sslverify'];
         }
