@@ -211,9 +211,11 @@ abstract class XML_RPC2_Client
      */
     public static function create($uri, $options = [])
     {
-        if (isset($this)) { // Method called non-statically forward to remote call() as RPC
-            $this->__call('create', func_get_args());
-        }
+        // As of PHP 8.0, $this is not set, even if you called $obj->create()
+        // so this condition is always false, and can be removed
+//        if (isset($this)) { // Method called non-statically forward to remote call() as RPC
+//            $this->__call('create', func_get_args());
+//        }
         if (isset($options['backend'])) {
             XML_RPC2_Backend::setBackend($options['backend']);
         }
