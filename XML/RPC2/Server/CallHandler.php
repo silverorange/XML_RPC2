@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -48,25 +49,26 @@
  *  - XML_RPC2_Server_Callhandler_Instance: Which exports an object's pubilc methods
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  * @see       XML_RPC2_Server_Callhandler_Class
  * @see       XML_RPC2_Server_Callhandler_Instance
  */
 abstract class XML_RPC2_Server_CallHandler
 {
     /**
-     * Holds server methods
+     * Holds server methods.
      *
      * @var array
      */
     protected $methods = [];
 
     /**
-     * Methods getter
+     * Methods getter.
      *
      * @return array Array of XML_RPC2_Server_Method instances
      */
@@ -76,11 +78,9 @@ abstract class XML_RPC2_Server_CallHandler
     }
 
     /**
-     * Method appender
+     * Method appender.
      *
      * @param XML_RPC2_Server_Method $method Method to append to methods
-     *
-     * @return void
      */
     protected function addMethod(XML_RPC2_Server_Method $method)
     {
@@ -88,16 +88,14 @@ abstract class XML_RPC2_Server_CallHandler
     }
 
     /**
-     * Method getter
+     * Method getter.
      *
      * @param string $name Name of method to return
      *
-     * @return XML_RPC2_Server_Method the named method.
+     * @return XML_RPC2_Server_Method the named method
      */
     public function getMethod($name)
     {
         return $this->methods[$name] ?? false;
     }
 }
-
-?>

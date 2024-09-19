@@ -22,50 +22,53 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * Class that feeds XML_RPC2 with input originating from php://input
+ * Class that feeds XML_RPC2 with input originating from php://input.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2011 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Server_Input_PhpInput implements XML_RPC2_Server_Input
 {
     /**
-     * The raw post data from the request
+     * The raw post data from the request.
      *
      * @var string
      */
     protected $input;
 
     /**
-     * Return true if there is no input (input is empty)
+     * Return true if there is no input (input is empty).
      *
-     * @return boolean True iff there is no input
+     * @return bool True iff there is no input
      */
     public function isEmpty()
     {
         if (!isset($this->input)) {
             $this->readRequest();
         }
+
         return empty($this->input);
     }
 
     /**
-     * Return the input as a string
+     * Return the input as a string.
      *
      * @return string The Input
      */
@@ -78,5 +81,3 @@ class XML_RPC2_Server_Input_PhpInput implements XML_RPC2_Server_Input
         return $this->input;
     }
 }
-
-?>

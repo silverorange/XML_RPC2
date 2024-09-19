@@ -22,30 +22,32 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC string value class. Instances of this class represent string scalars in XML_RPC
+ * XML_RPC string value class. Instances of this class represent string scalars in XML_RPC.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scalar
 {
     /**
-     * Will build a new XML_RPC2_Backend_Php_Value_String with the given value
+     * Will build a new XML_RPC2_Backend_Php_Value_String with the given value.
      *
      * @param mixed $nativeValue value
      */
@@ -56,7 +58,7 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
     }
 
     /**
-     * Encode the instance into XML, for transport
+     * Encode the instance into XML, for transport.
      *
      * @return string The encoded XML-RPC value,
      */
@@ -66,11 +68,11 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
     }
 
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
-     * @param mixed $xml The encoded XML-RPC value.
+     * @param mixed $xml the encoded XML-RPC value
      *
-     * @return string the decoded value.
+     * @return string the decoded value
      */
     public static function decode($xml)
     {
@@ -84,5 +86,3 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
         return (string) $xml->string;
     }
 }
-
-?>

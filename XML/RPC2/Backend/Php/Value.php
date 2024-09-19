@@ -22,37 +22,39 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2005 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC value abstract class. All XML_RPC value classes inherit from XML_RPC2_Value
+ * XML_RPC value abstract class. All XML_RPC value classes inherit from XML_RPC2_Value.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2005 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
 {
     /**
-     * Native value
+     * Native value.
      *
      * @var mixed
      */
-    private $_nativeValue = null;
+    private $_nativeValue;
 
     /**
-     * Getter for nativeValue property
+     * Getter for nativeValue property.
      *
      * @return mixed The current nativeValue
      */
@@ -62,11 +64,9 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
     }
 
     /**
-     * Setter for nativeValue
+     * Setter for nativeValue.
      *
-     * @param mixed $value the native value.
-     *
-     * @return void
+     * @param mixed $value the native value
      */
     protected function setNativeValue($value)
     {
@@ -97,7 +97,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      * @param mixed  $nativeValue  The native value
      * @param string $explicitType The xml-rpc target encoding type, as per the xmlrpc spec (optional)
      *
-     * @return XML_RPC2_Value the value instance.
+     * @return XML_RPC2_Value the value instance
      *
      * @throws XML_RPC2_Exception_InvalidTypeEncode When the native value has a type that can't be translated to XML_RPC
      *
@@ -108,75 +108,87 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
     {
         if (is_null($explicitType)) {
             switch (gettype($nativeValue)) {
-            case 'boolean':
-                $explicitType = 'boolean';
-                break;
-            case 'integer':
-                $explicitType = 'int';
-                break;
-            case 'double':
-                $explicitType = 'double';
-                break;
-            case 'string':
-                $explicitType = 'string';
-                break;
-            case 'array':
-                $explicitType = 'array';
-                $keys = array_keys($nativeValue);
-                if (count($keys) > 0) {
-                    if ($keys[0] !== 0 && ($keys[0] !== 1)) $explicitType = 'struct';
-                    $i=0;
-                    do {
-                        $previous = $keys[$i];
-                        $i++;
-                        if (array_key_exists($i, $keys) && ($keys[$i] !== ((int) $keys[$i - 1]) + 1)) $explicitType = 'struct';
-                    } while (array_key_exists($i, $keys) && $explicitType == 'array');
-                }
-                break;
-            case 'object':
-                if ((mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
-                    // In this case, we have a "stdclass native value" (emulate xmlrpcext)
-                    // the type 'base64' or 'datetime' is given by xmlrpc_type public property
-                    $explicitType = $nativeValue->xmlrpc_type;
-                } else {
-                    $nativeValue = serialize($nativeValue);
-                    $explicitType = 'base64';
-                }
-                break;
-            case 'resource':
-            case 'NULL':
-            case 'unknown type':
-                throw new XML_RPC2_Exception_InvalidTypeEncode(
-                    sprintf(
-                        'Impossible to encode value \'%s\' from type \'%s\'. No analogous type in XML_RPC.',
-                        (string) $nativeValue,
-                        gettype($nativeValue)
-                    )
-                );
-            default:
-                throw new XML_RPC2_Exception_InvalidTypeEncode(
-                    sprintf(
-                        'Unexpected PHP native type returned by gettype: \'%s\', for value \'%s\'',
-                        gettype($nativeValue),
-                        (string) $nativeValue
-                    )
-                );
+                case 'boolean':
+                    $explicitType = 'boolean';
+                    break;
+
+                case 'integer':
+                    $explicitType = 'int';
+                    break;
+
+                case 'double':
+                    $explicitType = 'double';
+                    break;
+
+                case 'string':
+                    $explicitType = 'string';
+                    break;
+
+                case 'array':
+                    $explicitType = 'array';
+                    $keys = array_keys($nativeValue);
+                    if (count($keys) > 0) {
+                        if ($keys[0] !== 0 && ($keys[0] !== 1)) {
+                            $explicitType = 'struct';
+                        }
+                        $i = 0;
+                        do {
+                            $previous = $keys[$i];
+                            $i++;
+                            if (array_key_exists($i, $keys) && ($keys[$i] !== ((int) $keys[$i - 1]) + 1)) {
+                                $explicitType = 'struct';
+                            }
+                        } while (array_key_exists($i, $keys) && $explicitType == 'array');
+                    }
+                    break;
+
+                case 'object':
+                    if ((mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+                        // In this case, we have a "stdclass native value" (emulate xmlrpcext)
+                        // the type 'base64' or 'datetime' is given by xmlrpc_type public property
+                        $explicitType = $nativeValue->xmlrpc_type;
+                    } else {
+                        $nativeValue = serialize($nativeValue);
+                        $explicitType = 'base64';
+                    }
+                    break;
+
+                case 'resource':
+                case 'NULL':
+                case 'unknown type':
+                    throw new XML_RPC2_Exception_InvalidTypeEncode(
+                        sprintf(
+                            'Impossible to encode value \'%s\' from type \'%s\'. No analogous type in XML_RPC.',
+                            (string) $nativeValue,
+                            gettype($nativeValue)
+                        )
+                    );
+
+                default:
+                    throw new XML_RPC2_Exception_InvalidTypeEncode(
+                        sprintf(
+                            'Unexpected PHP native type returned by gettype: \'%s\', for value \'%s\'',
+                            gettype($nativeValue),
+                            (string) $nativeValue
+                        )
+                    );
             }
         }
         $explicitType = ucfirst(mb_strtolower($explicitType));
+
         return match ($explicitType) {
             'I8' => XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue, 'Integer64'),
             'I4', 'Int', 'Boolean', 'Double', 'String', 'Nil' => XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue),
             'Datetime.iso8601', 'Datetime' => new XML_RPC2_Backend_Php_Value_Datetime($nativeValue),
             'Base64' => new XML_RPC2_Backend_Php_Value_Base64($nativeValue),
-            'Array' => new XML_RPC2_Backend_Php_Value_Array($nativeValue),
+            'Array'  => new XML_RPC2_Backend_Php_Value_Array($nativeValue),
             'Struct' => new XML_RPC2_Backend_Php_Value_Struct($nativeValue),
-            default => throw new XML_RPC2_Exception_InvalidTypeEncode(sprintf('Unexpected explicit encoding type \'%s\'', $explicitType)),
+            default  => throw new XML_RPC2_Exception_InvalidTypeEncode(sprintf('Unexpected explicit encoding type \'%s\'', $explicitType)),
         };
     }
 
     /**
-     * Decode an encoded value and build the applicable XML_RPC2_Value subclass
+     * Decode an encoded value and build the applicable XML_RPC2_Value subclass.
      *
      * @param SimpleXMLElement $simpleXML The encoded XML-RPC value
      *
@@ -194,15 +206,15 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
             $nativeType = match ($nodename) {
                 'i8' => 'Integer64',
                 'i4', 'int' => 'Integer',
-                'boolean' => 'Boolean',
-                'double' => 'Double',
-                'string' => 'String',
+                'boolean'          => 'Boolean',
+                'double'           => 'Double',
+                'string'           => 'String',
                 'dateTime.iso8601' => 'Datetime',
-                'base64' => 'Base64',
-                'array' => 'Array',
-                'struct' => 'Struct',
-                'nil' => 'Nil',
-                default => throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename)),
+                'base64'           => 'Base64',
+                'array'            => 'Array',
+                'struct'           => 'Struct',
+                'nil'              => 'Nil',
+                default            => throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename)),
             };
         } elseif (count($valueType) == 0) { // Default type is string
             $nodename = null;
@@ -211,10 +223,11 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
             throw new XML_RPC2_Exception_Decode(sprintf('Unable to decode XML-RPC value. Value presented %s type nodes: %s.', count($valueType), $simpleXML->asXML()));
         }
         $nativeType = 'XML_RPC2_Backend_Php_Value_' . $nativeType;
+
         return self::createFromNative(@call_user_func([$nativeType, 'decode'], $simpleXML), $nodename);
     }
 
-    /**
+    /*
      * Encode the instance into XML, for transport
      *
      * @return string The encoded XML-RPC value,
@@ -222,7 +235,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
     // Declaration commented because of: http://pear.php.net/bugs/bug.php?id=8499
     // public abstract function encode();
 
-    /**
+    /*
      * Decode transport XML and set the instance value accordingly
      *
      * @param mixed The encoded XML-RPC value,
@@ -230,5 +243,3 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
     // Declaration commented because of: http://pear.php.net/bugs/bug.php?id=8499
     // public static abstract function decode($xml);
 }
-
-?>

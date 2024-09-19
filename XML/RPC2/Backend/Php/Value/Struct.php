@@ -22,33 +22,34 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC struct value class. Represents values of type struct (associative struct)
+ * XML_RPC struct value class. Represents values of type struct (associative struct).
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
 {
-
     /**
-     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Scalar with the given nativeValue
+     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Scalar with the given nativeValue.
      *
-     * @param mixed $nativeValue the native value.
+     * @param mixed $nativeValue the native value
      */
     public function __construct($nativeValue)
     {
@@ -56,11 +57,9 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
     }
 
     /**
-     * NativeValue property setter
+     * NativeValue property setter.
      *
      * @param mixed $value value the new nativeValue
-     *
-     * @return void
      */
     protected function setNativeValue($value)
     {
@@ -77,7 +76,7 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
     }
 
     /**
-     * Encode the instance into XML, for transport
+     * Encode the instance into XML, for transport.
      *
      * @return string The encoded XML-RPC value,
      */
@@ -98,15 +97,16 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
             $result .= '</member>';
         }
         $result .= '</struct>';
+
         return $result;
     }
 
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
-     * @param mixed $xml The encoded XML-RPC value.
+     * @param mixed $xml the encoded XML-RPC value
      *
-     * @return array the parsed struct.
+     * @return array the parsed struct
      */
     public static function decode($xml)
     {
@@ -118,8 +118,7 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
         foreach (array_keys($values) as $i) {
             $result[(string) $values[$i]->name] = XML_RPC2_Backend_Php_Value::createFromDecode($values[$i]->value)->getNativeValue();
         }
+
         return $result;
     }
 }
-
-?>

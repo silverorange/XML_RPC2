@@ -22,58 +22,60 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Fabien MARTY <fab@php.net>
  * @copyright 2005-2006 Fabien MARTY
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
  * XML_RPC "cached client" class.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Fabien MARTY <fab@php.net>
  * @copyright 2005-2006 Fabien MARTY
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_CachedClient
 {
     /**
-     * Associative array of options for XML_RPC2_Client
+     * Associative array of options for XML_RPC2_Client.
      *
      * @var array
      */
     private $_options;
 
     /**
-     * Holds the uri for the XML_RPC server
+     * Holds the uri for the XML_RPC server.
      *
      * @var array
      */
     private $_uri;
 
     /**
-     * Holds the debug flag
+     * Holds the debug flag.
      *
-     * @var boolean
+     * @var bool
      */
     private $_debug = false;
 
     /**
-     * Cache_Lite options array
+     * Cache_Lite options array.
      *
      * @var array
      */
     private $_cacheOptions = [];
 
     /**
-     * Cached methods array (usefull only if cache is off by default)
+     * Cached methods array (usefull only if cache is off by default).
      *
      * Example1 : array('method1ToCache', 'method2ToCache', ...)
      * Example2 (with specific cache lifetime) :
@@ -85,7 +87,7 @@ class XML_RPC2_CachedClient
     private $_cachedMethods = [];
 
     /**
-     * Non-Cached methods array (usefull only if cache is on by default)
+     * Non-Cached methods array (usefull only if cache is on by default).
      *
      * Example : array('method1ToCache', 'method2ToCache', ...)
      *
@@ -94,42 +96,42 @@ class XML_RPC2_CachedClient
     private $_notCachedMethods = [];
 
     /**
-     * Whether or not to cache by default
+     * Whether or not to cache by default.
      *
-     * @var boolean
+     * @var bool
      */
     private $_cacheByDefault = true;
 
     /**
-     * Cache_Lite object
+     * Cache_Lite object.
      *
      * @var object
      */
-    private $_cacheObject = null;
+    private $_cacheObject;
 
     /**
-     * XML_RPC2_Client object (if needed, dynamically built)
+     * XML_RPC2_Client object (if needed, dynamically built).
      *
      * @var object
      */
-    private $_clientObject = null;
+    private $_clientObject;
 
     /**
-     * Default cache group for XML_RPC client caching
+     * Default cache group for XML_RPC client caching.
      *
      * @var string
      */
     private $_defaultCacheGroup = 'xml_rpc2_client';
 
     /**
-     * "cache debug" flag (for debugging the caching process)
+     * "cache debug" flag (for debugging the caching process).
      *
-     * @var boolean
+     * @var bool
      */
     private $_cacheDebug = false;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * TODO : documentations about cache options
      *
@@ -178,14 +180,14 @@ class XML_RPC2_CachedClient
     }
 
     /**
-     * "Emulated Factory" method to get the same API than XML_RPC2_Client class
+     * "Emulated Factory" method to get the same API than XML_RPC2_Client class.
      *
      * Here, simply returns a new instance of XML_RPC2_CachedClient class
      *
-     * @param string $uri     URI for the XML-RPC server.
-     * @param array  $options client options.
+     * @param string $uri     URI for the XML-RPC server
+     * @param array  $options client options
      *
-     * @return XML_RPC2_CachedClient the new client.
+     * @return XML_RPC2_CachedClient the new client
      */
     public static function create($uri, $options = [])
     {
@@ -193,7 +195,7 @@ class XML_RPC2_CachedClient
     }
 
     /**
-     * Catchall method
+     * Catchall method.
      *
      * Encapsulate all the class logic :
      * - determine if the cache has to be used (or not) for the called method
@@ -213,17 +215,19 @@ class XML_RPC2_CachedClient
         if (in_array($methodName, $this->_notCachedMethods)) {
             // if the called method is listed in _notCachedMethods => no cache
             if ($this->_cacheDebug) {
-                print "CACHE DEBUG : the called method is listed in _notCachedMethods => no cache !\n";
+                echo "CACHE DEBUG : the called method is listed in _notCachedMethods => no cache !\n";
             }
+
             return $this->_workWithoutCache___($methodName, $parameters);
         }
-        if (!($this->_cacheByDefault)) {
-            if ((!(isset($this->_cachedMethods[$methodName]))) and (!(in_array($methodName, $this->_cachedMethods)))) {
+        if (!$this->_cacheByDefault) {
+            if ((!(isset($this->_cachedMethods[$methodName]))) and (!in_array($methodName, $this->_cachedMethods))) {
                 // if cache is not on by default and if the called method is not described in _cachedMethods array
                 // => no cache
                 if ($this->_cacheDebug) {
-                    print "CACHE DEBUG : cache is not on by default and the called method is not listed in _cachedMethods => no cache !\n";
+                    echo "CACHE DEBUG : cache is not on by default and the called method is not listed in _cachedMethods => no cache !\n";
                 }
+
                 return $this->_workWithoutCache___($methodName, $parameters);
             }
         }
@@ -231,8 +235,9 @@ class XML_RPC2_CachedClient
             if ($this->_cachedMethods[$methodName] == -1) {
                 // if a method is described with a lifetime value of -1 => no cache
                 if ($this->_cacheDebug) {
-                    print "CACHE DEBUG : called method has a -1 lifetime value => no cache !\n";
+                    echo "CACHE DEBUG : called method has a -1 lifetime value => no cache !\n";
                 }
+
                 return $this->_workWithoutCache___($methodName, $parameters);
             }
             // if a method is described with a specific (and <> -1) lifetime
@@ -247,21 +252,23 @@ class XML_RPC2_CachedClient
         if (is_string($data)) {
             // cache is hit !
             if ($this->_cacheDebug) {
-                print "CACHE DEBUG : cache is hit !\n";
+                echo "CACHE DEBUG : cache is hit !\n";
             }
+
             return unserialize($data);
         }
         // the cache is not hit, let's call the "real" XML_RPC client
         if ($this->_cacheDebug) {
-            print "CACHE DEBUG : cache is not hit !\n";
+            echo "CACHE DEBUG : cache is not hit !\n";
         }
         $result = $this->_workWithoutCache___($methodName, $parameters);
         $this->_cacheObject->save(serialize($result)); // save in cache for next time...
+
         return $result;
     }
 
     /**
-     * Do the real call if no cache available
+     * Do the real call if no cache available.
      *
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call()
@@ -278,12 +285,13 @@ class XML_RPC2_CachedClient
             // If the XML_RPC2_Client object is not available, let's build it
             $this->_clientObject = XML_RPC2_Client::create($this->_uri, $this->_options);
         }
+
         // the real function call...
         return call_user_func_array([$this->_clientObject, $methodName], $parameters);
     }
 
     /**
-     * Make a cache id depending on method called (and corresponding parameters) but depending on "environnement" setting too
+     * Make a cache id depending on method called (and corresponding parameters) but depending on "environnement" setting too.
      *
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call()
@@ -300,15 +308,13 @@ class XML_RPC2_CachedClient
     }
 
     /**
-     * Drop the cache file corresponding to the given method call
+     * Drop the cache file corresponding to the given method call.
      *
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call()
      *
      * @param string $methodName called method
      * @param array  $parameters parameters of the called method
-     *
-     * @return void
      */
     // @codingStandardsIgnoreLine
     public function dropCacheFile___($methodName, $parameters)
@@ -318,12 +324,10 @@ class XML_RPC2_CachedClient
     }
 
     /**
-     * Clean all the cache
+     * Clean all the cache.
      *
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call()
-     *
-     * @return void
      */
     // @codingStandardsIgnoreLine
     public function clean___()
@@ -331,5 +335,3 @@ class XML_RPC2_CachedClient
         $this->_cacheObject->clean($this->_defaultCacheGroup, 'ingroup');
     }
 }
-
-?>

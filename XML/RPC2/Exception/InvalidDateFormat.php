@@ -22,29 +22,26 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
-
 
 /**
- * XML_RPC2_Exception_InvalidDateFormat is thrown when creating DateTime value objects from invalid string datetime representations
+ * XML_RPC2_Exception_InvalidDateFormat is thrown when creating DateTime value objects from invalid string datetime representations.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
-class XML_RPC2_Exception_InvalidDateFormat extends XML_RPC2_Exception
-{
-}
-
-?>
+class XML_RPC2_Exception_InvalidDateFormat extends XML_RPC2_Exception {}

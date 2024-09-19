@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -39,16 +40,17 @@
  * needed to encode/decode an xml-rpc response.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Response
 {
     /**
-     * Encode a normal XML-RPC response, containing the provided value
+     * Encode a normal XML-RPC response, containing the provided value.
      *
      * You may supply a php-native value, or an XML_RPC2_Backend_Php_Value instance, to be returned. Usually providing a native value
      * is more convenient. However, for some types, XML_RPC2_Backend_Php_Value::createFromNative can't properly choose the xml-rpc
@@ -68,13 +70,14 @@ class XML_RPC2_Backend_Php_Response
         if (!$param instanceof XML_RPC2_Backend_Php_Value) {
             $param = XML_RPC2_Backend_Php_Value::createFromNative($param);
         }
-        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?' . ">\n";
+        $result = '<?xml version="1.0" encoding="' . $encoding . '"?' . ">\n";
         $result .= '<methodResponse><params><param><value>' . $param->encode() . '</value></param></params></methodResponse>';
+
         return $result;
     }
 
     /**
-     * Encode a fault XML-RPC response, containing the provided code and message
+     * Encode a fault XML-RPC response, containing the provided code and message.
      *
      * @param int    $code     Response code
      * @param string $message  Response message
@@ -87,8 +90,9 @@ class XML_RPC2_Backend_Php_Response
     public static function encodeFault($code, $message, $encoding = 'utf-8')
     {
         $value = new XML_RPC2_Backend_Php_Value_Struct(['faultCode' => (int) $code, 'faultString' => (string) $message]);
-        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>' . "\n";
+        $result = '<?xml version="1.0" encoding="' . $encoding . '"?>' . "\n";
         $result .= '<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>';
+
         return $result;
     }
 
@@ -103,7 +107,7 @@ class XML_RPC2_Backend_Php_Response
      *
      * @see http://www.xmlrpc.com/spec
      *
-     * @throws XML_RPC2_Exception_Fault Signals the decoded response was an XML-RPC fault
+     * @throws XML_RPC2_Exception_Fault  Signals the decoded response was an XML-RPC fault
      * @throws XML_RPC2_Exception_Decode Signals an ill formed payload response section
      */
     public static function decode(SimpleXMLElement $xml)
@@ -116,8 +120,7 @@ class XML_RPC2_Backend_Php_Response
         if (count($paramValueNode) == 1) {
             return XML_RPC2_Backend_Php_Value::createFromDecode($paramValueNode[0])->getNativeValue();
         }
+
         throw new XML_RPC2_Exception_Decode('Unable to decode xml-rpc response. No fault nor params/param elements found');
     }
 }
-
-?>

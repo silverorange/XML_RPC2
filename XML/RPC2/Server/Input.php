@@ -22,44 +22,44 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * Interface for feeding input to an XML_RPC2_Server
+ * Interface for feeding input to an XML_RPC2_Server.
  *
  * Classes to be used as input readers for XML_RPC2_Server instances
  * should implement this interface
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2011 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 interface XML_RPC2_Server_Input
 {
     /**
-     * Return true if there is no input (input is empty)
+     * Return true if there is no input (input is empty).
      *
-     * @return boolean True iff there is no input
+     * @return bool True iff there is no input
      */
     public function isEmpty();
 
     /**
-     * Return the input as a string
+     * Return the input as a string.
      *
      * @return string The Input
      */
     public function readRequest();
 }
-
-?>

@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -49,81 +50,82 @@
  * server, under the /1.0/ URI.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Client
 {
     /**
-     * URI Field (holds the uri for the XML_RPC server)
+     * URI Field (holds the uri for the XML_RPC server).
      *
      * @var string
      */
-    protected $uri = null;
+    protected $uri;
 
     /**
-     * Proxy Field (holds the proxy server data)
+     * Proxy Field (holds the proxy server data).
      *
      * @var string
      */
-    protected $proxy = null;
+    protected $proxy;
 
     /**
-     * Holds the prefix to prepend to method names
+     * Holds the prefix to prepend to method names.
      *
      * @var string
      */
-    protected $prefix = null;
+    protected $prefix;
 
     /**
-     * Holds the debug flag
+     * Holds the debug flag.
      *
-     * @var boolean
+     * @var bool
      */
     protected $debug = false;
 
     /**
-     * Hold the encoding of the client request
+     * Hold the encoding of the client request.
      *
      * @var string
      */
     protected $encoding = 'utf-8';
 
     /**
-     * Holds the escaping method(s) of the client request
+     * Holds the escaping method(s) of the client request.
      *
      * @var string
      */
     protected $escaping = ['non-ascii', 'non-print', 'markup'];
 
     /**
-     * Holds the SSL verify flag
+     * Holds the SSL verify flag.
      *
-     * @var boolean
+     * @var bool
      */
     protected $sslverify = true;
 
     /**
      * Holds the connection timeout in milliseconds of the client request.
      *
-     * @var integer
+     * @var int
      */
-    protected $connectionTimeout = null;
+    protected $connectionTimeout;
 
     /**
-     * Ugly hack flag to avoid http://bugs.php.net/bug.php?id=21949
+     * Ugly hack flag to avoid http://bugs.php.net/bug.php?id=21949.
      *
      * See XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
      *
-     * @var boolean
+     * @var bool
      */
     protected $uglyStructHack = true;
 
     /**
-     * Preconfigured HTTP_Request2 provided by the user
+     * Preconfigured HTTP_Request2 provided by the user.
      *
      * @var HTTP_Request2
      */
@@ -150,7 +152,7 @@ abstract class XML_RPC2_Client
         }
         $this->uri = $uri;
         if (isset($options['prefix'])) {
-            if (!(XML_RPC2_ClientHelper::testMethodName($options['prefix']))) {
+            if (!XML_RPC2_ClientHelper::testMethodName($options['prefix'])) {
                 throw new XML_RPC2_Exception_InvalidPrefix(sprintf('Prefix \'%s\' is not valid', $options['prefix']));
             }
             $this->prefix = $options['prefix'];
@@ -162,7 +164,7 @@ abstract class XML_RPC2_Client
             $this->proxy = $options['proxy'];
         }
         if (isset($options['debug'])) {
-            if (!(is_bool($options['debug']))) {
+            if (!is_bool($options['debug'])) {
                 throw new XML_RPC2_Exception_InvalidDebug(sprintf('Debug \'%s\' is not valid', $options['debug']));
             }
             $this->debug = $options['debug'];
@@ -179,13 +181,13 @@ abstract class XML_RPC2_Client
             $this->uglyStructHack = $options['uglyStructHack'];
         }
         if (isset($options['sslverify'])) {
-            if (!(is_bool($options['sslverify']))) {
+            if (!is_bool($options['sslverify'])) {
                 throw new XML_RPC2_Exception_InvalidSslVerify(sprintf('SSL verify \'%s\' is not valid', $options['sslverify']));
             }
             $this->sslverify = $options['sslverify'];
         }
         if (isset($options['connectionTimeout'])) {
-            if (!(is_int($options['connectionTimeout']))) {
+            if (!is_int($options['connectionTimeout'])) {
                 throw new XML_RPC2_Exception_InvalidConnectionTimeout(sprintf('Connection timeout \'%s\' is not valid', $options['connectionTimeout']));
             }
             $this->connectionTimeout = $options['connectionTimeout'];
@@ -198,7 +200,7 @@ abstract class XML_RPC2_Client
     // }}}
 
     /**
-     * Factory method to select, create and return a XML_RPC2_Client backend
+     * Factory method to select, create and return a XML_RPC2_Client backend.
      *
      * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/).
      *
@@ -207,19 +209,20 @@ abstract class XML_RPC2_Client
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) associative array of options (see constructor)
      *
-     * @return XML_RPC2_Client new client using requested backend.
+     * @return XML_RPC2_Client new client using requested backend
      */
     public static function create($uri, $options = [])
     {
         // As of PHP 8.0, $this is not set, even if you called $obj->create()
         // so this condition is always false, and can be removed
-//        if (isset($this)) { // Method called non-statically forward to remote call() as RPC
-//            $this->__call('create', func_get_args());
-//        }
+        //        if (isset($this)) { // Method called non-statically forward to remote call() as RPC
+        //            $this->__call('create', func_get_args());
+        //        }
         if (isset($options['backend'])) {
             XML_RPC2_Backend::setBackend($options['backend']);
         }
         $backend = XML_RPC2_Backend::getClientClassname();
+
         return new $backend($uri, $options);
     }
 
@@ -237,7 +240,5 @@ abstract class XML_RPC2_Client
      *
      * @return mixed The call result, already decoded into native types
      */
-    public abstract function __call($methodName, $parameters);
+    abstract public function __call($methodName, $parameters);
 }
-
-?>

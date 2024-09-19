@@ -22,30 +22,32 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC integer value class. Instances of this class represent int scalars in XML_RPC
+ * XML_RPC integer value class. Instances of this class represent int scalars in XML_RPC.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Integer extends XML_RPC2_Backend_Php_Value_Scalar
 {
     /**
-     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Integer with the given value
+     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Integer with the given value.
      *
      * @param mixed $nativeValue value
      */
@@ -56,11 +58,11 @@ class XML_RPC2_Backend_Php_Value_Integer extends XML_RPC2_Backend_Php_Value_Scal
     }
 
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
      * @param mixed $xml The decoded XML-RPC value,
      *
-     * @return integer the decoded value.
+     * @return int the decoded value
      */
     public static function decode($xml)
     {
@@ -73,5 +75,3 @@ class XML_RPC2_Backend_Php_Value_Integer extends XML_RPC2_Backend_Php_Value_Scal
         return (int) ((string) $value[0]);
     }
 }
-
-?>

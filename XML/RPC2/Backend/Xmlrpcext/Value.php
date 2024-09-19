@@ -22,30 +22,32 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
  * XML_RPC value class for the XMLRPCext backend.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Xmlrpcext_Value
 {
     /**
-     * Factory method that constructs the appropriate XML-RPC encoded type value
+     * Factory method that constructs the appropriate XML-RPC encoded type value.
      *
      * @param mixed  $value        Value to be encode
      * @param string $explicitType Explicit XML-RPC type as enumerated in the XML-RPC spec (defaults to automatically selected type)
@@ -57,8 +59,8 @@ class XML_RPC2_Backend_Xmlrpcext_Value
         $type = mb_strtolower($explicitType);
         $availableTypes = ['datetime', 'base64', 'struct'];
         if (in_array($type, $availableTypes)) {
-            if ($type=='struct') {
-                if (!(is_array($value))) {
+            if ($type == 'struct') {
+                if (!is_array($value)) {
                     throw new XML_RPC2_Exception('With struct type, value has to be an array');
                 }
                 // Because of http://bugs.php.net/bug.php?id=21949
@@ -66,19 +68,20 @@ class XML_RPC2_Backend_Xmlrpcext_Value
                 // (xmlrpc_set_type doesn't help for this, so we need this ugly hack)
                 $new = [];
                 foreach ($value as $k => $v) {
-                    $new["xml_rpc2_ugly_struct_hack_$k"] = $v;
+                    $new["xml_rpc2_ugly_struct_hack_{$k}"] = $v;
                     // with this "string" prefix, we are sure that the array will be seen as a "struct"
                 }
+
                 return $new;
             }
             $value2 = (string) $value;
             if (!xmlrpc_set_type($value2, $type)) {
                 throw new XML_RPC2_Exception('Error returned from xmlrpc_set_type');
             }
+
             return $value2;
         }
+
         return $value;
     }
 }
-
-?>

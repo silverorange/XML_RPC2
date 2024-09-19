@@ -22,37 +22,39 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC scalar value abstract class. All XML_RPC value classes representing scalar types inherit from XML_RPC2_Value_Scalar
+ * XML_RPC scalar value abstract class. All XML_RPC value classes representing scalar types inherit from XML_RPC2_Value_Scalar.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Value
 {
     /**
-     * Scalar type
+     * Scalar type.
      *
      * @var string
      */
-    private $_scalarType = null;
+    private $_scalarType;
 
     /**
-     * Constructor. Will build a new XML_RPC2_Value_Scalar with the given nativeValue
+     * Constructor. Will build a new XML_RPC2_Value_Scalar with the given nativeValue.
      *
      * @param string $scalarType  the scalar type to represent
      * @param mixed  $nativeValue the native value
@@ -64,11 +66,9 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
     }
 
     /**
-     * Property setter for scalarType
+     * Property setter for scalarType.
      *
      * @param mixed $value The new scalarType
-     *
-     * @return void
      */
     protected function setScalarType($value)
     {
@@ -79,7 +79,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
     }
 
     /**
-     * Property getter for scalarType
+     * Property getter for scalarType.
      *
      * @return mixed The current scalarType
      */
@@ -104,7 +104,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
         if (is_null($explicitType)) {
             $explicitType = match (gettype($nativeValue)) {
                 'integer' => $nativeValue <= 2147483647 /* PHP_INT_MAX on 32 bit systems */ ? gettype($nativeValue) : 'Integer64',
-                'NULL' => 'Nil',
+                'NULL'    => 'Nil',
                 'boolean', 'double', 'string' => gettype($nativeValue),
                 default => throw new XML_RPC2_Exception_InvalidTypeEncode(
                     sprintf(
@@ -117,11 +117,12 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
         }
         $explicitType = ucfirst(mb_strtolower($explicitType));
         $explicitType = sprintf('XML_RPC2_Backend_Php_Value_%s', $explicitType);
+
         return new $explicitType($nativeValue);
     }
 
     /**
-     * Encode the instance into XML, for transport
+     * Encode the instance into XML, for transport.
      *
      * @return string The encoded XML-RPC value,
      */
@@ -130,5 +131,3 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
         return '<' . $this->getScalarType() . '>' . $this->getNativeValue() . '</' . $this->getScalarType() . '>';
     }
 }
-
-?>

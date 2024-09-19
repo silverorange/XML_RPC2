@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -39,11 +40,12 @@
  * XML_RPC based on the always present DOM and SimpleXML PHP5 extensions.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
 {
@@ -88,12 +90,14 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         $request = $request->encode();
         $uri = $this->uri;
         $options = [
-            'encoding' => $this->encoding,
-            'proxy' => $this->proxy,
-            'sslverify' => $this->sslverify,
-            'connectionTimeout' => $this->connectionTimeout
+            'encoding'          => $this->encoding,
+            'proxy'             => $this->proxy,
+            'sslverify'         => $this->sslverify,
+            'connectionTimeout' => $this->connectionTimeout,
         ];
-        if (isset($this->httpRequest)) $options['httpRequest'] = $this->httpRequest;
+        if (isset($this->httpRequest)) {
+            $options['httpRequest'] = $this->httpRequest;
+        }
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
@@ -101,24 +105,25 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         if ($this->debug) {
             XML_RPC2_ClientHelper::printPreParseDebugInfo($request, $body);
         }
+
         try {
             $document = new SimpleXMLElement($body);
-            $result   = XML_RPC2_Backend_Php_Response::decode($document);
+            $result = XML_RPC2_Backend_Php_Response::decode($document);
         } catch (XML_RPC2_Exception $e) {
             if ($this->debug) {
-                if ($e::class=='XML_RPC2_Exception_Fault') {
-                    print "XML_RPC2_Exception_Fault #" . $e->getFaultCode() . " : " . $e->getMessage();
+                if ($e::class == 'XML_RPC2_Exception_Fault') {
+                    echo 'XML_RPC2_Exception_Fault #' . $e->getFaultCode() . ' : ' . $e->getMessage();
                 } else {
-                    print $e::class . " : " . $e->getMessage();
+                    echo $e::class . ' : ' . $e->getMessage();
                 }
             }
+
             throw $e;
         }
         if ($this->debug) {
             XML_RPC2_ClientHelper::printPostRequestDebugInformation($result);
         }
+
         return $result;
     }
 }
-
-?>
