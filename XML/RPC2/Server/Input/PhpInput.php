@@ -42,7 +42,7 @@
  * @copyright 2011 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  *
- * @see      http://pear.php.net/package/XML_RPC2
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Server_Input_PhpInput implements XML_RPC2_Server_Input
 {

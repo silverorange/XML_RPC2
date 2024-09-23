@@ -42,7 +42,7 @@
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  *
- * @see      http://pear.php.net/package/XML_RPC2
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
 {
@@ -92,9 +92,6 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
         return $result;
     }
 
-    // }}}
-    // {{{ decode()
-
     /**
      * Decode transport XML and set the instance value accordingly.
      *
@@ -115,6 +112,4 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
 
         return $result;
     }
-
-    // }}}
 }

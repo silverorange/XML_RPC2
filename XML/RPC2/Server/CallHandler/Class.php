@@ -72,7 +72,7 @@
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  *
- * @see      http://pear.php.net/package/XML_RPC2
+ * @see       https://pear.php.net/package/XML_RPC2
  * @see       XML_RPC2_Server::create
  * @see       XML_RPC2_Server_CallHandler_Instance
  */
@@ -126,6 +126,4 @@ class XML_RPC2_Server_CallHandler_Class extends XML_RPC2_Server_CallHandler
 
         return call_user_func_array([$this->_className, $this->getMethod($methodName)->getInternalMethod()], $parameters);
     }
-
-    // }}}
 }
