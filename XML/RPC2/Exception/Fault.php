@@ -22,43 +22,45 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
  * XML_RPC2_Exception_Fault signals a XML-RPC response that contains a fault element instead of a regular params element.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
 {
     /**
-     * Fault code (in the response body)
+     * Fault code (in the response body).
      *
      * @var string
      */
-    protected $faultCode = null;
+    protected $faultCode;
 
     /**
      * Construct a new XML_RPC2_Exception_Fault with a given message string and
-     * fault code
+     * fault code.
      *
      * @param string $messageString the message string, corresponding to the
-     *                              faultString present in the response body.
+     *                              faultString present in the response body
      * @param string $faultCode     the fault code, corresponding to the
-     *                              faultCode in the response body.
+     *                              faultCode in the response body
      */
     public function __construct($messageString, $faultCode)
     {
@@ -67,7 +69,7 @@ class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
     }
 
     /**
-     * FaultCode getter
+     * FaultCode getter.
      *
      * @return string fault code
      */
@@ -77,7 +79,7 @@ class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
     }
 
     /**
-     * FaultString getter
+     * FaultString getter.
      *
      * This is an alias to getMessage() in order to respect XML-RPC
      * nomenclature for faults.
@@ -91,11 +93,11 @@ class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
 
     /**
      * Create a XML_RPC2_Exception_Fault by decoding the corresponding XML
-     * string
+     * string.
      *
-     * @param string $xml the raw XML string.
+     * @param string $xml the raw XML string
      *
-     * @return XML_RPC2_Exception_Fault the parsed fault exception.
+     * @return XML_RPC2_Exception_Fault the parsed fault exception
      */
     public static function createFromDecode($xml)
     {
@@ -117,5 +119,3 @@ class XML_RPC2_Exception_Fault extends XML_RPC2_Exception
         );
     }
 }
-
-?>

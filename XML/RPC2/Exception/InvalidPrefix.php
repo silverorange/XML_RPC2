@@ -22,28 +22,26 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC2_Exception_InvalidPrefix is thrown whenever the XML_RPC2 client is asked to use an invalid XML/RPC prefix
+ * XML_RPC2_Exception_InvalidPrefix is thrown whenever the XML_RPC2 client is asked to use an invalid XML/RPC prefix.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
-class XML_RPC2_Exception_InvalidPrefix extends XML_RPC2_Exception
-{
-}
-
-?>
+class XML_RPC2_Exception_InvalidPrefix extends XML_RPC2_Exception {}

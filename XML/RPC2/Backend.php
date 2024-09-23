@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -50,23 +51,24 @@
  *  - The value class
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Backend
 {
     /**
-     * The current backend
+     * The current backend.
      *
      * @var string
      */
     protected static $currentBackend;
 
     /**
-     * Backend setter
+     * Backend setter.
      *
      * Currently, two backends exist: 'php' and 'XMLRPCext'.
      * The PHP backend has no external dependencies, while the xmlrpcext
@@ -78,8 +80,6 @@ abstract class XML_RPC2_Backend
      *
      * @param string $backend The backend to select. Either 'php' or
      *                        'XMLRPCext'.
-     *
-     * @return void
      */
     public static function setBackend($backend)
     {
@@ -91,7 +91,7 @@ abstract class XML_RPC2_Backend
         }
         if ($backend == 'Xmlrpcext'
             && !function_exists('xmlrpc_server_create')
-            && !( PEAR::loadExtension('php_xmlrpc') )
+            && !PEAR::loadExtension('php_xmlrpc')
         ) {
             throw new XML_RPC2_Exception('Unable to load xmlrpc extension.');
         }
@@ -121,6 +121,7 @@ abstract class XML_RPC2_Backend
                 self::setBackend('php');     // But will settle with this one in case of error
             }
         }
+
         return self::$currentBackend;
     }
 
@@ -157,5 +158,3 @@ abstract class XML_RPC2_Backend
         return sprintf('XML_RPC2_Backend_%s_Value', self::getBackend());
     }
 }
-
-?>

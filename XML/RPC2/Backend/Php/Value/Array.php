@@ -22,30 +22,32 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC array value class. Represents values of type array
+ * XML_RPC array value class. Represents values of type array.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
 {
     /**
-     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Array with the given nativeValue
+     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Array with the given nativeValue.
      *
      * @param mixed $nativeValue the native value
      */
@@ -55,25 +57,23 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
     }
 
     /**
-     * Property setter for nativeValue
+     * Property setter for nativeValue.
      *
      * @param mixed $value the new nativeValue
      *
-     * @return void
-     *
      * @throws XML_RPC2_Exception_InvalidType if the provided value is not an
-     *                                       array.
+     *                                        array
      */
     protected function setNativeValue($value)
     {
         if (!is_array($value)) {
-            throw new XML_RPC2_Exception_InvalidType(sprintf('Cannot create XML_RPC2_Value_Array from type \'%s\'.', gettype($nativeValue)));
+            throw new XML_RPC2_Exception_InvalidType(sprintf('Cannot create XML_RPC2_Value_Array from type \'%s\'.', gettype($value)));
         }
         parent::setNativeValue($value);
     }
 
     /**
-     * Encode the instance into XML, for transport
+     * Encode the instance into XML, for transport.
      *
      * @return string The encoded XML-RPC value,
      */
@@ -88,18 +88,16 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
             $result .= '</value>';
         }
         $result .= '</data></array>';
+
         return $result;
     }
 
-    // }}}
-    // {{{ decode()
-
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
      * @param mixed $xml The encoded XML-RPC value,
      *
-     * @return array the decoded result.
+     * @return array the decoded result
      */
     public static function decode($xml)
     {
@@ -107,15 +105,11 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $values = $xml->xpath('/value/array/data/value');
-        $result = array();
+        $result = [];
         foreach (array_keys($values) as $i) {
             $result[] = XML_RPC2_Backend_Php_Value::createFromDecode($values[$i])->getNativeValue();
         }
+
         return $result;
     }
-
-    // }}}
-
 }
-
-?>

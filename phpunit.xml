@@ -1,5 +1,6 @@
 <phpunit bootstrap="vendor/autoload.php">
   <php>
+    <env name="XDEBUG_MODE" value="off"/>
     <ini name="xdebug.overload_var_dump" value="off"/>
   </php>
   <testsuites>

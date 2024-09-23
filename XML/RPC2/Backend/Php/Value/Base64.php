@@ -22,18 +22,19 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC base64 value class. Instances of this class represent base64-encoded string scalars in XML_RPC
+ * XML_RPC base64 value class. Instances of this class represent base64-encoded string scalars in XML_RPC.
  *
  * To work on a compatible way with the xmlrpcext backend, we introduce a particular "nativeValue" which is
  * a standard class (stdclass) with two public properties :
@@ -43,16 +44,17 @@
  * The constructor can be called with a "classic" string or with a such object
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
 {
     /**
-     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Base64 with the given value
+     * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Base64 with the given value.
      *
      * This class handles encoding-decoding internally. Do not provide the
      * native string base64-encoded
@@ -61,7 +63,7 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
      */
     public function __construct($nativeValue)
     {
-        if ((is_object($nativeValue)) && (mb_strtolower(get_class($nativeValue)) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+        if (is_object($nativeValue) && (mb_strtolower($nativeValue::class) === 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
             $scalar = $nativeValue->scalar;
         } else {
             if (!is_string($nativeValue)) {
@@ -69,29 +71,30 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
             }
             $scalar = $nativeValue;
         }
-        $tmp              = new stdclass();
-        $tmp->scalar      = $scalar;
+        $tmp = new stdClass();
+        $tmp->scalar = $scalar;
         $tmp->xmlrpc_type = 'base64';
         $this->setNativeValue($tmp);
     }
 
     /**
-     * Encode the instance into XML, for transport
+     * Encode the instance into XML, for transport.
      *
      * @return string The encoded XML-RPC value,
      */
     public function encode()
     {
         $native = $this->getNativeValue();
+
         return '<base64>' . base64_encode($native->scalar) . '</base64>';
     }
 
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
      * @param mixed $xml The encoded XML-RPC value,
      *
-     * @return stdClass decoded object with keys scalar and xml_rpctype.
+     * @return stdClass decoded object with keys scalar and xml_rpctype
      */
     public static function decode($xml)
     {
@@ -103,11 +106,10 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
             $value = $xml->xpath('/value/text()');
         }
         // Emulate xmlrpcext results (to be able to switch from a backend to another)
-        $result = new stdclass();
+        $result = new stdClass();
         $result->scalar = base64_decode($value[0]);
         $result->xmlrpc_type = 'base64';
+
         return $result;
     }
 }
-
-?>

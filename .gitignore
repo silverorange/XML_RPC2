@@ -7,6 +7,8 @@ vendor/
 composer.phar
 .DS_Store
 .env
+/.idea
+.php-cs-fixer.cache
 *.swp
 
 # dependency lock file

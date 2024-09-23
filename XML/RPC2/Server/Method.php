@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -39,70 +40,71 @@
  * package should not need to ever instantiate XML_RPC2_Server_Method
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Server_Method
 {
     /**
-     * Method signature parameters
+     * Method signature parameters.
      *
      * @var array
      */
     private $_parameters;
 
     /**
-     * Method signature return type
+     * Method signature return type.
      *
      * @var string
      */
-    private $_returns ;
+    private $_returns;
 
     /**
-     * Method help, for introspection
+     * Method help, for introspection.
      *
      * @var string
      */
     private $_help;
 
     /**
-     * InternalMethod field - method name in PHP-land
+     * InternalMethod field - method name in PHP-land.
      *
      * @var string
      */
     private $_internalMethod;
 
     /**
-     * Hidden field
+     * Hidden field.
      *
      * True if the method is hidden
      *
-     * @var boolean
+     * @var bool
      */
     private $_hidden;
 
     /**
-     * External method name
+     * External method name.
      *
      * @var string
      */
     private $_name;
 
     /**
-     * Number of required parameters
+     * Number of required parameters.
      *
      * @var int
      */
     private $_numberOfRequiredParameters;
 
     /**
-     * Create a new XML-RPC method by introspecting a PHP method
+     * Create a new XML-RPC method by introspecting a PHP method.
      *
-     * @param ReflectionMethod $method        The PHP method to introspect.
-     * @param string           $defaultPrefix default prefix.
+     * @param ReflectionMethod $method        the PHP method to introspect
+     * @param string           $defaultPrefix default prefix
      */
     public function __construct(ReflectionMethod $method, $defaultPrefix)
     {
@@ -113,7 +115,7 @@ class XML_RPC2_Server_Method
         }
         $docs = explode("\n", $docs);
 
-        $parameters = array();
+        $parameters = [];
         $methodname = null;
         $returns = 'mixed';
         $shortdesc = '';
@@ -121,14 +123,15 @@ class XML_RPC2_Server_Method
         $prefix = $defaultPrefix;
 
         // Extract info from Docblock
-        $paramDocs = array();
-        foreach ($docs as $i => $doc) {
+        $paramDocs = [];
+        foreach ($docs as $doc) {
             $doc = trim($doc, " \r\t/*");
             if ($doc != '' && mb_strpos($doc, '@') !== 0) {
                 if ($shortdesc) {
                     $shortdesc .= "\n";
                 }
                 $shortdesc .= $doc;
+
                 continue;
             }
             if (mb_strpos($doc, '@xmlrpc.hidden') === 0) {
@@ -145,7 +148,7 @@ class XML_RPC2_Server_Method
             }
 
             if (mb_strpos($doc, '@return') === 0) {
-                $param = preg_split("/\s+/", $doc);
+                $param = preg_split('/\s+/', $doc);
                 if (isset($param[1])) {
                     $param = $param[1];
                     $returns = $param;
@@ -156,7 +159,7 @@ class XML_RPC2_Server_Method
         // Fill in info for each method parameter
         foreach ($method->getParameters() as $parameterIndex => $parameter) {
             // Parameter defaults
-            $newParameter = array('type' => 'mixed');
+            $newParameter = ['type' => 'mixed'];
 
             // Attempt to extract type and doc from docblock
             if (array_key_exists($parameterIndex, $paramDocs)
@@ -187,14 +190,14 @@ class XML_RPC2_Server_Method
 
         $this->_internalMethod = $method->getName();
         $this->_parameters = $parameters;
-        $this->_returns  = $returns;
+        $this->_returns = $returns;
         $this->_help = $shortdesc;
         $this->_name = $methodname;
         $this->_hidden = $hidden;
     }
 
     /**
-     * InternalMethod getter
+     * InternalMethod getter.
      *
      * @return string internalMethod
      */
@@ -204,9 +207,9 @@ class XML_RPC2_Server_Method
     }
 
     /**
-     * Hidden getter
+     * Hidden getter.
      *
-     * @return boolean hidden value
+     * @return bool hidden value
      */
     public function isHidden()
     {
@@ -214,7 +217,7 @@ class XML_RPC2_Server_Method
     }
 
     /**
-     * Name getter
+     * Name getter.
      *
      * @return string name
      */
@@ -224,15 +227,15 @@ class XML_RPC2_Server_Method
     }
 
     /**
-     * Check if method matches provided call signature
+     * Check if method matches provided call signature.
      *
      * Compare the provided call signature with this methods' signature and
      * return true iff they match.
      *
      * @param string $methodName Signature to compare method name
-     * @param array  $callParams Array of parameter values for method call.
+     * @param array  $callParams array of parameter values for method call
      *
-     * @return boolean True if call matches signature, false otherwise
+     * @return bool True if call matches signature, false otherwise
      */
     public function matchesSignature($methodName, $callParams)
     {
@@ -250,17 +253,18 @@ class XML_RPC2_Server_Method
             $paramIndex++;
             if ($paramIndex <= $this->_numberOfRequiredParameters) {
                 // the parameter is not optional
-                $callParamType = XML_RPC2_Server_Method::_limitPHPType(gettype($callParams[$paramIndex-1]));
+                $callParamType = XML_RPC2_Server_Method::_limitPHPType(gettype($callParams[$paramIndex - 1]));
                 if ((!($param['type'] == 'mixed')) and ($param['type'] != $callParamType)) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 
     /**
-     * Return a HTML signature of the method
+     * Return a HTML signature of the method.
      *
      * @return string HTML signature
      */
@@ -268,15 +272,15 @@ class XML_RPC2_Server_Method
     {
         $name = $this->_name;
         $returnType = $this->_returns;
-        $result  = "<span class=\"type\">($returnType)</span> ";
-        $result .= "<span class=\"name\">$name</span>";
-        $result  .= "<span class=\"other\">(</span>";
+        $result = "<span class=\"type\">({$returnType})</span> ";
+        $result .= "<span class=\"name\">{$name}</span>";
+        $result .= '<span class="other">(</span>';
         $first = true;
         $nbr = 0;
         foreach ($this->_parameters as $name => $parameter) {
             $nbr++;
             if ($nbr == $this->_numberOfRequiredParameters + 1) {
-                $result .= "<span class=\"other\"> [ </span>";
+                $result .= '<span class="other"> [ </span>';
             }
             if ($first) {
                 $first = false;
@@ -284,20 +288,19 @@ class XML_RPC2_Server_Method
                 $result .= ', ';
             }
             $type = $parameter['type'];
-            $result .= "<span class=\"paratype\">($type) </span>";
-            $result .= "<span class=\"paraname\">$name</span>";
+            $result .= "<span class=\"paratype\">({$type}) </span>";
+            $result .= "<span class=\"paraname\">{$name}</span>";
         }
         if ($nbr > $this->_numberOfRequiredParameters) {
-            $result .= "<span class=\"other\"> ] </span>";
+            $result .= '<span class="other"> ] </span>';
         }
-        $result .= "<span class=\"other\">)</span>";
+        $result .= '<span class="other">)</span>';
+
         return $result;
     }
 
     /**
-     * Print a complete HTML description of the method
-     *
-     * @return void
+     * Print a complete HTML description of the method.
      */
     public function autoDocument()
     {
@@ -305,62 +308,57 @@ class XML_RPC2_Server_Method
         $signature = $this->getHTMLSignature();
         $id = md5($name);
         $help = nl2br(htmlentities($this->_help, ENT_COMPAT));
-        print "      <h3><a name=\"$id\">$signature</a></h3>\n";
-        print "      <p><b>Description :</b></p>\n";
-        print "      <div class=\"description\">\n";
-        print "        $help\n";
-        print "      </div>\n";
-        if (count($this->_parameters)>0) {
-            print "      <p><b>Parameters : </b></p>\n";
-            if (count($this->_parameters)>0) {
-                print "      <table>\n";
-                print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
+        echo "      <h3><a name=\"{$id}\">{$signature}</a></h3>\n";
+        echo "      <p><b>Description :</b></p>\n";
+        echo "      <div class=\"description\">\n";
+        echo "        {$help}\n";
+        echo "      </div>\n";
+        if (count($this->_parameters) > 0) {
+            echo "      <p><b>Parameters : </b></p>\n";
+            if (count($this->_parameters) > 0) {
+                echo "      <table>\n";
+                echo "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
                 foreach ($this->_parameters as $name => $parameter) {
                     $type = $parameter['type'];
                     $doc = isset($parameter['doc']) ? htmlentities($parameter['doc'], ENT_COMPAT) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
-                    print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
+                    echo "        <tr><td>{$type}</td><td>{$name}</td><td>{$doc}</td></tr>\n";
                 }
-                print "      </table>\n";
+                echo "      </table>\n";
             }
         }
     }
 
     /**
-     * Standardize type names between gettype php function and phpdoc comments (and limit to xmlrpc available types)
+     * Standardize type names between gettype php function and phpdoc comments (and limit to xmlrpc available types).
      *
-     * @param string $type the parameter type.
+     * @param string $type the parameter type
      *
-     * @return string standardized type.
+     * @return string standardized type
      */
     private static function _limitPHPType($type)
     {
         $tmp = mb_strtolower($type);
-        $convertArray = array(
-        'int' => 'integer',
-        'i4' => 'integer',
-        'integer' => 'integer',
-        'string' => 'string',
-        'str' => 'string',
-        'char' => 'string',
-        'bool' => 'boolean',
-        'boolean' => 'boolean',
-        'array' => 'array',
-        'float' => 'double',
-        'double' => 'double',
-        'array' => 'array',
-        'struct' => 'array',
-        'assoc' => 'array',
-        'structure' => 'array',
-        'datetime' => 'mixed',
-        'datetime.iso8601' => 'mixed',
-        'iso8601' => 'mixed',
-        'base64' => 'string'
-        );
-        if (isset($convertArray[$tmp])) {
-            return $convertArray[$tmp];
-        }
-        return 'mixed';
+
+        return match ($tmp) {
+            'array'            => 'array',
+            'assoc'            => 'array',
+            'base64'           => 'string',
+            'bool'             => 'boolean',
+            'boolean'          => 'boolean',
+            'char'             => 'string',
+            'datetime'         => 'mixed',
+            'datetime.iso8601' => 'mixed',
+            'double'           => 'double',
+            'float'            => 'double',
+            'i4'               => 'integer',
+            'int'              => 'integer',
+            'integer'          => 'integer',
+            'iso8601'          => 'mixed',
+            'str'              => 'string',
+            'string'           => 'string',
+            'struct'           => 'array',
+            'structure'        => 'array',
+            default            => 'mixed'
+        };
     }
 }
-
-?>

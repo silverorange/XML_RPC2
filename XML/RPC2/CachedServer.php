@@ -22,105 +22,108 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Fabien MARTY <fab@php.net>
  * @copyright 2005-2006 Fabien MARTY
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
  * XML_RPC "cached server" class.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Fabien MARTY <fab@php.net>
  * @copyright 2005-2006 Fabien MARTY
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_CachedServer
 {
     /**
-     * Whether or not to cache by default
+     * Whether or not to cache by default.
      *
-     * @var boolean
+     * @var bool
      */
     private $_cacheByDefault = true;
 
     /**
-     * Cache_Lite object
+     * Cache_Lite object.
      *
      * @var object
      */
-    private $_cacheObject = null;
+    private $_cacheObject;
 
+    private array $_cacheOptions = [];
     /**
-     * XML_RPC2_Server object (if needed, dynamically built)
+     * XML_RPC2_Server object (if needed, dynamically built).
      *
      * @var object
      */
-    private $_serverObject = null;
+    private $_serverObject;
 
     /**
-     * Default cache group for XML_RPC server caching
+     * Default cache group for XML_RPC server caching.
      *
      * @var string
      */
     private $_defaultCacheGroup = 'xml_rpc2_server';
 
     /**
-     * The call handler is responsible for executing the server exported methods
+     * The call handler is responsible for executing the server exported methods.
      *
      * @var mixed
      */
-    private $_callHandler = null;
+    private $_callHandler;
 
     /**
-     * Either a class name or an object instance
+     * Either a class name or an object instance.
      *
      * @var mixed
      */
     private $_callTarget = '';
 
     /**
-     * Methods prefix
+     * Methods prefix.
      *
      * @var string
      */
     private $_prefix = '';
 
     /**
-     * XML_RPC2_Server options
+     * XML_RPC2_Server options.
      *
      * @var array
      */
-    private $_options = array();
+    private $_options = [];
 
     /**
-     * Flag for debugging the caching process
+     * Flag for debugging the caching process.
      *
-     * @var boolean
+     * @var bool
      */
     private $_cacheDebug = false;
 
     /**
-     * Encoding
+     * Encoding.
      *
      * @var string
      */
     private $_encoding = 'utf-8';
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param object $callTarget the call handler will receive a method call for each remote call received.
-     * @param array  $options    cache options.
+     * @param object $callTarget the call handler will receive a method call for each remote call received
+     * @param array  $options    cache options
      */
-    protected function __construct($callTarget, $options = array())
+    protected function __construct($callTarget, $options = [])
     {
         if (isset($options['cacheOptions'])) {
             $cacheOptions = $options['cacheOptions'];
@@ -142,15 +145,13 @@ class XML_RPC2_CachedServer
     }
 
     /**
-     * Set options for the caching process
+     * Set options for the caching process.
      *
      * See Cache_Lite constructor for options
      * Specific options are 'cachedMethods', 'notCachedMethods', 'cacheByDefault', 'defaultCacheGroup'
      * See corresponding properties for more informations
      *
      * @param array $array the cache options
-     *
-     * @return void
      */
     private function _setCacheOptions($array)
     {
@@ -171,24 +172,22 @@ class XML_RPC2_CachedServer
     }
 
     /**
-     * "Emulated Factory" method to get the same API than XML_RPC2_Server class
+     * "Emulated Factory" method to get the same API than XML_RPC2_Server class.
      *
      * Here, simply returns a new instance of XML_RPC2_CachedServer class
      *
-     * @param mixed $callTarget either a class name or an object instance.
+     * @param mixed $callTarget either a class name or an object instance
      * @param array $options    associative array of options
      *
      * @return object a server class instance
      */
-    public static function create($callTarget, $options = array())
+    public static function create($callTarget, $options = [])
     {
         return new XML_RPC2_CachedServer($callTarget, $options);
     }
 
     /**
-     * Handle XML_RPC calls
-     *
-     * @return void
+     * Handle XML_RPC calls.
      */
     public function handleCall()
     {
@@ -199,11 +198,11 @@ class XML_RPC2_CachedServer
         }
         header('Content-type: text/xml; charset=' . $encoding);
         header('Content-length: ' . $this->getContentLength($response));
-        print $response;
+        echo $response;
     }
 
     /**
-     * Get the XML response of the XMLRPC server
+     * Get the XML response of the XMLRPC server.
      *
      * @return string the XML response
      */
@@ -218,23 +217,23 @@ class XML_RPC2_CachedServer
         $lifetime = $this->_cacheOptions['lifetime'];
         if ($this->_cacheDebug) {
             if ($weCache) {
-                print "CACHE DEBUG : default values  => weCache=true, lifetime=$lifetime\n";
+                echo "CACHE DEBUG : default values  => weCache=true, lifetime={$lifetime}\n";
             } else {
-                print "CACHE DEBUG : default values  => weCache=false, lifetime=$lifetime\n";
+                echo "CACHE DEBUG : default values  => weCache=false, lifetime={$lifetime}\n";
             }
         }
         if ($methodName) {
             // work on reflection API to search for @xmlrpc.caching tags into PHPDOC comments
-            list($weCache, $lifetime) = $this->_reflectionWork($methodName);
+            [$weCache, $lifetime] = $this->_reflectionWork($methodName);
             if ($this->_cacheDebug) {
                 if ($weCache) {
-                    print "CACHE DEBUG : phpdoc comments => weCache=true, lifetime=$lifetime\n";
+                    echo "CACHE DEBUG : phpdoc comments => weCache=true, lifetime={$lifetime}\n";
                 } else {
-                    print "CACHE DEBUG : phpdoc comments => weCache=false, lifetime=$lifetime\n";
+                    echo "CACHE DEBUG : phpdoc comments => weCache=false, lifetime={$lifetime}\n";
                 }
             }
         }
-        if (($weCache) and ($lifetime!=-1)) {
+        if ($weCache and ($lifetime != -1)) {
             if (isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
                 $cacheId = $this->_makeCacheId($GLOBALS['HTTP_RAW_POST_DATA']);
             } else {
@@ -245,27 +244,28 @@ class XML_RPC2_CachedServer
             if ($data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup)) {
                 // cache id hit
                 if ($this->_cacheDebug) {
-                    print "CACHE DEBUG : cache is hit !\n";
+                    echo "CACHE DEBUG : cache is hit !\n";
                 }
             } else {
                 // cache is not hit
                 if ($this->_cacheDebug) {
-                    print "CACHE DEBUG : cache is not hit !\n";
+                    echo "CACHE DEBUG : cache is not hit !\n";
                 }
                 $data = $this->_workWithoutCache();
                 $this->_cacheObject->save($data);
             }
         } else {
             if ($this->_cacheDebug) {
-                print "CACHE DEBUG : we don't cache !\n";
+                echo "CACHE DEBUG : we don't cache !\n";
             }
             $data = $this->_workWithoutCache();
         }
+
         return $data;
     }
 
     /**
-     * Work on reflection API to search for @xmlrpc.caching tags into PHPDOC comments
+     * Work on reflection API to search for @xmlrpc.caching tags into PHPDOC comments.
      *
      * @param string $methodName method name
      *
@@ -280,23 +280,23 @@ class XML_RPC2_CachedServer
         if (is_string($this->_callTarget)) {
             $className = mb_strtolower($this->_callTarget);
         } else {
-            $className = get_class($this->_callTarget);
+            $className = $this->_callTarget::class;
         }
         $class = new ReflectionClass($className);
         $method = $class->getMethod($methodName);
         $docs = explode("\n", $method->getDocComment());
-        foreach ($docs as $i => $doc) {
+        foreach ($docs as $doc) {
             $doc = trim($doc, " \r\t/*");
             $res = preg_match('/@xmlrpc.caching ([+-]{0,1}[a-zA-Z0-9]*)/', $doc, $results); // TODO : better/faster regexp ?
-            if ($res>0) {
+            if ($res > 0) {
                 $value = $results[1];
-                if (($value=='yes') or ($value=='true') or ($value=='on')) {
+                if (($value == 'yes') or ($value == 'true') or ($value == 'on')) {
                     $weCache = true;
-                } else if (($value=='no') or ($value=='false') or ($value=='off')) {
+                } elseif (($value == 'no') or ($value == 'false') or ($value == 'off')) {
                     $weCache = false;
                 } else {
                     $lifetime = (int) $value;
-                    if ($lifetime==-1) {
+                    if ($lifetime == -1) {
                         $weCache = false;
                     } else {
                         $weCache = true;
@@ -304,15 +304,16 @@ class XML_RPC2_CachedServer
                 }
             }
         }
-         return array($weCache, $lifetime);
+
+        return [$weCache, $lifetime];
     }
 
     /**
-     * Parse the method name from the raw XMLRPC client request
+     * Parse the method name from the raw XMLRPC client request.
      *
      * NB : the prefix is removed from the method name
      *
-     * @param string $request raw XMLRPC client request.
+     * @param string $request raw XMLRPC client request
      *
      * @return string method name
      */
@@ -320,27 +321,29 @@ class XML_RPC2_CachedServer
     {
         // TODO : change for "simplexml"
         $res = preg_match('/<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)<\/methodName>/', $request, $results);
-        if ($res>0) {
+        if ($res > 0) {
             return $results[1];
         }
+
         return false;
     }
 
     /**
-     * Do the real stuff if no cache available
+     * Do the real stuff if no cache available.
      *
      * @return string the response of the real XML/RPC2 server
      */
     private function _workWithoutCache()
     {
         $this->_serverObject = XML_RPC2_Server::create($this->_callTarget, $this->_options);
+
         return $this->_serverObject->getResponse();
     }
 
     /**
-     * Make a cache id depending on the raw xmlrpc client request but depending on "environnement" setting too
+     * Make a cache id depending on the raw xmlrpc client request but depending on "environnement" setting too.
      *
-     * @param string $raw_request the raw request data.
+     * @param string $raw_request the raw request data
      *
      * @return string cache id
      */
@@ -350,9 +353,7 @@ class XML_RPC2_CachedServer
     }
 
     /**
-     * Clean all the cache
-     *
-     * @return void
+     * Clean all the cache.
      */
     public function clean()
     {
@@ -360,16 +361,14 @@ class XML_RPC2_CachedServer
     }
 
     /**
-     * Gets the content legth of a serialized XML-RPC message in bytes
+     * Gets the content legth of a serialized XML-RPC message in bytes.
      *
-     * @param string $content the serialized XML-RPC message.
+     * @param string $content the serialized XML-RPC message
      *
-     * @return integer the content length in bytes.
+     * @return int the content length in bytes
      */
     protected function getContentLength($content)
     {
         return mb_strlen($content, '8bit');
     }
 }
-
-?>

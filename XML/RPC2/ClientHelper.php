@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -40,46 +41,43 @@
  * in XML_RPC2 because of namespace pollution are defined here.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_ClientHelper
 {
     /**
-     * Display debug informations
+     * Display debug informations.
      *
      * @param string $request XML client request
      * @param string $body    XML server response
-     *
-     * @return void
      */
     public static function printPreParseDebugInfo($request, $body)
     {
-        print '<pre>';
-        print "***** Request *****\n";
-        print htmlspecialchars($request);
-        print "***** End Of request *****\n\n";
-        print "***** Server response *****\n";
-        print htmlspecialchars($body);
-        print "\n***** End of server response *****\n\n";
+        echo '<pre>';
+        echo "***** Request *****\n";
+        echo htmlspecialchars($request);
+        echo "***** End Of request *****\n\n";
+        echo "***** Server response *****\n";
+        echo htmlspecialchars($body);
+        echo "\n***** End of server response *****\n\n";
     }
 
     /**
-     * Display debug informations (part 2)
+     * Display debug informations (part 2).
      *
      * @param mixed $result decoded server response
-     *
-     * @return void
      */
     public static function printPostRequestDebugInformation($result)
     {
-        print "***** Decoded result *****\n";
+        echo "***** Decoded result *****\n";
         print_r($result);
-        print "\n***** End of decoded result *****";
-        print '</pre>';
+        echo "\n***** End of decoded result *****";
+        echo '</pre>';
     }
 
     /**
@@ -88,16 +86,12 @@ class XML_RPC2_ClientHelper
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call()
      *
-     * @param string $methodName the method name.
+     * @param string $methodName the method name
      *
-     * @return boolean true if ok.
+     * @return bool true if ok
      */
     public static function testMethodName($methodName)
     {
-        return (preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName));
+        return preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName);
     }
-
-    // }}}
 }
-
-?>

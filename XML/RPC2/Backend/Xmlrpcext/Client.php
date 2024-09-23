@@ -22,25 +22,27 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
  * XML_RPC client backend class. This backend class uses the XMLRPCext extension to execute the call.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
 {
@@ -53,7 +55,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      * @param string $uri     URI for the XML-RPC server
      * @param array  $options (optional) Associative array of options
      */
-    public function __construct($uri, $options = array())
+    public function __construct($uri, $options = [])
     {
         parent::__construct($uri, $options);
     }
@@ -74,7 +76,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      */
     public function __call($methodName, $parameters)
     {
-        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('escaping' => $this->escaping, 'encoding' => $this->encoding));
+        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, ['escaping' => $this->escaping, 'encoding' => $this->encoding]);
         if ($this->uglyStructHack) {
             // ugly hack because of http://bugs.php.net/bug.php?id=21949
             // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
@@ -83,13 +85,15 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
             $request = $tmp;
         }
         $uri = $this->uri;
-        $options = array(
-            'encoding' => $this->encoding,
-            'proxy' => $this->proxy,
-            'sslverify' => $this->sslverify,
-            'connectionTimeout' => $this->connectionTimeout
-        );
-        if (isset($this->httpRequest)) $options['httpRequest'] = $this->httpRequest;
+        $options = [
+            'encoding'          => $this->encoding,
+            'proxy'             => $this->proxy,
+            'sslverify'         => $this->sslverify,
+            'connectionTimeout' => $this->connectionTimeout,
+        ];
+        if (isset($this->httpRequest)) {
+            $options['httpRequest'] = $this->httpRequest;
+        }
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
@@ -109,16 +113,18 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
         if (is_array($result) && xmlrpc_is_fault($result)) {
             if ($this->debug) {
                 printf(
-                    "XML_RPC2_Exception_Fault(%s, %s)",
+                    'XML_RPC2_Exception_Fault(%s, %s)',
                     $result['faultString'],
                     $result['faultCode']
                 );
             }
+
             throw new XML_RPC2_Exception_Fault($result['faultString'], $result['faultCode']);
         }
         if ($this->debug) {
             XML_RPC2_ClientHelper::printPostRequestDebugInformation($result);
         }
+
         return $result;
     }
 }

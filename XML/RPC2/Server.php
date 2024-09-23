@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -50,10 +51,11 @@
  *      * hello says hello
  *      *
  *      * @param string  Name
+ *
  *      * @return string Greetings
  *      {@*}
  *     public static function hello($name)
-    {
+ * {
  *         return "Hello $name";
  *     }
  * }
@@ -73,30 +75,31 @@
  * </code>
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Server
 {
     /**
-     * The call handler responsible for executing the server exported methods
+     * The call handler responsible for executing the server exported methods.
      *
      * @var mixed
      */
-    protected $callHandler = null;
+    protected $callHandler;
 
     /**
-     * Prefix field
+     * Prefix field.
      *
      * @var string
      */
     protected $prefix = '';
 
     /**
-     * Encoding field
+     * Encoding field.
      *
      * TODO: work on encoding for this backend
      *
@@ -106,31 +109,31 @@ abstract class XML_RPC2_Server
 
     /**
      * Display html documentation of XML-RPC exported methods when there is no
-     * post data
+     * post data.
      *
-     * @var boolean
+     * @var bool
      */
     protected $autoDocument = true;
 
     /**
-     * Display external links at the end of autodocumented page
+     * Display external links at the end of autodocumented page.
      *
-     * @var boolean
+     * @var bool
      */
     protected $autoDocumentExternalLinks = true;
 
     /**
-     * Signature checking flag
+     * Signature checking flag.
      *
      * If set to true, the server will check the method signature before
      * calling the corresponding php method.
      *
-     * @var boolean
+     * @var bool
      */
     protected $signatureChecking = true;
 
     /**
-     * Input handler
+     * Input handler.
      *
      * Implementation of XML_RPC2_Server_Input that feeds this server with
      * input
@@ -143,28 +146,30 @@ abstract class XML_RPC2_Server
      * Creates a new XML-RPC Server.
      *
      * @param object $callHandler the call handler will receive a method call
-     *                            for each remote call received.
-     * @param array  $options     associative array of options.
+     *                            for each remote call received
+     * @param array  $options     associative array of options
      */
-    protected function __construct($callHandler, $options = array())
+    protected function __construct($callHandler, $options = [])
     {
         $this->callHandler = $callHandler;
-        if ((isset($options['prefix'])) && (is_string($options['prefix']))) {
+        if ((isset($options['prefix'])) && is_string($options['prefix'])) {
             $this->prefix = $options['prefix'];
         }
-        if ((isset($options['encoding'])) && (is_string($options['encoding']))) {
+        if ((isset($options['encoding'])) && is_string($options['encoding'])) {
             $this->encoding = $options['encoding'];
         }
-        if ((isset($options['autoDocument'])) && (is_bool($options['autoDocument']))) {
+        if ((isset($options['autoDocument'])) && is_bool($options['autoDocument'])) {
             $this->autoDocument = $options['autoDocument'];
         }
-        if ((isset($options['autoDocumentExternalLinks'])) && (is_bool($options['autoDocumentExternalLinks']))) {
+        if ((isset($options['autoDocumentExternalLinks'])) && is_bool($options['autoDocumentExternalLinks'])) {
             $this->autoDocumentExternalLinks = $options['autoDocumentExternalLinks'];
         }
-        if ((isset($options['signatureChecking'])) && (is_bool($options['signatureChecking']))) {
+        if ((isset($options['signatureChecking'])) && is_bool($options['signatureChecking'])) {
             $this->signatureChecking = $options['signatureChecking'];
         }
-        if (!isset($options['input'])) $options['input'] = 'XML_RPC2_Server_Input_RawPostData';
+        if (!isset($options['input'])) {
+            $options['input'] = 'XML_RPC2_Server_Input_RawPostData';
+        }
         if (is_string($options['input'])) {
             $inputClass = $options['input'];
             $options['input'] = new $inputClass();
@@ -178,14 +183,14 @@ abstract class XML_RPC2_Server
 
     /**
      * Factory method to select a backend and return a new XML_RPC2_Server
-     * based on the backend
+     * based on the backend.
      *
-     * @param mixed $callTarget either a class name or an object instance.
-     * @param array $options    associative array of options.
+     * @param mixed $callTarget either a class name or an object instance
+     * @param array $options    associative array of options
      *
-     * @return object a server class instance.
+     * @return object a server class instance
      */
-    public static function create($callTarget, $options = array())
+    public static function create($callTarget, $options = [])
     {
         if (isset($options['backend'])) {
             XML_RPC2_Backend::setBackend($options['backend']);
@@ -208,6 +213,7 @@ abstract class XML_RPC2_Server
         } else {
             $callHandler = $options['callHandler'];
         }
+
         return new $backend($callHandler, $options);
     }
 
@@ -216,103 +222,100 @@ abstract class XML_RPC2_Server
      * execution to the call handler, and output the encoded call handler
      * response.
      *
-     * @return string the encoded call handler response.
+     * @return string the encoded call handler response
      */
-    public abstract function handleCall();
+    abstract public function handleCall();
 
     /**
-     * Transforms an error into an exception
+     * Transforms an error into an exception.
      *
-     * @param int    $errno   error number.
-     * @param string $errstr  error string.
-     * @param string $errfile error file.
-     * @param int    $errline error line.
+     * @param int    $errno   error number
+     * @param string $errstr  error string
+     * @param string $errfile error file
+     * @param int    $errline error line
      *
-     * @return Exception the exception.
+     * @throws Exception the exception
      */
     public static function errorToException($errno, $errstr, $errfile, $errline)
     {
         switch ($errno) {
-        case E_WARNING:
-        case E_NOTICE:
-        case E_USER_WARNING:
-        case E_USER_NOTICE:
-        case E_STRICT:
-            // Silence warnings
-            // TODO Logging should occur here
-            break;
-        default:
-            throw new Exception(
-                'Classic error reported "' . $errstr . '" on ' .
-                $errfile . ':' . $errline
-            );
+            case E_WARNING:
+            case E_NOTICE:
+            case E_USER_WARNING:
+            case E_USER_NOTICE:
+            case E_STRICT:
+                // Silence warnings
+                // TODO Logging should occur here
+                break;
+
+            default:
+                throw new Exception(
+                    'Classic error reported "' . $errstr . '" on ' .
+                    $errfile . ':' . $errline
+                );
         }
     }
 
     /**
-     * Produce an HTML page from the result of server introspection
-     *
-     * @return string HTML document describing this server.
+     * Print an HTML page from the result of server introspection.
      */
-    public function autoDocument()
+    public function autoDocument(): void
     {
-        print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
-        print "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n";
-        print "  <head>\n";
-        print "    <meta http-equiv=\"Content-Type\" content=\"text/HTML; charset=" . $this->encoding . "\"  />\n";
-        print "    <title>Available XMLRPC methods for this server</title>\n";
-        print "    <style type=\"text/css\">\n";
-        print "      li,p { font-size: 10pt; font-family: Arial,Helvetia,sans-serif; }\n";
-        print "      a:link { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
-        print "      a:visited { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
-        print "      table { border-collapse:collapse; width: 100% }\n";
-        print "      table,td { padding: 5px; border: 1px solid black; }\n";
-        print "      div.bloc { border: 1px dashed gray; padding: 10px; margin-bottom: 20px; }\n";
-        print "      div.description { border: 1px solid black; padding: 10px; }\n";
-        print "      span.type { background-color: white; color: gray; font-weight: normal; }\n";
-        print "      span.paratype { background-color: white; color: gray; font-weight: normal; }\n";
-        print "      span.name { background-color: white; color: #660000; }\n";
-        print "      span.paraname { background-color: white; color: #336600; }\n";
-        print "      img { border: 0px; }\n";
-        print "      li { font-size: 12pt; }\n";
-        print "    </style>\n";
-        print "  </head>\n";
-        print "  <body>\n";
-        print "    <h1>Available XMLRPC methods for this server</h1>\n";
-        print "    <h2><a name=\"index\">Index</a></h2>\n";
-        print "    <ul>\n";
+        echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+        echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n";
+        echo "  <head>\n";
+        echo '    <meta http-equiv="Content-Type" content="text/HTML; charset=' . $this->encoding . "\"  />\n";
+        echo "    <title>Available XMLRPC methods for this server</title>\n";
+        echo "    <style type=\"text/css\">\n";
+        echo "      li,p { font-size: 10pt; font-family: Arial,Helvetia,sans-serif; }\n";
+        echo "      a:link { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
+        echo "      a:visited { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
+        echo "      table { border-collapse:collapse; width: 100% }\n";
+        echo "      table,td { padding: 5px; border: 1px solid black; }\n";
+        echo "      div.bloc { border: 1px dashed gray; padding: 10px; margin-bottom: 20px; }\n";
+        echo "      div.description { border: 1px solid black; padding: 10px; }\n";
+        echo "      span.type { background-color: white; color: gray; font-weight: normal; }\n";
+        echo "      span.paratype { background-color: white; color: gray; font-weight: normal; }\n";
+        echo "      span.name { background-color: white; color: #660000; }\n";
+        echo "      span.paraname { background-color: white; color: #336600; }\n";
+        echo "      img { border: 0px; }\n";
+        echo "      li { font-size: 12pt; }\n";
+        echo "    </style>\n";
+        echo "  </head>\n";
+        echo "  <body>\n";
+        echo "    <h1>Available XMLRPC methods for this server</h1>\n";
+        echo "    <h2><a name=\"index\">Index</a></h2>\n";
+        echo "    <ul>\n";
         foreach ($this->callHandler->getMethods() as $method) {
             $name = $method->getName();
             $id = md5($name);
             $signature = $method->getHTMLSignature();
-            print "      <li><a href=\"#$id\">$name()</a></li>\n";
+            echo "      <li><a href=\"#{$id}\">{$name}()</a></li>\n";
         }
-        print "    </ul>\n";
-        print "    <h2>Details</h2>\n";
+        echo "    </ul>\n";
+        echo "    <h2>Details</h2>\n";
         foreach ($this->callHandler->getMethods() as $method) {
-            print "    <div class=\"bloc\">\n";
+            echo "    <div class=\"bloc\">\n";
             $method->autoDocument();
-            print "      <p>(return to <a href=\"#index\">index</a>)</p>\n";
-            print "    </div>\n";
+            echo "      <p>(return to <a href=\"#index\">index</a>)</p>\n";
+            echo "    </div>\n";
         }
-        if (!($this->autoDocumentExternalLinks)) {
-            print '    <p><a href="http://pear.php.net/packages/XML_RPC2"><img src="http://pear.php.net/gifs/pear-power.png" alt="Powered by PEAR/XML_RPC2" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a></p>' . "\n";
+        if (!$this->autoDocumentExternalLinks) {
+            echo '    <p><a href="http://pear.php.net/packages/XML_RPC2"><img src="http://pear.php.net/gifs/pear-power.png" alt="Powered by PEAR/XML_RPC2" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a></p>' . "\n";
         }
-        print "  </body>\n";
-        print "</html>\n";
+        echo "  </body>\n";
+        echo "</html>\n";
     }
 
     /**
-     * Gets the content legth of a serialized XML-RPC message in bytes
+     * Gets the content legth of a serialized XML-RPC message in bytes.
      *
-     * @param string $content the serialized XML-RPC message.
+     * @param string $content the serialized XML-RPC message
      *
-     * @return integer the content length in bytes.
+     * @return int the content length in bytes
      */
     protected function getContentLength($content)
     {
         return mb_strlen($content, '8bit');
     }
 }
-
-?>

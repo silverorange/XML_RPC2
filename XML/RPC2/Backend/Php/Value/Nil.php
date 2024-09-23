@@ -22,30 +22,32 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC null value class. Instances of this class represent null scalars in XML_RPC
+ * XML_RPC null value class. Instances of this class represent null scalars in XML_RPC.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Nil extends XML_RPC2_Backend_Php_Value_Scalar
 {
     /**
-     * Will build a new XML_RPC2_Backend_Php_Value_Nil with the given value
+     * Will build a new XML_RPC2_Backend_Php_Value_Nil with the given value.
      */
     public function __construct()
     {
@@ -53,19 +55,15 @@ class XML_RPC2_Backend_Php_Value_Nil extends XML_RPC2_Backend_Php_Value_Scalar
         $this->setNativeValue(null);
     }
 
-    // }}}
-
     /**
-     * Decode transport XML and set the instance value accordingly
+     * Decode transport XML and set the instance value accordingly.
      *
-     * @param mixed $xml The XML-RPC value to decode.
+     * @param mixed $xml the XML-RPC value to decode
      *
-     * @return the decoded value.
+     * @return the decoded value
      */
     public static function decode($xml)
     {
         return null;
     }
 }
-
-?>

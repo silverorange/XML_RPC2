@@ -22,49 +22,50 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC value abstract class
+ * XML_RPC value abstract class.
  *
  * All XML_RPC value classes inherit from XML_RPC2_Value
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Value
 {
     /**
      * Factory method that constructs the appropriate XML-RPC encoded type
-     * value
+     * value.
      *
-     * @param mixed  $value        The value to be encode.
+     * @param mixed  $value        the value to be encode
      * @param string $explicitType optional. The explicit XML-RPC type as
      *                             enumerated in the XML-RPC spec (defaults to
      *                             automatically selected type)
      *
-     * @return mixed the encoded value.
+     * @return mixed the encoded value
      */
     public static function createFromNative($value, $explicitType = null)
     {
-        $xmlrpcTypes = array('int', 'boolean', 'string', 'double', 'datetime', 'base64', 'struct', 'array');
+        $xmlrpcTypes = ['int', 'boolean', 'string', 'double', 'datetime', 'base64', 'struct', 'array'];
         if (in_array($explicitType, $xmlrpcTypes)) {
-            return @call_user_func(array(XML_RPC2_Backend::getValueClassname(), 'createFromNative'), $value, $explicitType);
+            return @call_user_func([XML_RPC2_Backend::getValueClassname(), 'createFromNative'], $value, $explicitType);
         }
+
         return $value;
     }
 }
-
-?>

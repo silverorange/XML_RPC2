@@ -22,18 +22,19 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * XML_RPC server class XMLRPCext extension-based backend
+ * XML_RPC server class XMLRPCext extension-based backend.
  *
  * The XML_RPC2_Server does the work of decoding and encoding xml-rpc request and response. The actual
  * method execution is delegated to the call handler instance.
@@ -42,16 +43,17 @@
  * call handler class. It then encodes the result into an XML-RPC response and returns it to the client.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
 {
     /**
-     * The server
+     * The server.
      *
      * @var resource
      */
@@ -63,10 +65,10 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      * The constructor receives a mandatory parameter: the Call Handler. The call handler executes the actual
      * method call. XML_RPC2 server acts as a protocol decoder/encoder between the call handler and the client
      *
-     * @param object $callHandler call handler to use.
+     * @param object $callHandler call handler to use
      * @param array  $options     associative array of options
      */
-    public function __construct($callHandler, $options = array())
+    public function __construct($callHandler, $options = [])
     {
         parent::__construct($callHandler, $options);
         $this->_xmlrpcextServer = xmlrpc_server_create();
@@ -74,7 +76,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             if (xmlrpc_server_register_method(
                 $this->_xmlrpcextServer,
                 $method->getName(),
-                array($this, 'epiFunctionHandlerAdapter')
+                [$this, 'epiFunctionHandlerAdapter']
             ) !== true
             ) {
                 throw new XML_RPC2_Exception('Unable to setup XMLRPCext server. xmlrpc_server_register_method returned non-true.');
@@ -83,17 +85,17 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     }
 
     /**
-     * This is an adapter between XML_RPC2_CallHandler::__call and xmlrpc_server_register_method callback interface
+     * This is an adapter between XML_RPC2_CallHandler::__call and xmlrpc_server_register_method callback interface.
      *
      * @param string $methodName Method name
      * @param array  $params     Parameters
      * @param array  $appData    Application data (ignored)
      *
-     * @return mixed result of the method call.
+     * @return mixed result of the method call
      */
     protected function epiFunctionHandlerAdapter($methodName, $params, $appData)
     {
-        return @call_user_func_array(array($this->callHandler, $methodName), $params);
+        return @call_user_func_array([$this->callHandler, $methodName], $params);
     }
 
     /**
@@ -102,8 +104,6 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      * The handleCall method reads the XML-RPC request from the raw HTTP body
      * and decodes it. It then calls the corresponding method in the call
      * handler class, returning the encoded result to the client.
-     *
-     * @return void
      */
     public function handleCall()
     {
@@ -113,12 +113,12 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             $response = $this->getResponse();
             header('Content-type: text/xml; charset=' . $this->encoding);
             header('Content-length: ' . $this->getContentLength($response));
-            print $response;
+            echo $response;
         }
     }
 
     /**
-     * Get the XML response of the XMLRPC server
+     * Get the XML response of the XMLRPC server.
      *
      * @return string the XML response
      */
@@ -130,33 +130,32 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
                 $methodName = $tmp['methodName'];
                 $parameters = xmlrpc_decode($this->input->readRequest(), $this->encoding);
                 $method = $this->callHandler->getMethod($methodName);
-                if (!($method)) {
+                if (!$method) {
                     // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes
-                    return (XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found'));
+                    return XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found');
                 }
-                if (!($method->matchesSignature($methodName, $parameters))) {
-                    return (XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));
+                if (!$method->matchesSignature($methodName, $parameters)) {
+                    return XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters');
                 }
             }
-            set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
+            set_error_handler(['XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException']);
             $response = @xmlrpc_server_call_method(
                 $this->_xmlrpcextServer,
                 $this->input->readRequest(),
                 null,
-                array('output_type' => 'xml', 'encoding' => $this->encoding)
+                ['output_type' => 'xml', 'encoding' => $this->encoding]
             );
             restore_error_handler();
+
             return $response;
         } catch (XML_RPC2_Exception_Fault $e) {
-            return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
+            return XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage());
         } catch (Exception $e) {
             if (ini_get('display_errors') == 1) {
-                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
-            } else {
-                return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception');
+                return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . $e::class . ' exception:' . $e->getMessage());
             }
+
+            return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception');
         }
     }
 }
-
-?>

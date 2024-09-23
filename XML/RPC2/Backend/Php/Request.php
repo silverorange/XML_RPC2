@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -37,37 +38,38 @@
  * needed to encode/decode a request.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Php_Request
 {
     /**
-     * Name of requested method
+     * Name of requested method.
      *
      * @var mixed
      */
     private $_methodName = '';
 
     /**
-     * Request parameters
+     * Request parameters.
      *
      * @var array
      */
-    private $_parameters = null;
+    private $_parameters;
 
     /**
-     * Encoding of the request
+     * Encoding of the request.
      *
      * @var string
      */
     private $_encoding = 'utf-8';
 
     /**
-     * Create a new xml-rpc request with the provided methodname
+     * Create a new xml-rpc request with the provided methodname.
      *
      * @param string $methodName Name of method targeted by this xml-rpc request
      * @param string $encoding   encoding of the request
@@ -75,16 +77,14 @@ class XML_RPC2_Backend_Php_Request
     public function __construct($methodName, $encoding = 'utf-8')
     {
         $this->_methodName = $methodName;
-        $this->setParameters(array());
+        $this->setParameters([]);
         $this->_encoding = $encoding;
     }
 
     /**
-     * Parameters property setter
+     * Parameters property setter.
      *
      * @param mixed $value The new parameters
-     *
-     * @return void
      */
     public function setParameters($value)
     {
@@ -92,11 +92,9 @@ class XML_RPC2_Backend_Php_Request
     }
 
     /**
-     * Parameters property appender
+     * Parameters property appender.
      *
      * @param mixed $value The new parameter
-     *
-     * @return void
      */
     public function addParameter($value)
     {
@@ -104,7 +102,7 @@ class XML_RPC2_Backend_Php_Request
     }
 
     /**
-     * Parameters property getter
+     * Parameters property getter.
      *
      * @return mixed The current parameters
      */
@@ -114,7 +112,7 @@ class XML_RPC2_Backend_Php_Request
     }
 
     /**
-     * Method name getter
+     * Method name getter.
      *
      * @return string method name
      */
@@ -134,30 +132,31 @@ class XML_RPC2_Backend_Php_Request
         $parameters = $this->getParameters();
 
         $result = '<?xml version="1.0" encoding="' . $this->_encoding . '"?' . ">\n";
-        $result .= "<methodCall>";
+        $result .= '<methodCall>';
         $result .= "<methodName>{$methodName}</methodName>";
-        $result .= "<params>";
+        $result .= '<params>';
         foreach ($parameters as $parameter) {
-            $result .= "<param><value>";
+            $result .= '<param><value>';
             $result .= ($parameter instanceof XML_RPC2_Backend_Php_Value) ? $parameter->encode() : XML_RPC2_Backend_Php_Value::createFromNative($parameter)->encode();
-            $result .= "</value></param>";
+            $result .= '</value></param>';
         }
-        $result .= "</params>";
-        $result .= "</methodCall>";
+        $result .= '</params>';
+        $result .= '</methodCall>';
+
         return $result;
     }
 
     /**
-     * Decode a request from XML and construct a request object with the createFromDecoded values
+     * Decode a request from XML and construct a request object with the createFromDecoded values.
      *
-     * @param SimpleXMLElement $simpleXML The encoded XML-RPC request.
+     * @param SimpleXMLElement $simpleXML the encoded XML-RPC request
      *
      * @return XML_RPC2_Backend_Php_Request The xml-rpc request, represented as an object instance
      */
     public static function createFromDecode($simpleXML)
     {
         $methodName = (string) $simpleXML->methodName;
-        $params = array();
+        $params = [];
         foreach ($simpleXML->params->param as $param) {
             foreach ($param->value as $value) {
                 $params[] = XML_RPC2_Backend_Php_Value::createFromDecode($value)->getNativeValue();
@@ -165,6 +164,7 @@ class XML_RPC2_Backend_Php_Request
         }
         $result = new XML_RPC2_Backend_Php_Request($methodName);
         $result->setParameters($params);
+
         return $result;
     }
 }

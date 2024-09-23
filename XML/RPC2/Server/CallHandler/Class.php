@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -46,6 +47,7 @@
  *  * echoecho echoes the message received
  *  *
  *  * @param string  Message
+ *
  *  * @return string The echo
  *  {@*}
  * class EchoServer {
@@ -65,25 +67,26 @@
  * In that case, it is probably best to use XML_RPC2_Server_CallHandler_Instance instead.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  * @see       XML_RPC2_Server::create
  * @see       XML_RPC2_Server_CallHandler_Instance
  */
 class XML_RPC2_Server_CallHandler_Class extends XML_RPC2_Server_CallHandler
 {
     /**
-     * Name of target class
+     * Name of target class.
      *
      * @var string
      */
     private $_className;
 
     /**
-     * XML_RPC2_Server_CallHandler_Class Constructor. Creates a new call handler exporting the give static class' methods
+     * XML_RPC2_Server_CallHandler_Class Constructor. Creates a new call handler exporting the give static class' methods.
      *
      * Before using this constructor, take a look at XML_RPC2_Server::create. The factory
      * method is usually a quicker way of instantiating the server and its call handler.
@@ -100,13 +103,15 @@ class XML_RPC2_Server_CallHandler_Class extends XML_RPC2_Server_CallHandler
         foreach ($reflection->getMethods() as $method) {
             if ($method->isStatic() && $method->isPublic() && !$method->isAbstract() && !$method->isConstructor()) {
                 $candidate = new XML_RPC2_Server_Method($method, $defaultPrefix);
-                if (!$candidate->isHidden()) $this->addMethod($candidate);
+                if (!$candidate->isHidden()) {
+                    $this->addMethod($candidate);
+                }
             }
         }
     }
 
     /**
-     * __call catchall. Delegate the method call to the target class, and return its result
+     * __call catchall. Delegate the method call to the target class, and return its result.
      *
      * @param string $methodName Name of method to call
      * @param array  $parameters Array of parameters for call
@@ -116,12 +121,9 @@ class XML_RPC2_Server_CallHandler_Class extends XML_RPC2_Server_CallHandler
     public function __call($methodName, $parameters)
     {
         if (!array_key_exists($methodName, $this->getMethods())) {
-            throw new XML_RPC2_Exception_UnknownMethod("Method $methodName is not exported by this server");
+            throw new XML_RPC2_Exception_UnknownMethod("Method {$methodName} is not exported by this server");
         }
-        return call_user_func_array(array($this->_className, $this->getMethod($methodName)->getInternalMethod()), $parameters);
+
+        return call_user_func_array([$this->_className, $this->getMethod($methodName)->getInternalMethod()], $parameters);
     }
-
-    // }}}
 }
-
-?>

@@ -22,14 +22,15 @@
  * | 02111-1307 USA                                                              |
  * +-----------------------------------------------------------------------------+
  * | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
- * +-----------------------------------------------------------------------------+
+ * +-----------------------------------------------------------------------------+.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2006 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
@@ -37,72 +38,75 @@
  * and is to be refactored out of the package once HTTP_Request releases an E_STRICT version.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright 2004-2011 Sergio Carvalho
  * @license   http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see       https://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Util_HTTPRequest
 {
     /**
-     * Proxy field
+     * Proxy field.
      *
      * @var string
      */
-    private $_proxy = null;
+    private $_proxy;
 
     /**
-     * Proxyauth field
+     * Proxyauth field.
      *
      * @var string
      */
-    private $_proxyAuth = null;
+    private $_proxyAuth;
 
     /**
-     * PostData field
+     * PostData field.
      *
      * @var string
      */
     private $_postData;
 
     /**
-     * URI field
+     * URI field.
      *
      * @var array
      */
     private $_uri;
 
     /**
-     * Encoding for the request
+     * Encoding for the request.
      *
      * @var string
      */
-    private $_encoding='utf-8';
+    private $_encoding = 'utf-8';
 
     /**
-     * SSL verify flag
+     * SSL verify flag.
      *
-     * @var boolean
+     * @var bool
      */
-    private $_sslverify=true;
+    private $_sslverify = true;
 
     /**
      * HTTP timeout length in seconds.
      *
-     * @var integer
+     * @var int
      */
-    private $_connectionTimeout = null;
+    private $_connectionTimeout;
 
     /**
-     * HTTP_Request2 backend
+     * HTTP_Request2 backend.
      *
-     * @var integer
+     * @var int
      */
-    private $_httpRequest = null;
+    private $_httpRequest;
+
+    private string $_body = '';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * Sets up the object
      *
@@ -115,7 +119,7 @@ class XML_RPC2_Util_HTTPRequest
      *                       - connectionTimeout - The connection timeout in milliseconds (integer)
      *                       - httpRequest       - Preconfigured instance of HTTP_Request2 (optional)
      */
-    public function __construct($uri = '', $params = array())
+    public function __construct($uri = '', $params = [])
     {
         if (!preg_match('/(https?:\/\/)(.*)/', $uri)) {
             throw new XML_RPC2_Exception('Unable to parse URI');
@@ -151,7 +155,7 @@ class XML_RPC2_Util_HTTPRequest
     }
 
     /**
-     * Body field getter
+     * Body field getter.
      *
      * @return string body value
      */
@@ -161,11 +165,9 @@ class XML_RPC2_Util_HTTPRequest
     }
 
     /**
-     * PostData field setter
+     * PostData field setter.
      *
-     * @param string $value postData value.
-     *
-     * @return void
+     * @param string $value postData value
      */
     public function setPostData($value)
     {
@@ -173,9 +175,9 @@ class XML_RPC2_Util_HTTPRequest
     }
 
     /**
-     * Sends the request
+     * Sends the request.
      *
-     * @return mixed PEAR error on error, true otherwise.
+     * @return mixed PEAR error on error, true otherwise
      */
     public function sendRequest()
     {
@@ -189,8 +191,8 @@ class XML_RPC2_Util_HTTPRequest
         $request = $this->_httpRequest;
         $request->setUrl($this->_uri);
         $request->setMethod(HTTP_Request2::METHOD_POST);
-        if (isset($params['proxy'])) {
-            $elements = parse_url($params['proxy']);
+        if ($this->_proxy !== null) {
+            $elements = parse_url($this->_proxy);
             if (is_array($elements)) {
                 if ((isset($elements['scheme'])) and (isset($elements['host']))) {
                     $request->setConfig('proxy_host', $elements['host']);
@@ -206,7 +208,7 @@ class XML_RPC2_Util_HTTPRequest
         }
         $request->setConfig('ssl_verify_peer', $this->_sslverify);
         $request->setConfig('ssl_verify_host', $this->_sslverify);
-        $request->setHeader('Content-type: text/xml; charset='.$this->_encoding);
+        $request->setHeader('Content-type: text/xml; charset=' . $this->_encoding);
         $request->setHeader('User-Agent: PEAR::XML_RPC2/@package_version@');
         $request->setBody($this->_postData);
         if (isset($this->_connectionTimeout)) {
@@ -215,6 +217,7 @@ class XML_RPC2_Util_HTTPRequest
                 (int) ($this->_connectionTimeout / 1000)
             );
         }
+
         try {
             $result = $request->send();
             if ($result->getStatus() != 200) {
@@ -227,8 +230,7 @@ class XML_RPC2_Util_HTTPRequest
             throw new XML_RPC2_Exception_Curl($e);
         }
         $this->_body = $result->getBody();
+
         return $result->getBody();
     }
 }
-
-?>

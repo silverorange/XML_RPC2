@@ -34,7 +34,7 @@
  */
 
 /**
- * XML_RPC2_Exception_InvalidDebug is thrown whenever the XML_RPC2 client is asked to use an invalid XML/RPC debug flag.
+ * XML_RPC2_Exception_InvalidProxy is thrown whenever the XML_RPC2 client is asked to use an invalid proxy.
  *
  * @category  XML
  *
@@ -44,4 +44,4 @@
  *
  * @see       https://pear.php.net/package/XML_RPC2
  */
-class XML_RPC2_Exception_InvalidDebug extends XML_RPC2_Exception {}
+class XML_RPC2_Exception_InvalidProxy extends XML_RPC2_Exception {}
