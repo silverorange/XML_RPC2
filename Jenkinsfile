@@ -20,5 +20,11 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sh 'composer run test'
+            }
+        }
+
     }
 }
