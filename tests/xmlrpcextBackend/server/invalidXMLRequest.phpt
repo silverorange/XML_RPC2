@@ -5,6 +5,7 @@ XMLRPCext Backend XML-RPC server with normal response
 // I can't silence expat errors anyhow. We're skipping this test
 // for xmlrpci
 print "skip";
+?>
 --FILE--
 <?php
 

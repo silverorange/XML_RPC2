@@ -5,6 +5,7 @@ PHP Backend XML-RPC cachedClient against phpxmlrpc validator1 (easyStructTest wi
 if (!function_exists('curl_init')) {
     print "Skip no cURL extension available";
 }
+?>
 --FILE--
 <?php
 
