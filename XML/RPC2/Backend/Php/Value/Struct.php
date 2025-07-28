@@ -66,8 +66,8 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
         if (!is_array($value)) {
             throw new XML_RPC2_Exception_InvalidType(
                 sprintf(
-                    'Cannot create XML_RPC2_Backend_Php_Value_Struct from ' .
-                    'type \'%s\'.',
+                    'Cannot create XML_RPC2_Backend_Php_Value_Struct from '
+                    . 'type \'%s\'.',
                     gettype($value)
                 )
             );

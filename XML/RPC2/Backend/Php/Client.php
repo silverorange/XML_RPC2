@@ -63,8 +63,8 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         parent::__construct($uri, $options);
         if ($this->encoding != 'utf-8') {
             throw new XML_RPC2_Exception(
-                'XML_RPC2_Backend_Php does not support any encoding other ' .
-                'than utf-8, due to a simplexml limitation'
+                'XML_RPC2_Backend_Php does not support any encoding other '
+                . 'than utf-8, due to a simplexml limitation'
             );
         }
     }
