@@ -222,7 +222,6 @@ abstract class XML_RPC2_Server
      * execution to the call handler, and output the encoded call handler
      * response.
      *
-     * @return void
      * @note The encoded call handler response is echoed, not returned.
      */
     abstract public function handleCall();
