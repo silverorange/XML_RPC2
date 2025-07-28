@@ -62,12 +62,11 @@
     "phpcs": "./vendor/bin/php-cs-fixer check -v",
     "phpcs:ci": "./vendor/bin/php-cs-fixer check --config=.php-cs-fixer.php --no-interaction --show-progress=none --diff --using-cache=no -vvv",
     "phpcs:write": "./vendor/bin/php-cs-fixer fix -v",
-    "phpcs:fix": "./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.php -v",
     "phpstan": "./vendor/bin/phpstan analyze",
     "phpstan:ci": "./vendor/bin/phpstan analyze -vvv --no-progress --memory-limit 2G",
     "phpstan:baseline": "./vendor/bin/phpstan analyze --generate-baseline",
     "rector": "./vendor/bin/rector --dry-run",
-    "rector:fix": "./vendor/bin/rector"
+    "rector:write": "./vendor/bin/rector"
   },
   "config": {
     "sort-packages": true
