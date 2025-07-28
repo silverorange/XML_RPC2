@@ -3,7 +3,7 @@ XMLRPCext backend test setting explicit type for value
 --SKIPIF--
 <?php
 if (!function_exists('xmlrpc_server_create')) {
-    print "Skip XMLRPC extension unavailable";
+    echo 'Skip XMLRPC extension unavailable';
 }
 ?>
 --FILE--

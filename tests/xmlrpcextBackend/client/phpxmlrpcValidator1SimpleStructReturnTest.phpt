@@ -3,10 +3,10 @@ XMLRPCext Backend XML-RPC client against phpxmlrpc validator1 (simpleStructRetur
 --SKIPIF--
 <?php
 if (!function_exists('xmlrpc_server_create')) {
-    print "Skip XMLRPC extension unavailable";
+    echo 'Skip XMLRPC extension unavailable';
 }
 if (!function_exists('curl_init')) {
-    print "Skip CURL extension unavailable";
+    echo 'Skip CURL extension unavailable';
 }
 ?>
 --FILE--
@@ -14,11 +14,11 @@ if (!function_exists('curl_init')) {
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-$options = array(
-    'debug' => false,
+$options = [
+    'debug'   => false,
     'backend' => 'Xmlrpcext',
-    'prefix' => 'validator1.'
-);
+    'prefix'  => 'validator1.',
+];
 $client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
 $result = $client->simpleStructReturnTest(13);
 var_dump($result['times10']);

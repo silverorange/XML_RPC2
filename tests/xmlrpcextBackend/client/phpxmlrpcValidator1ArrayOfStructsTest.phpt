@@ -3,10 +3,10 @@ XMLRPCext Backend XML-RPC client against phpxmlrpc validator1 (arrayOfStructsTes
 --SKIPIF--
 <?php
 if (!function_exists('xmlrpc_server_create')) {
-    print "Skip XMLRPC extension unavailable";
+    echo 'Skip XMLRPC extension unavailable';
 }
 if (!function_exists('curl_init')) {
-    print "Skip CURL extension unavailable";
+    echo 'Skip CURL extension unavailable';
 }
 ?>
 --FILE--
@@ -14,29 +14,29 @@ if (!function_exists('curl_init')) {
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-$options = array(
-    'debug' => false,
+$options = [
+    'debug'   => false,
     'backend' => 'Xmlrpcext',
-    'prefix' => 'validator1.'
-);
+    'prefix'  => 'validator1.',
+];
 $client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
-$arg = array(
-    array(
-        'moe' => 5,
+$arg = [
+    [
+        'moe'   => 5,
         'larry' => 6,
-        'curly' => 8
-    ),
-    array(
-        'moe' => 5,
+        'curly' => 8,
+    ],
+    [
+        'moe'   => 5,
         'larry' => 2,
-        'curly' => 4
-    ),
-    array(
-        'moe' => 0,
+        'curly' => 4,
+    ],
+    [
+        'moe'   => 0,
         'larry' => 1,
-        'curly' => 12
-    )
-);
+        'curly' => 12,
+    ],
+];
 $result = $client->arrayOfStructsTest($arg);
 var_dump($result);
 

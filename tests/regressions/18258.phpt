@@ -5,12 +5,12 @@ Request #18258  Can not call remote function called create() because XML_RPC2_Cl
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-class TestServer {
-
+class TestServer
+{
     /**
-     * returns something
+     * returns something.
      *
-     * @param int   $id     Some id
+     * @param int $id Some id
      *
      * @return id The same id
      */
@@ -18,14 +18,13 @@ class TestServer {
     {
         return $id;
     }
-
 }
 
-$options = array(
-    'backend' => 'Php',
-    'prefix' => 'test.',
-    'encoding' => 'utf-8'
-);
+$options = [
+    'backend'  => 'Php',
+    'prefix'   => 'test.',
+    'encoding' => 'utf-8',
+];
 
 $server = XML_RPC2_Server::create('TestServer', $options);
 $request = new XML_RPC2_Backend_Php_Request('test.create');

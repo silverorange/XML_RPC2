@@ -3,7 +3,7 @@ XMLRPCext Backend XML-RPC server Validator1 test (simpleStructReturnTest)
 --SKIPIF--
 <?php
 if (!function_exists('xmlrpc_server_create')) {
-    print "Skip XMLRPC extension unavailable";
+    echo 'Skip XMLRPC extension unavailable';
 }
 ?>
 --FILE--
@@ -11,46 +11,48 @@ if (!function_exists('xmlrpc_server_create')) {
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-class TestServer {
+class TestServer
+{
     /**
-     * test function
+     * test function.
      *
      * see http://www.xmlrpc.com/validator1Docs
      *
      * @param int $int a int
+     *
      * @return array result
      */
-    public static function simpleStructReturnTest($int) {
-        return array(
-            'times10' => 10 * $int,
-            'times100' => 100 * $int,
-            'times1000' => 1000 * $int
-        );
+    public static function simpleStructReturnTest($int)
+    {
+        return [
+            'times10'   => 10 * $int,
+            'times100'  => 100 * $int,
+            'times1000' => 1000 * $int,
+        ];
     }
 }
 
-$options = array(
-    'prefix' => 'validator1.',
-    'backend' => 'Xmlrpcext'
-);
+$options = [
+    'prefix'  => 'validator1.',
+    'backend' => 'Xmlrpcext',
+];
 
 $server = XML_RPC2_Server::create('TestServer', $options);
-$GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
-<?xml version="1.0" encoding="iso-8859-1"?>
-<methodCall>
-<methodName>validator1.simpleStructReturnTest</methodName>
-<params>
- <param>
-  <value>
-   <int>13</int>
-  </value>
- </param>
-</params>
-</methodCall>
-EOS
-;
+$GLOBALS['HTTP_RAW_POST_DATA'] = <<<'EOS'
+    <?xml version="1.0" encoding="iso-8859-1"?>
+    <methodCall>
+    <methodName>validator1.simpleStructReturnTest</methodName>
+    <params>
+     <param>
+      <value>
+       <int>13</int>
+      </value>
+     </param>
+    </params>
+    </methodCall>
+    EOS;
 $response = $server->getResponse();
-$result = (XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
+$result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 var_dump($result);
 
 ?>

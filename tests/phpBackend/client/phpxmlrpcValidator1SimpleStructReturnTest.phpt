@@ -3,7 +3,7 @@ PHP Backend XML-RPC client against phpxmlrpc validator1 (simpleStructReturnTest)
 --SKIPIF--
 <?php
 if (!function_exists('curl_init')) {
-    print "Skip no CURI extension available";
+    echo 'Skip no CURI extension available';
 }
 ?>
 --FILE--
@@ -11,11 +11,11 @@ if (!function_exists('curl_init')) {
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-$options = array(
-    'debug' => false,
+$options = [
+    'debug'   => false,
     'backend' => 'Php',
-    'prefix' => 'validator1.'
-);
+    'prefix'  => 'validator1.',
+];
 $client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
 $result = $client->simpleStructReturnTest(13);
 var_dump($result['times10']);

@@ -3,13 +3,13 @@ XMLRPCext Backend XML-RPC client against phpxmlrpc validator1 (manyTypesTest)
 --SKIPIF--
 <?php
 if (!function_exists('xmlrpc_server_create')) {
-    print "Skip XMLRPC extension unavailable";
+    echo 'Skip XMLRPC extension unavailable';
 }
 if (!function_exists('curl_init')) {
-    print "Skip CURL extension unavailable";
+    echo 'Skip CURL extension unavailable';
 }
 if (version_compare(PHP_VERSION, '5.2.9', '<')) {
-    print "Skip Will fail because of http://bugs.php.net/bug.php?id=47263";
+    echo 'Skip Will fail because of http://bugs.php.net/bug.php?id=47263';
 }
 ?>
 --FILE--
@@ -19,13 +19,13 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 date_default_timezone_set('UTC');
 
-$options = array(
-    'debug' => false,
+$options = [
+    'debug'   => false,
     'backend' => 'Xmlrpcext',
-    'prefix' => 'validator1.'
-);
+    'prefix'  => 'validator1.',
+];
 $client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
-$tmp = "20060116T19:14:03";
+$tmp = '20060116T19:14:03';
 $time = XML_RPC2_Value::createFromNative($tmp, 'datetime');
 $base64 = XML_RPC2_Value::createFromNative('foobar', 'base64');
 $result = $client->manyTypesTest(1, true, 'foo', 3.14159, $time, $base64);

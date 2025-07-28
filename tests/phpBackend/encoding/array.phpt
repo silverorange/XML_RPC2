@@ -5,7 +5,7 @@ Array XML-RPC encoding (Php Backend)
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-$array = new XML_RPC2_Backend_Php_Value_Array(array(1, true, 'a string'));
+$array = new XML_RPC2_Backend_Php_Value_Array([1, true, 'a string']);
 var_dump($array->encode());
 ?>
 --EXPECT--
