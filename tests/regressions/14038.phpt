@@ -5,22 +5,28 @@ Empty array should not trigger notice
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-class Empty_Array_Value_Test extends XML_RPC2_Backend_Php_Value
-{
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+class Empty_Array_Value_Test extends XML_RPC2_Backend_Php_Value {}
+
+function errorHandler(
+    $errno,
+    $errstr,
+    $errfile,
+    $errline,
+    $errcontext
+) {
+    echo $errno;
 }
 
-{
-    function errorHandler ($errno, $errstr, $errfile, $errline,
-$errcontext)
-    {
-        echo $errno;
-    }
+set_error_handler('errorHandler');
 
-    set_error_handler('errorHandler');
+$array_class = new Empty_Array_Value_Test();
+$array_class->createFromNative([]);
 
-
-    $array_class = new Empty_Array_Value_Test();
-    $array_class->createFromNative(array());
-}
+?>
 --EXPECTREGEX--
 ^$

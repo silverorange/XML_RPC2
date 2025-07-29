@@ -82,9 +82,9 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
         $result = '<array><data>';
         foreach ($this->getNativeValue() as $element) {
             $result .= '<value>';
-            $result .= ($element instanceof XML_RPC2_Backend_Php_Value) ?
-                        $element->encode() :
-                        XML_RPC2_Backend_Php_Value::createFromNative($element)->encode();
+            $result .= ($element instanceof XML_RPC2_Backend_Php_Value)
+                        ? $element->encode()
+                        : XML_RPC2_Backend_Php_Value::createFromNative($element)->encode();
             $result .= '</value>';
         }
         $result .= '</data></array>';

@@ -5,73 +5,75 @@ PHP Backend XML-RPC cachedServer Validator1 test (easyStructTest with cache on b
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-class TestServer {
+class TestServer
+{
     /**
-     * test function
+     * test function.
      *
      * see http://www.xmlrpc.com/validator1Docs
      *
      * @param array $struct a struct
+     *
      * @return int result
      */
-    public static function easyStructTest($struct) {
-        return ($struct['moe'] + $struct['larry'] + $struct['curly']);
+    public static function easyStructTest($struct)
+    {
+        return $struct['moe'] + $struct['larry'] + $struct['curly'];
     }
 }
 
-$options = array(
-    'prefix' => 'validator1.',
-    'backend' => 'Php',
-    'cacheOptions' => array(
-        'cacheDir' => sys_get_temp_dir() . '/',
-        'lifetime' => 60,
-        'cacheByDefault' => true
-    ),
-    'cacheDebug' => true
-);
+$options = [
+    'prefix'       => 'validator1.',
+    'backend'      => 'Php',
+    'cacheOptions' => [
+        'cacheDir'       => sys_get_temp_dir() . '/',
+        'lifetime'       => 60,
+        'cacheByDefault' => true,
+    ],
+    'cacheDebug' => true,
+];
 
 $server = XML_RPC2_CachedServer::create('TestServer', $options);
-$GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
-<?xml version="1.0" encoding="iso-8859-1"?>
-<methodCall>
-<methodName>validator1.easyStructTest</methodName>
-<params>
- <param>
-  <value>
-   <struct>
-    <member>
-     <name>moe</name>
-     <value>
-      <int>5</int>
-     </value>
-    </member>
-    <member>
-     <name>larry</name>
-     <value>
-      <int>6</int>
-     </value>
-    </member>
-    <member>
-     <name>curly</name>
-     <value>
-      <int>8</int>
-     </value>
-    </member>
-   </struct>
-  </value>
- </param>
-</params>
-</methodCall>
-EOS
-;
+$GLOBALS['HTTP_RAW_POST_DATA'] = <<<'EOS'
+    <?xml version="1.0" encoding="iso-8859-1"?>
+    <methodCall>
+    <methodName>validator1.easyStructTest</methodName>
+    <params>
+     <param>
+      <value>
+       <struct>
+        <member>
+         <name>moe</name>
+         <value>
+          <int>5</int>
+         </value>
+        </member>
+        <member>
+         <name>larry</name>
+         <value>
+          <int>6</int>
+         </value>
+        </member>
+        <member>
+         <name>curly</name>
+         <value>
+          <int>8</int>
+         </value>
+        </member>
+       </struct>
+      </value>
+     </param>
+    </params>
+    </methodCall>
+    EOS;
 $response = $server->getResponse();
-$result = (XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
+$result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 var_dump($result);
 $response = $server->getResponse();
-$result = (XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
+$result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 var_dump($result);
 $response = $server->getResponse();
-$result = (XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
+$result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 var_dump($result);
 $server->clean();
 

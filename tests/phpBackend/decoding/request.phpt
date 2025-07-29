@@ -9,7 +9,7 @@ date_default_timezone_set('UTC');
 
 $request = XML_RPC2_Backend_Php_Request::createFromDecode(simplexml_load_string('<?xml version="1.0"?><methodCall><methodName>foo.bar</methodName><params><param><value><string>a string</string></value></param><param><value><int>125</int></value></param><param><value><double>125.2</double></value></param><param><value><dateTime.iso8601>19970716192030</dateTime.iso8601></value></param><param><value><boolean>1</boolean></value></param><param><value><boolean>0</boolean></value></param></params></methodCall>'));
 var_dump($request->getMethodName());
-$result = ($request->getParameters());
+$result = $request->getParameters();
 var_dump($result[0]);
 var_dump($result[1]);
 var_dump($result[2]);

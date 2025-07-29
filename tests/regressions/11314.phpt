@@ -12,47 +12,50 @@ require_once __DIR__ . '/../../vendor/autoload.php';
  * PHP version 5
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Lars Olesen <lars@legestue.net>
-
  * @copyright 2007 Lars Olesen
  * @license   GPL http://www.opensource.org/licenses/gpl-license.php
+ *
  * @version   @package-version@
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
 
 /**
- * The implementation
+ * The implementation.
  *
  * @category  XML
- * @package   XML_RPC2
+ *
  * @author    Lars Olesen <lars@legestue.net>
  * @copyright 2007 Lars Olesen
  * @license   GPL http://www.opensource.org/licenses/gpl-license.php
+ *
  * @version   @package-version@
- * @link      http://pear.php.net/package/XML_RPC2
+ *
+ * @see      http://pear.php.net/package/XML_RPC2
  */
-class DocumentationServer {
-
+class DocumentationServer
+{
     /**
-     * returns something
+     * returns something.
      *
-     * @param array   $something     A description
-     * @param string  $another_thing A description of another thing
-     * @param boolean $return        Whether to return nothing - server doesn't care though
+     * @param array  $something     A description
+     * @param string $another_thing A description of another thing
+     * @param bool   $credentials   Whether to return nothing - server doesn't care though
      *
      * @return string An international string
      */
-    public static function getSomething($something, $another_thing, $credentials) {
+    public static function getSomething($something, $another_thing, $credentials)
+    {
         return 'nothing interesting';
     }
-
 }
 
-$options = array(
-    'prefix' => 'test.',
-    'encoding' => 'utf-8'
-);
+$options = [
+    'prefix'   => 'test.',
+    'encoding' => 'utf-8',
+];
 
 $server = XML_RPC2_Server::create('DocumentationServer', $options);
 $GLOBALS['HTTP_RAW_POST_DATA'] = '';
@@ -91,7 +94,7 @@ $server->handleCall();
       <h3><a name="2d6b7f96be69b46a6523f48b4a288864"><span class="type">(string)</span> <span class="name">test.getSomething</span><span class="other">(</span><span class="paratype">(array) </span><span class="paraname">something</span>, <span class="paratype">(string) </span><span class="paraname">another_thing</span>, <span class="paratype">(boolean) </span><span class="paraname">credentials</span><span class="other">)</span></a></h3>
       <p><b>Description :</b></p>
       <div class="description">
-        returns something
+        returns something.
       </div>
       <p><b>Parameters : </b></p>
       <table>

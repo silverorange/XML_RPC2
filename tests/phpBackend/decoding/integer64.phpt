@@ -2,7 +2,9 @@
 Integer XML-RPC decoding (Php Backend)
 --SKIPIF--
 <?php
-if (PHP_INT_SIZE < 8) print "Skip: Integer64 is only available on 64bit systems"
+if (PHP_INT_SIZE < 8) {
+    echo 'Skip: Integer64 is only available on 64bit systems';
+}
 ?>
 --FILE--
 <?php

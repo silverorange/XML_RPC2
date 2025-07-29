@@ -1,0 +1,11 @@
+includes:
+  - phpstan-baseline.neon
+
+parameters:
+  phpVersion: 80200
+  level: 2
+  paths:
+    - XML
+  editorUrl: '%%file%%:%%line%%'
+  editorUrlTitle: '%%file%%:%%line%%'
+  errorFormat: table

@@ -222,7 +222,7 @@ abstract class XML_RPC2_Server
      * execution to the call handler, and output the encoded call handler
      * response.
      *
-     * @return string the encoded call handler response
+     * @note The encoded call handler response is echoed, not returned.
      */
     abstract public function handleCall();
 
@@ -250,8 +250,8 @@ abstract class XML_RPC2_Server
 
             default:
                 throw new Exception(
-                    'Classic error reported "' . $errstr . '" on ' .
-                    $errfile . ':' . $errline
+                    'Classic error reported "' . $errstr . '" on '
+                    . $errfile . ':' . $errline
                 );
         }
     }

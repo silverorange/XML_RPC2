@@ -1,0 +1,101 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method XML_RPC2_Exception\\:\\:getFaultCode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Client.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Backend_Php_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Request.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Request.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Response.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Backend_Php_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Array.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Array.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$scalar\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Base64.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$scalar\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Datetime.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$timestamp\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Datetime.php
+
+		-
+			message: "#^Method XML_RPC2_Backend_Php_Value_Nil\\:\\:decode\\(\\) has invalid return type the\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Nil.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Backend_Php_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Struct.php
+
+		-
+			message: "#^Call to an undefined method XML_RPC2_Value\\:\\:encode\\(\\)\\.$#"
+			count: 1
+			path: XML/RPC2/Backend/Php/Value/Struct.php
+
+		-
+			message: "#^Cannot call method asXML\\(\\) on string\\.$#"
+			count: 1
+			path: XML/RPC2/Exception/Fault.php
+
+		-
+			message: "#^Comparison operation \"\\>\" between int\\<0, max\\> and array results in an error\\.$#"
+			count: 1
+			path: XML/RPC2/Server/Method.php
+
+		-
+			message: "#^Cannot call method send\\(\\) on int\\.$#"
+			count: 1
+			path: XML/RPC2/Util/HTTPRequest.php
+
+		-
+			message: "#^Cannot call method setBody\\(\\) on int\\.$#"
+			count: 1
+			path: XML/RPC2/Util/HTTPRequest.php
+
+		-
+			message: "#^Cannot call method setConfig\\(\\) on int\\.$#"
+			count: 7
+			path: XML/RPC2/Util/HTTPRequest.php
+
+		-
+			message: "#^Cannot call method setHeader\\(\\) on int\\.$#"
+			count: 2
+			path: XML/RPC2/Util/HTTPRequest.php
+
+		-
+			message: "#^Cannot call method setMethod\\(\\) on int\\.$#"
+			count: 1
+			path: XML/RPC2/Util/HTTPRequest.php
+
+		-
+			message: "#^Cannot call method setUrl\\(\\) on int\\.$#"
+			count: 1
+			path: XML/RPC2/Util/HTTPRequest.php

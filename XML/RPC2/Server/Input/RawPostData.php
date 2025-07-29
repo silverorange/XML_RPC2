@@ -76,8 +76,8 @@ class XML_RPC2_Server_Input_RawPostData implements XML_RPC2_Server_Input
     {
         if (!isset($this->input) && !isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
             throw new XML_RPC2_Exception_Config(
-                'XML_RPC2_Server_Input_RawPostData requested but PHP config ' .
-                'does not show GLOBALS[\'HTTP_RAW_POST_DATA\'] as available'
+                'XML_RPC2_Server_Input_RawPostData requested but PHP config '
+                . 'does not show GLOBALS[\'HTTP_RAW_POST_DATA\'] as available'
             );
         }
 

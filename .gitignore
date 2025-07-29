@@ -9,7 +9,11 @@ composer.phar
 .env
 /.idea
 .php-cs-fixer.cache
+.phpunit.result.cache
 *.swp
 
 # dependency lock file
 composer.lock
+
+# overrides for local tooling
+/phpstan.neon

@@ -134,9 +134,9 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
 
             return ((float) $result) + $milliseconds / 1000;
         }
-        $result = ((float) @mktime($hour, $minutes, $seconds, $month, $day, $year)) +
-            ((float) $milliseconds) -
-            ((float) $tzSeconds);
+        $result = ((float) @mktime($hour, $minutes, $seconds, $month, $day, $year))
+            + ((float) $milliseconds)
+            - ((float) $tzSeconds);
         if ($milliseconds == 0) {
             return (int) $result;
         }
